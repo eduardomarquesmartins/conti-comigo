@@ -1,0 +1,255 @@
+/* ═══════════════════════════════════════════════════════
+   CINEMA ANIMATION — Standalone CSS
+   3D particle animation overlay for & CONTI website
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400&display=swap');
+
+/* ── Fixed Canvas (Background Layer) ── */
+#cinema-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    /* Lowest level, behind everything else */
+    pointer-events: none;
+}
+
+/* ── Cinema Wrapper ── */
+#cinema-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+/* ── Step Sections (Scroll-Synced Cards) ── */
+.step-section {
+    height: 150vh;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5%;
+}
+
+.step-section .split-layout {
+    display: flex;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.step-section .content-side {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.step-section .visual-side {
+    width: 50%;
+}
+
+/* ── Content Box (Typographic Layout) ── */
+.step-section .content-box {
+    width: 100%;
+    max-width: 800px;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    border-radius: 0;
+    padding: 2rem;
+    box-shadow: none;
+
+    /* Animation driven by cinema-animation.js */
+    opacity: 0;
+    transform: translateY(60px);
+    will-change: opacity, transform;
+}
+
+.step-section .content-box .icon {
+    display: none;
+    /* Removed icon for cleaner typographic look */
+}
+
+.step-section .content-box .service-category {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: #3b82f6;
+    /* Blue-500 */
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.step-section .content-box .service-category::before {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 12px;
+    background: #3b82f6;
+}
+
+.step-section .content-box h2 {
+    font-size: 5rem;
+    font-weight: 100;
+    color: #0f172a;
+    /* Slate-900 */
+    margin-bottom: 2rem;
+    letter-spacing: -0.06em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    word-break: break-word;
+    /* Previne quebras feias no mobile */
+}
+
+.step-section .content-box p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #475569;
+    /* Slate-600 */
+    font-weight: 400;
+    max-width: 450px;
+    letter-spacing: -0.01em;
+}
+
+/* ── Final Section (Logo Reveal) ── */
+.final-section {
+    height: 150vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+    .step-section {
+        height: 140vh;
+    }
+
+    .step-section .split-layout {
+        flex-direction: column-reverse;
+        justify-content: center;
+    }
+
+    .step-section .content-side,
+    .step-section .visual-side {
+        width: 100%;
+    }
+
+    .step-section .visual-side {
+        height: 30vh;
+        display: none;
+    }
+
+    .step-section {
+        padding: 0 1.5rem;
+    }
+
+    .step-section .content-box {
+        padding: 0;
+        background: transparent;
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .step-section .content-box .service-category {
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 1rem;
+    }
+
+    .step-section .content-box h2 {
+        font-size: 2.8rem;
+        line-height: 0.9;
+        margin-bottom: 1.5rem;
+    }
+
+    .step-section .content-box p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+}
+
+/* ═══════════════════════════════════════════
+   PILL HEADER REDESIGN
+   ═══════════════════════════════════════════ */
+#main-header {
+    top: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important;
+    max-width: 1100px !important;
+    background: #fdfcf0ee !important;
+    /* Cream theme */
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-radius: 999px !important;
+    padding: 12px 30px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    margin: 0 auto !important;
+    transition: all 0.3s ease !important;
+}
+
+#main-header .max-w-7xl {
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Ensure links are dark on the cream background */
+#main-header .nav-link {
+    color: #1a1a1a !important;
+    background-color: transparent !important;
+}
+
+#main-header #hamburger-btn .hamburger-line {
+    background-color: #1a1a1a !important;
+}
+
+#main-header #hamburger-btn .hamburger-line {
+    height: 1.5px !important;
+}
+
+#main-header #hamburger-btn::after {
+    display: none !important;
+}
+
+/* Specific fix for text color in nav-link */
+#main-header ul li a.nav-link {
+    color: #4a4a4a !important;
+    font-weight: 500 !important;
+}
+
+/* Adjust button for the pill shape */
+#main-header a[href*="compresuafoto"] {
+    border-radius: 999px !important;
+    /* Match pill shape */
+    padding: 8px 24px !important;
+    font-size: 11px !important;
+    height: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+@media (max-width: 768px) {
+    #main-header {
+        width: 95% !important;
+        top: 15px !important;
+        padding: 8px 18px !important;
+    }
+
+    #main-header img {
+        height: 24px !important;
+        /* Slightly smaller logo on mobile header */
+    }
+}

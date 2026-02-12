@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>& CONTI - Marketing Digital</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
+    <link rel="shortcut icon" href="favicon.ico?v=2">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Outfit:wght@100;200;300;400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+        }
+
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loader-text {
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.95);
+            }
+        }
+
+        html {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden !important;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body.loading {
+            overflow: hidden !important;
+        }
+
+
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            min-width: 100%;
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scroller {
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
+        }
+
+        .scroller-inner {
+            display: flex;
+            width: max-content;
+        }
+
+        .animate-scroll-left {
+            animation: scrollLeft 60s linear infinite;
+        }
+
+        .animate-scroll-right {
+            animation: scrollRight 60s linear infinite;
+        }
+
+        .scroller:hover .scroller-inner {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes scrollRight {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+
+        .portfolio-carousel {
+            width: 100%;
+            overflow: hidden;
+            padding: 30px 0;
+
+            background: #2563eb;
+
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .carousel-track {
+            width: 100%;
+            overflow: visible;
+            padding: 10px 0;
+            position: relative;
+            z-index: 1;
+            transition: z-index 0s;
+        }
+
+        .carousel-track:hover {
+            z-index: 10;
+        }
+
+        .carousel-inner {
+            display: flex;
+            gap: 20px;
+            animation: scrollLeft 90s linear infinite;
+            width: max-content;
+        }
+
+
+        .image-modal,
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100001;
+
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+        }
+
+        .image-modal.active,
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .image-modal img,
+        .video-modal video {
+            max-width: 90%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-modal.active img,
+        .video-modal.active video {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 100002;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .video-modal-content {
+            width: 100%;
+            max-width: 500px;
+
+            position: relative;
+            padding: 0 20px;
+        }
+
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #000;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 99999;
+            transition: all 0.3s ease, opacity 0.8s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .whatsapp-float.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            background-color: #111;
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        .carousel-inner.reverse {
+            animation-direction: reverse;
+        }
+
+        .carousel-inner:hover {
+            animation-play-state: paused;
+        }
+
+        .carousel-inner img {
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+
+        .carousel-inner img:hover {
+            transform: scale(1.35);
+            z-index: 9999;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+
+        .parceiro-card {
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            width: 180px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .parceiro-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .parceiro-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            filter: grayscale(1);
+            opacity: 0.8;
+            transition: all 0.4s ease;
+        }
+
+        .parceiro-card:hover img {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+
+
+        .mobile-menu {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s;
+        }
+
+        .mobile-menu.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.open .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 768px) {
+            .parceiro-card {
+                width: 140px;
+                height: 90px;
+                padding: 8px;
+            }
+        }
+
+
+        footer {
+            background-color: #000;
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo span {
+            color: #2563eb;
+        }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .footer-social-link {
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .footer-social-link:hover {
+            transform: translateY(-5px);
+            filter: brightness(1.2);
+        }
+
+        .footer-social-link.social-instagram:hover {
+            color: #E4405F;
+        }
+
+        .footer-social-link.social-facebook:hover {
+            color: #3d87e7;
+        }
+
+        .footer-social-link.social-email:hover {
+            color: #ffffff;
+        }
+
+        .footer-social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .footer-copyright {
+            text-align: center;
+            color: #ffffff;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+
+        .video-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.4);
+            border-color: #2563eb;
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .video-card .video-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: scale(1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .play-icon {
+            transform: scale(1.1);
+            background: rgba(37, 99, 235, 0.6);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal.delay-100 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal.delay-200 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal.delay-300 {
+            transition-delay: 0.3s;
+        }
+
+        .title-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 99px;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .title-underline {
+            width: 40px;
+            height: 2px;
+            background: #fff;
+            margin: 15px auto 0;
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-active .title-underline {
+            width: 80px;
+        }
+
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #2563eb;
+
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Split Background Hero */
+        .hero-split-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bg-half {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .bg-half::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.2);
+            /* Subtle overlay for readability */
+        }
+
+        /* Hero Layout Responsivity - Mantendo lado a lado */
+        .hero-split-bg {
+            display: flex;
+            flex-direction: row;
+        }
+
+        /* Ajustes Individuais de Enquadramento no Mobile */
+        /* Ajustes Individuais de Enquadramento no Mobile */
+        @media (max-width: 768px) {
+            #hero-bg-left {
+                background-position: 75% 20% !important;
+                /* Foco agressivo na direita (Moça) */
+            }
+
+            #hero-bg-right {
+                background-position: 25% 20% !important;
+                /* Foco agressivo na esquerda (Rapaz) */
+            }
+
+            /* Remover Card Glass no Mobile */
+            .hero-content-glass {
+                background: transparent !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+
+            /* Ajuste de Velocidade de Animação para Mobile */
+            body.loaded .animate-co {
+                animation-duration: 1.0s !important;
+            }
+
+            body.loaded .animate-nti {
+                animation-duration: 0.8s !important;
+                animation-delay: 0.6s !important;
+            }
+
+            body.loaded .animate-amp {
+                animation-duration: 0.6s !important;
+                animation-delay: 1.4s !important;
+            }
+
+            body.loaded .animate-subtitle {
+                animation-duration: 1.2s !important;
+                animation-delay: 2.0s !important;
+            }
+
+            body.loaded .scroll-indicator-container {
+                animation-delay: 3.0s !important;
+            }
+        }
+
+        /* Garantir que o conteúdo da hero se destaque sobre o fundo */
+        /* Animação do Mouse Scroll */
+        @keyframes scroll-dot {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(12px);
+                opacity: 0;
+            }
+        }
+
+        .mouse-dot {
+            animation: scroll-dot 2s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+        }
+
+        /* Animações do Logo Sequencial */
+        @keyframes co-slide-in {
+            0% {
+                transform: translateX(-150%);
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            60% {
+                transform: translateX(10%);
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes nti-slide-in {
+            0% {
+                transform: translateX(150%);
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            60% {
+                transform: translateX(-10%);
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes amp-drop {
+            0% {
+                transform: translateY(-200%);
+                opacity: 0;
+            }
+
+            70% {
+                transform: translateY(20%);
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Estado Inicial (Escondido enquanto carrega) */
+        .animate-co,
+        .animate-nti,
+        .animate-amp {
+            opacity: 0;
+        }
+
+        /* Disparar Animações apenas após carregar (DESACELERADO) */
+        body.loaded .animate-co {
+            display: inline-block;
+            animation: co-slide-in 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        body.loaded .animate-nti {
+            display: inline-block;
+            animation: nti-slide-in 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.8s;
+        }
+
+        body.loaded .animate-amp {
+            display: block;
+            animation: amp-drop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.8s;
+        }
+
+        @keyframes subtitle-reveal {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-subtitle {
+            opacity: 0;
+        }
+
+        body.loaded .animate-subtitle {
+            animation: subtitle-reveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards 2.6s;
+        }
+
+        /* Animação Premium do Indicador de Scroll */
+        @keyframes mouse-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes text-pulse {
+
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes indicator-reveal {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .scroll-indicator-container {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body.loaded .scroll-indicator-container {
+            animation: indicator-reveal 1.2s ease-out forwards 3.8s;
+            pointer-events: auto;
+        }
+
+        .mouse-icon-floating {
+            animation: mouse-float 3s ease-in-out infinite;
+        }
+
+        .text-pulse-animation {
+            animation: text-pulse 3s ease-in-out infinite;
+        }
+
+        /* --- Dynamic Header State --- */
+        #main-header.header-expanded {
+            max-width: 100% !important;
+            width: 100% !important;
+            border-radius: 0 !important;
+            top: 0 !important;
+            background-color: #020617 !important;
+            /* Matches section bg */
+            padding-top: 1rem !important;
+            /* py-4 */
+            padding-bottom: 1rem !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        #main-header.header-expanded .max-w-7xl {
+            max-width: 100% !important;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        #main-header.header-expanded .nav-link {
+            color: #ffffff !important;
+        }
+
+        #main-header.header-expanded .nav-link:hover {
+            color: #2563eb !important;
+            /* blue-600 */
+        }
+
+        #main-header.header-expanded .hamburger-line {
+            background-color: #ffffff !important;
+        }
+
+        @media (max-width: 768px) {
+            #main-header.header-expanded {
+                transform: translateY(-100%) !important;
+                pointer-events: none;
+                opacity: 0 !important;
+                transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="cinema-animation.css">
+</head>
+
+<body class="bg-slate-50 text-gray-900 loading">
+
+
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <div class="loader-text">
+                <img src="./logo.png" alt="& CONTI" class="h-12 w-auto">
+            </div>
+        </div>
+    </div>
+
+    <header id="main-header"
+        class="fixed top-0 w-full z-50 px-4 md:px-10 py-4 md:py-6 transition-all duration-300 bg-transparent">
+        <div class="flex items-center justify-between w-full max-w-7xl mx-auto">
+
+            <a href="#" class="hover:opacity-80 transition-opacity z-50">
+                <img src="./logo.png" alt="& CONTI" class="h-8 md:h-10 w-auto">
+            </a>
+
+            <nav class="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <ul class="flex space-x-8 text-sm font-normal text-gray-600 tracking-wide">
+                    <li><a href="#hero-section" class="nav-link hover:text-blue-600">INÍCIO</a></li>
+                    <li><a href="#portfolio-section" class="nav-link hover:text-blue-600">PORTFÓLIO</a></li>
+                    <li><a href="#contato-section" class="nav-link hover:text-blue-600">CONTATO</a></li>
+                </ul>
+            </nav>
+
+
+            <button id="hamburger-btn"
+                class="hamburger md:hidden flex flex-col justify-center items-center w-8 h-8 z-50" aria-label="Menu">
+                <span class="hamburger-line block w-6 h-0.5 bg-gray-800 mb-1"></span>
+                <span class="hamburger-line block w-6 h-0.5 bg-gray-800 mb-1"></span>
+                <span class="hamburger-line block w-6 h-0.5 bg-gray-800"></span>
+            </button>
+
+            <div class="hidden md:block">
+                <a href="https://compresuafoto-comigo.vercel.app/" target="_blank"
+                    class="inline-flex items-center justify-center px-6 py-3 md:px-10 md:py-3 bg-blue-600 text-white rounded-none hover:bg-blue-700 hover:scale-105 transition-all shadow-lg shadow-blue-500/30 text-xs md:text-sm font-light tracking-widest">
+                    COMPRE SUA FOTO
+                </a>
+            </div>
+        </div>
+
+
+        <div id="mobile-menu"
+            class="mobile-menu fixed top-0 right-0 w-full h-screen bg-white z-40 flex flex-col items-center justify-center md:hidden">
+            <nav class="flex flex-col items-center space-y-8">
+                <a href="#hero-section"
+                    class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">INÍCIO</a>
+                <a href="#portfolio-section"
+                    class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">PORTFÓLIO</a>
+                <a href="#contato-section"
+                    class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">CONTATO</a>
+                <a href="https://compresuafoto-comigo.vercel.app/" target="_blank"
+                    class="mt-8 inline-flex items-center justify-center px-10 py-4 bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 text-sm font-light tracking-widest">
+                    COMPRE SUA FOTO
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero-section"
+        class="relative w-screen max-w-full overflow-hidden flex flex-col justify-center py-0 bg-[#020617] z-40"
+        style="height: 100dvh;">
+
+        <!-- FUNDO DIVIDIDO (Desktop) -->
+        <div class="hidden lg:flex absolute top-0 left-0 w-full h-full flex-row z-0">
+            <div id="hero-bg-left" class="flex-1 h-full bg-cover relative"
+                style="background-image: url('./3.jpg'); background-position: center 15%;">
+            </div>
+            <div id="hero-bg-right" class="flex-1 h-full bg-cover relative"
+                style="background-image: url('./2.jpg'); background-position: center 15%;">
+            </div>
+        </div>
+
+        <!-- FUNDO ÚNICO (Mobile) -->
+        <div class="flex lg:hidden absolute top-0 left-0 w-full h-full z-0 bg-cover bg-center"
+            style="background-image: url('./background.jpg');">
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+
+        <!-- Overlay suave universal -->
+        <div class="absolute inset-0 bg-black/5 pointer-events-none z-[1]"></div>
+
+        <div class="w-full max-w-[1500px] mx-auto px-4 lg:px-12 relative z-10 h-full flex items-center justify-center">
+
+            <!-- Card Branding Centralizado -->
+            <div class="relative z-20 w-full lg:w-auto flex-shrink-0 bg-transparent">
+                <div
+                    class="hero-content-glass p-10 lg:p-14 rounded-[2rem] max-w-[340px] lg:max-w-[500px] mx-auto text-center transition-all hover:scale-[1.02] duration-500 overflow-hidden">
+                    <h1
+                        class="text-6xl lg:text-8xl font-thin text-white lg:text-gray-900 tracking-tighter leading-none flex flex-col items-center">
+                        <span
+                            class="animate-amp text-3xl lg:text-4xl text-blue-400 lg:text-blue-600 mb-2 font-extralight">&</span>
+                        <div class="flex">
+                            <span class="animate-co">CO</span>
+                            <span class="animate-nti">NTI</span>
+                        </div>
+                    </h1>
+                    <h2
+                        class="mt-6 lg:mt-12 text-[12px] lg:text-sm text-gray-100 lg:text-gray-800 tracking-[0.4em] font-medium uppercase border-t border-white/20 lg:border-gray-900/60 pt-6 lg:pt-12 w-full inline-block animate-subtitle">
+                        Marketing Digital
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Indicador de Scroll Aprimorado -->
+            <div
+                class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 scroll-indicator-container">
+                <!-- Ícone de Mouse Minimalista com Flutuação -->
+                <div class="mouse-icon-floating">
+                    <div
+                        class="w-6 h-10 border-2 border-white/80 rounded-full flex justify-center p-1.5 shadow-lg backdrop-blur-sm">
+                        <div class="w-1 h-2 bg-white rounded-full mouse-dot"></div>
+                    </div>
+                </div>
+                <span
+                    class="text-[9px] tracking-[0.4em] uppercase text-white font-light scroll-indicator-text text-pulse-animation">
+                    Descubra mais
+                </span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══ MARQUEE TRANSITION (Option 1) ═══ -->
+    <section class="bg-[#020617] py-12 md:py-20 overflow-hidden border-y border-white/5 relative z-20">
+        <div class="marquee-container opacity-50">
+            <div
+                class="marquee-content gap-12 text-white text-3xl md:text-6xl font-extralight uppercase tracking-[0.2em] whitespace-nowrap">
+                <span>Estratégia</span> <span>•</span>
+                <span>Conexão</span> <span>•</span>
+                <span>Resultado</span> <span>•</span>
+                <span>Criatividade</span> <span>•</span>
+                <span>Branding</span> <span>•</span>
+                <span>Performance</span> <span>•</span>
+                <span>Design</span> <span>•</span>
+                <span>Inovação</span> <span>•</span>
+                <span class="text-blue-500 font-light">Conti Comigo</span> <span>•</span>
+            </div>
+            <!-- Duplicate for infinite loop -->
+            <div class="marquee-content gap-12 text-white text-3xl md:text-6xl font-extralight uppercase tracking-[0.2em] whitespace-nowrap"
+                aria-hidden="true">
+                <span>Estratégia</span> <span>•</span>
+                <span>Conexão</span> <span>•</span>
+                <span>Resultado</span> <span>•</span>
+                <span>Criatividade</span> <span>•</span>
+                <span>Branding</span> <span>•</span>
+                <span>Performance</span> <span>•</span>
+                <span>Design</span> <span>•</span>
+                <span>Inovação</span> <span>•</span>
+                <span class="text-blue-500 font-light">Conti Comigo</span> <span>•</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SEÇÃO: O QUE A &CONTI PODE FAZER (Scroll-Story) ═══ -->
+    <section id="sobre-negocio-section" class="relative min-h-[800vh] bg-[#020617] z-40">
+        <!-- Sticky Container -->
+        <div
+            class="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden bg-[#020617] pt-28 lg:pt-36">
+
+            <!-- CARD 1: POSICIONAMENTO (Original) -->
+            <div id="sobre-card-1"
+                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-100 z-10">
+                <!-- Lado Esquerdo: Imagem -->
+                <div class="w-full lg:w-1/2 h-[45vh] lg:h-auto overflow-hidden">
+                    <img src="./IMG_9080.jpg" alt="Equipe & CONTI em ação"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100"
+                        style="object-position: center 25%;">
+                </div>
+
+                <!-- Lado Direito: Texto Impactante -->
+                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24">
+                    <div class="max-w-2xl bg-[#020617]">
+                        <span class="title-tag">POSICIONAMENTO</span>
+                        <h2
+                            class="text-3xl md:text-5xl lg:text-6xl font-thin text-white leading-[0.9] tracking-tighter uppercase italic">
+                            O QUE A <br>
+                            <span class="text-blue-600 block mt-2">& CONTI</span>
+                            PODE <br>
+                            <span
+                                class="text-gray-400 text-3xl md:text-5xl block mt-4 font-light tracking-normal lowercase">
+                                (ou não) fazer
+                            </span>
+                            PELO <br>
+                            <span class="block text-white">SEU NEGÓCIO</span>
+                        </h2>
+
+                        <div class="w-20 h-1 bg-blue-600 mt-12 mb-8"></div>
+
+                        <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed max-w-lg">
+                            Não somos apenas uma agência. Somos o seu braço estratégico para transformar presença
+                            digital em
+                            autoridade absoluta e resultados reais.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2: PRESENÇA x PROMESSAS (Novo) -->
+            <div id="sobre-card-2"
+                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
+                <!-- Lado Esquerdo: Texto (Trocou de lado) -->
+                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
+                    <div class="max-w-2xl px-4">
+                        <h2
+                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
+                            O QUE FAZEMOS <br>
+                            É <span class="text-blue-600">CONSTRUIR</span> <br>
+                            <span class="text-white">PRESENÇA E NÃO</span> <br>
+                            <span class="text-gray-500">PROMESSAS.</span>
+                        </h2>
+
+                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8"></div>
+
+                        <p
+                            class="text-white text-lg md:text-xl font-bold leading-tight max-w-lg mb-8 uppercase tracking-widest">
+                            A &CONTI TE AJUDA A <span class="text-blue-400">MOSTRAR O VALOR</span> DO QUE VOCÊ ENTREGA,
+                            A ORGANIZAR SUA COMUNICAÇÃO.
+                        </p>
+
+                        <div
+                            class="bg-blue-600/20 border border-blue-500/50 p-6 md:p-8 rounded-2xl backdrop-blur-sm shadow-xl shadow-blue-900/20">
+                            <p
+                                class="text-blue-400 text-sm md:text-base font-light uppercase tracking-widest leading-relaxed text-center">
+                                E TRANSFORMAR O SEU CONTEÚDO EM ALGO QUE REALMENTE TRABALHA POR VOCÊ!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lado Direito: Nova Imagem (Trocou de lado) -->
+                <div class="w-full lg:w-1/2 h-[50vh] lg:h-auto overflow-hidden">
+                    <img src="./oque.jpg" alt="Transformação & CONTI"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100">
+                </div>
+            </div>
+
+            <!-- CARD 3: RESULTADOS vs ENVOLVIMENTO (Novo) -->
+            <div id="sobre-card-3"
+                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
+                <!-- Lado Esquerdo: Imagem (Voltou para esquerda) -->
+                <div class="w-full lg:w-1/2 h-[50vh] lg:h-auto overflow-hidden">
+                    <img src="./Untitled3.jpg" alt="Resultados & CONTI"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100">
+                </div>
+
+                <!-- Lado Direito: Texto (Voltou para direita) -->
+                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
+                    <div class="max-w-2xl px-4 text-right lg:text-left">
+                        <h2
+                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
+                            MAS NÃO <br>
+                            PODEMOS TE DAR <br>
+                            <span class="text-blue-600">RESULTADOS</span> <br>
+                            SEM ENVOLVIMENTO.
+                        </h2>
+
+                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8 ml-auto lg:ml-0"></div>
+
+                        <div class="flex flex-col gap-4">
+                            <div
+                                class="bg-white/5 border border-white/10 p-4 md:p-6 rounded-2xl backdrop-blur-sm self-end lg:self-start max-w-sm">
+                                <p
+                                    class="text-gray-300 text-sm md:text-base font-medium uppercase tracking-widest leading-tight">
+                                    O DIGITAL É FEITO DE <span class="text-white">CONSTÂNCIA,</span> <br>
+                                    DE TESTES, DE TEMPO
+                                </p>
+                            </div>
+
+                            <div
+                                class="bg-blue-600/30 border border-blue-500/50 p-4 md:p-6 rounded-2xl backdrop-blur-sm self-end lg:self-start">
+                                <p
+                                    class="text-blue-400 text-base md:text-xl font-light uppercase tracking-widest leading-none">
+                                    E É ISSO QUE FAZ <br> A DIFERENÇA!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 4: NOSSO PAPEL (Novo) -->
+            <div id="sobre-card-4"
+                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
+                <!-- Lado Esquerdo: Texto (Invertido) -->
+                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
+                    <div class="max-w-2xl px-4">
+                        <h2
+                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
+                            O NOSSO PAPEL É <br>
+                            CRIAR <span class="text-blue-600">ESTRATÉGIA,</span> <br>
+                            CLAREZA E <br> PROPÓSITO.
+                        </h2>
+
+                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8"></div>
+
+                        <div
+                            class="bg-white/5 border border-white/10 p-6 md:p-10 rounded-3xl backdrop-blur-md shadow-2xl">
+                            <p class="text-white text-lg md:text-2xl font-light leading-snug uppercase tracking-tight">
+                                O SEU É ACREDITAR NO PROCESSO, CONFIAR NO QUE FOI CONSTRUÍDO E <span
+                                    class="text-blue-400 font-bold italic">DAR ESPAÇO</span> PRO RESULTADO AMADURECER.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lado Direito: Foto (Direita conforme pedido) -->
+                <div class="w-full lg:w-1/2 h-[50vh] lg:h-auto overflow-hidden">
+                    <img src="./Untitled2.jpg" alt="Estratégia & CONTI"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100">
+                </div>
+            </div>
+
+            <!-- CARD 5: NÃO VENDEMOS MILAGRES (O Fechamento) -->
+            <div id="sobre-card-5"
+                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
+                <!-- Lado Esquerdo: Foto (Voltou para esquerda) -->
+                <div class="w-full lg:w-1/2 h-[55vh] lg:h-auto overflow-hidden bg-[#020617]">
+                    <img src="./Untitled4.jpg" alt="Compromisso & CONTI"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100"
+                        style="object-position: center 20%;">
+                </div>
+
+                <!-- Lado Direito: Texto (Voltou para direita) -->
+                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
+                    <div class="max-w-2xl px-4 text-right lg:text-left">
+                        <h2
+                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
+                            NÃO VENDEMOS <br>
+                            <span class="text-blue-600">MILAGRES.</span>
+                        </h2>
+
+                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8 ml-auto lg:ml-0"></div>
+
+                        <div
+                            class="bg-blue-600/10 border border-blue-500/30 p-8 md:p-12 rounded-[2.5rem] backdrop-blur-xl shadow-2xl relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent"></div>
+                            <p
+                                class="text-white text-xl md:text-3xl font-light leading-snug uppercase tracking-tight relative z-10">
+                                ENTREGAMOS ESTRATÉGIA, VISÃO E <span class="text-blue-400 font-bold italic">COMPROMISSO
+                                    REAL</span> COM O SEU CRESCIMENTO.
+                            </p>
+                            <p
+                                class="text-gray-400 text-sm md:text-lg font-medium uppercase tracking-widest mt-8 relative z-10">
+                                E QUANDO ISSO SE ENCONTRA COM DEDICAÇÃO, <br>
+                                <span class="text-white font-extralight text-2xl md:text-4xl block mt-2">O RESULTADO
+                                    SEMPRE
+                                    VEM.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══ SEÇÃO: TÍTULO DAS SOLUÇÕES (Ponte para o 3D) ═══ -->
+    <section id="solutions-intro-section" class="relative bg-[#020617] py-24 md:py-32 z-40 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 md:px-10">
+            <div class="flex flex-col items-center text-center">
+                <span
+                    class="inline-block py-1 px-4 bg-blue-600/20 border border-blue-500/30 rounded-full text-blue-400 text-[10px] md:text-xs font-light tracking-[0.3em] uppercase mb-6">
+                    expertise & entrega
+                </span>
+                <h2
+                    class="text-4xl md:text-6xl lg:text-7xl font-thin text-white leading-[0.9] tracking-tighter uppercase italic mb-8">
+                    NOSSAS <span class="text-blue-600 block md:inline">SOLUÇÕES</span>
+                </h2>
+                <div class="w-12 h-1 bg-blue-600 mb-8 mt-2"></div>
+                <p
+                    class="text-gray-400 text-sm md:text-base font-medium uppercase tracking-[0.2em] max-w-xl leading-relaxed">
+                    Tiramos sua estratégia do papel e criamos uma presença digital que funciona. Veja como destacar sua
+                    marca de verdade.
+                </p>
+
+                <!-- Seta de Indicação (Scroll) -->
+                <div class="mt-16 animate-bounce text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ 3D CINEMA ANIMATION ═══ -->
+    <canvas id="cinema-canvas"></canvas>
+
+    <div id="cinema-wrapper">
+        <!-- 1. Redes Sociais -->
+        <section class="step-section" id="step-0" data-obj="iphone">
+            <div class="split-layout">
+                <div class="content-side">
+                    <div class="content-box">
+                        <div class="service-category">gestão estratégica</div>
+                        <h2>redes sociais corporativas</h2>
+                        <p>Planejamento e gerenciamento completo com foco em identidade e conversão.</p>
+                    </div>
+                </div>
+                <div class="visual-side"></div>
+            </div>
+        </section>
+
+        <!-- 2. Conteúdo -->
+        <section class="step-section" id="step-1" data-obj="bulb">
+            <div class="split-layout">
+                <div class="content-side">
+                    <div class="content-box">
+                        <div class="service-category">criação de alto nível</div>
+                        <h2>conteúdo estratégico & criativo</h2>
+                        <p>Do conceito à publicação, criando conexões reais entre sua marca e seu público.</p>
+                    </div>
+                </div>
+                <div class="visual-side"></div>
+            </div>
+        </section>
+
+        <!-- 3. Audiovisual -->
+        <section class="step-section" id="step-2" data-obj="camera">
+            <div class="split-layout">
+                <div class="content-side">
+                    <div class="content-box">
+                        <div class="service-category">produção visual</div>
+                        <h2>audiovisual profissional</h2>
+                        <p>Fotografia e vídeo de alta qualidade que elevam instantaneamente o posicionamento da sua
+                            marca.</p>
+                    </div>
+                </div>
+                <div class="visual-side"></div>
+            </div>
+        </section>
+
+        <!-- 4. Eventos -->
+        <section class="step-section" id="step-3" data-obj="mediaControls">
+            <div class="split-layout">
+                <div class="content-side">
+                    <div class="content-box">
+                        <div class="service-category">presença em eventos</div>
+                        <h2>cobertura completa & real-time</h2>
+                        <p>Captação premium para que cada momento do seu evento se torne um ativo de marketing.</p>
+                    </div>
+                </div>
+                <div class="visual-side"></div>
+            </div>
+        </section>
+
+        <!-- 5. Tráfego -->
+        <section class="step-section" id="step-4" data-obj="target">
+            <div class="split-layout">
+                <div class="content-side">
+                    <div class="content-box">
+                        <div class="service-category">impulsionamento digital</div>
+                        <h2>tráfego pago meta & google</h2>
+                        <p>Campanhas estratégicas que colocam sua marca na frente do público com maior potencial de
+                            compra.</p>
+                    </div>
+                </div>
+                <div class="visual-side"></div>
+            </div>
+        </section>
+
+        <!-- 6. Branding -->
+        <section class="step-section" id="step-5" data-obj="atom">
+            <div class="split-layout">
+                <div class="content-side">
+                    <div class="content-box">
+                        <div class="service-category">identidade & posicionamento</div>
+                        <h2>branding, design & tecnologia</h2>
+                        <p>Criação e fortalecimento do DNA da sua marca, do logotipo ao ecossistema digital completo.
+                        </p>
+                    </div>
+                </div>
+                <div class="visual-side"></div>
+            </div>
+        </section>
+
+        <!-- 7. Final Reveal (Logo) -->
+        <section class="final-section min-h-[150vh] flex items-center justify-center" id="step-final">
+            <!-- Brand reveals here via Canvas (Center) -->
+        </section>
+    </div>
+    <!-- ═══ END CINEMA ANIMATION ═══ -->
+
+
+    <section id="portfolio-section" class="portfolio-carousel relative z-[100] bg-blue-600">
+        <div class="text-center mb-10 px-4 relative z-10 reveal">
+            <span class="title-tag">PROJETOS</span>
+            <p class="text-blue-100/70 mt-3 text-xs md:text-sm tracking-[0.3em] font-light uppercase">Social Media &
+                Branding</p>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="carousel-track">
+            <div class="carousel-inner">
+
+                <img src="carrosel/port1.jpg"
+                    class="clickable-image w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg" alt="1">
+                <img src="carrosel/port2.jpg"
+                    class="clickable-image w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg" alt="2">
+                <img src="carrosel/port3.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="3">
+                <img src="carrosel/port4.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="4">
+                <img src="carrosel/port5.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="5">
+                <img src="carrosel/port6.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="6">
+                <img src="carrosel/port7.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="7">
+                <img src="carrosel/port8.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="8">
+                <img src="carrosel/port9.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="9">
+                <img src="carrosel/port10.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="10">
+                <img src="carrosel/port11.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="11">
+                <img src="carrosel/port12.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="12">
+                <img src="carrosel/port13.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="13">
+                <img src="carrosel/port14.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="14">
+                <img src="carrosel/port15.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="15">
+
+
+                <img src="carrosel/port1.jpg"
+                    class="clickable-image w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg" alt="1">
+                <img src="carrosel/port2.jpg"
+                    class="clickable-image w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg" alt="2">
+                <img src="carrosel/port3.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="3">
+                <img src="carrosel/port4.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="4">
+                <img src="carrosel/port5.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="5">
+                <img src="carrosel/port6.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="6">
+                <img src="carrosel/port7.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="7">
+                <img src="carrosel/port8.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="8">
+                <img src="carrosel/port9.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="9">
+                <img src="carrosel/port10.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="10">
+                <img src="carrosel/port11.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="11">
+                <img src="carrosel/port12.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="12">
+                <img src="carrosel/port13.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="13">
+                <img src="carrosel/port14.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="14">
+                <img src="carrosel/port15.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="15">
+            </div>
+        </div>
+
+        <div class="carousel-track">
+            <div class="carousel-inner reverse">
+
+                <img src="carrosel/port16.jpg"
+                    class="clickable-image w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg" alt="16">
+                <img src="carrosel/port17.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="17">
+                <img src="carrosel/port18.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="18">
+                <img src="carrosel/port19.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="19">
+                <img src="carrosel/port20.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="20">
+                <img src="carrosel/port22.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="22">
+                <img src="carrosel/port23.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="23">
+                <img src="carrosel/port24.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="24">
+                <img src="carrosel/port25.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="25">
+                <img src="carrosel/port26.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="26">
+                <img src="carrosel/port27.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="27">
+                <img src="carrosel/port28.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="28">
+                <img src="carrosel/port29.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="29">
+                <img src="carrosel/port30.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="30">
+                <img src="carrosel/port31.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="31">
+
+
+                <img src="carrosel/port16.jpg"
+                    class="clickable-image w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg" alt="16">
+                <img src="carrosel/port17.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="17">
+                <img src="carrosel/port18.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="18">
+                <img src="carrosel/port19.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="19">
+                <img src="carrosel/port20.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="20">
+                <img src="carrosel/port22.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="22">
+                <img src="carrosel/port23.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="23">
+                <img src="carrosel/port24.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="24">
+                <img src="carrosel/port25.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="25">
+                <img src="carrosel/port26.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="26">
+                <img src="carrosel/port27.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="27">
+                <img src="carrosel/port28.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="28">
+                <img src="carrosel/port29.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="29">
+                <img src="carrosel/port30.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="30">
+                <img src="carrosel/port31.jpg" class="w-48 h-48 md:w-72 md:h-72 object-cover rounded-xl shadow-lg"
+                    alt="31">
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-slate-50 relative reveal">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-thin text-gray-900 tracking-tighter">
+                    NOSSAS <span class=" text-blue-600">PRODUÇÕES</span>
+                </h2>
+                <div class="w-16 md:w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <div
+                    class="video-card rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white aspect-[9/16] bg-gray-900">
+                    <video muted loop playsinline class="w-full h-full object-cover">
+                        <source src="videos/1.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="video-card rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white aspect-[9/16] bg-gray-900">
+                    <video muted loop playsinline class="w-full h-full object-cover">
+                        <source src="videos/2.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="video-card rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white aspect-[9/16] bg-gray-900">
+                    <video muted loop playsinline class="w-full h-full object-cover">
+                        <source src="videos/3.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="py-10 bg-white overflow-hidden reveal">
+        <div class="max-w-7xl mx-auto px-4 md:px-10">
+            <div class="flex flex-col-reverse lg:flex-row lg:items-center gap-16 md:gap-24">
+
+                <div class="relative flex justify-center lg:justify-start">
+                    <div
+                        class="w-full max-w-[500px] aspect-[4/5] rounded-[2.5rem] bg-gray-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.25)] overflow-hidden relative">
+
+                        <img src="back.jpg" alt="Fundadores &CONTI"
+                            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
+                    </div>
+                </div>
+
+
+                <div class="flex flex-col justify-center">
+                    <h2 class="text-4xl md:text-5xl font-light tracking-tighter text-gray-900 mb-8 uppercase">
+                        CONHEÇA <span class="text-blue-600">& </span>CONTI
+                    </h2>
+
+                    <div class="space-y-6 text-gray-700 leading-relaxed text-sm md:text-base">
+                        <p>
+                            A <span class="font-normal">&CONTI</span> nasceu da paixão por transformar negócios através
+                            de
+                            soluções completas de marketing, tanto online quanto offline.
+                            Fundada por Eduarda Conti, nosso nome simboliza a ideia de sempre contar com a gente.
+                        </p>
+
+                        <p>
+                            O símbolo & (ampersand) representa parceria, adição e crescimento. Nossa proposta é
+                            proporcionar excelência com atendimento personalizado, valorizando a proximidade e o
+                            relacionamento genuíno com nossos clientes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SEÇÃO FALE CONOSCO ═══ -->
+    <section id="contato-section" class="py-20 bg-[#020617] border-y border-white/5 reveal">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="title-tag">CONTATO</span>
+                <h2 class="text-4xl md:text-5xl font-light tracking-tighter text-white mt-4 uppercase">
+                    Fale <span class="text-blue-500">Conosco</span>
+                </h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mt-6 opacity-50"></div>
+            </div>
+
+            <form class="space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Nome -->
+                    <div class="space-y-2 group">
+                        <label class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Nome
+                            Completo</label>
+                        <input type="text" id="contact-name" placeholder="Seu nome"
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300">
+                    </div>
+                    <!-- Assunto -->
+                    <div class="space-y-2 group">
+                        <label
+                            class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Assunto</label>
+                        <input type="text" id="contact-subject" placeholder="Ex: Orçamento, Parceria..."
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300">
+                    </div>
+                </div>
+
+                <!-- Mensagem -->
+                <div class="space-y-2 group">
+                    <label
+                        class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Mensagem</label>
+                    <textarea id="contact-message" rows="6" placeholder="Como podemos ajudar seu negócio hoje?"
+                        class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300 resize-none"></textarea>
+                </div>
+
+                <!-- Botão Enviar -->
+                <div class="flex justify-center pt-4">
+                    <button type="button" onclick="sendToWhatsApp()"
+                        class="px-12 py-5 bg-blue-600 text-white rounded-full font-normal tracking-[0.2em] uppercase text-xs hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-500/20 active:scale-95">
+                        Enviar Mensagem
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="py-16 bg-slate-50 border-t border-gray-100 overflow-hidden reveal">
+        <div class="max-w-7xl mx-auto px-4 mb-12 text-center">
+            <h2 class="text-3xl md:text-4xl font-normal  tracking-tighter text-gray-900 mb-2 uppercase">
+                Nossos Parceiros
+            </h2>
+            <p class="text-black text-sm md:text-base">
+                Empresas que confiam em nosso trabalho
+            </p>
+        </div>
+
+        <div class="carousel-track">
+            <div class="carousel-inner" style="animation-duration: 40s;">
+
+                <div class="parceiro-card">
+                    <img src="partner/partner1.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner2.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner3.jpg">
+                </div>
+
+                <div class="parceiro-card">
+                    <img src="partner/partner4.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner5.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner6.jpg">
+                </div>
+
+
+                <div class="parceiro-card">
+                    <img src="partner/partner1.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner2.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner3.jpg">
+                </div>
+
+                <div class="parceiro-card">
+                    <img src="partner/partner4.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner5.jpg">
+                </div>
+                <div class="parceiro-card">
+                    <img src="partner/partner6.jpg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="footer-logo">
+                <img src="logo.png" alt="& CONTI Logo"
+                    class="h-10 md:h-12 w-auto opacity-90 transition-opacity hover:opacity-100">
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/econticomigo/" class="footer-social-link social-instagram"
+                    aria-label="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 0C8.74 0 8.333 0.015 7.053 0.072 5.775 0.132 4.905 0.333 4.14 0.632 3.351 0.938 2.682 1.347 2.016 2.016 1.347 2.682 0.938 3.351 0.632 4.14 0.333 4.905 0.132 5.775 0.072 7.053 0.015 8.333 0 8.74 0 12s0.015 3.667 0.072 4.947c0.06 1.277 0.261 2.148 0.56 2.911 0.306 0.788 0.715 1.457 1.38 2.122 0.665 0.665 1.334 1.074 2.122 1.38 0.763 0.299 1.634 0.499 2.911 0.56 1.28 0.058 1.688 0.072 4.947 0.072s3.667 -0.015 4.947 -0.072c1.277 -0.06 2.148 -0.261 2.911 -0.56 0.788 -0.306 1.457 -0.715 2.122 -1.38 0.665 -0.665 1.074 -1.334 1.38 -2.122 0.299 -0.763 0.499 -1.634 0.56 -2.911 0.058 -1.28 0.072 -1.688 0.072 -4.947s-0.015 -3.667 -0.072 -4.947c-0.06 -1.277 -0.261 -2.148 -0.56 -2.911 -0.306 -0.788 -0.715 -1.457 -1.38 -2.122 -0.665 -0.665 -1.334 -1.074 -2.122 -1.38 -0.763 -0.299 -1.634 -0.499 -2.911 -0.56C15.667 0.015 15.26 0 12 0zm0 5.838c3.403 0 6.162 2.759 6.162 6.162s-2.759 6.162-6.162 6.162-6.162-2.759-6.162-6.162 2.759-6.162 6.162-6.162zm0 10.162c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4zm6.406-11.845c.796 0 1.441.645 1.441 1.44s-.645 1.44-1.441 1.44-1.441-.645-1.441-1.44.645-1.44 1.441-1.44z" />
+                    </svg>
+                </a>
+                <a href="#" class="footer-social-link social-facebook" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="mailto:marketing@econticomigo.com.br" class="footer-social-link social-email"
+                    aria-label="Email">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20,4H4C2.895,4,2,4.895,2,6v12c0,1.105,0.895,2,2,2h16c1.105,0,2-0.895,2-2V6C22,4.895,21.105,4,20,4z M20,8.236 l-8,4.882L4,8.236V6l8,4.882L20,6V8.236z" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="footer-copyright">
+                © 2026 & CONTI - Todos os direitos reservados
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.remove('bg-transparent', 'py-4', 'md:py-6');
+                header.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-2', 'md:py-3');
+            } else {
+                header.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-2', 'md:py-3');
+                header.classList.add('bg-transparent', 'py-4', 'md:py-6');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.classList.toggle('overflow-hidden');
+            });
+
+            // Close menu when clicking on a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburgerBtn.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            });
+        }
+
+        // --- SCROLL STORY: SOBRE NEGÓCIO (5 CARDS) ---
+        const sobreSection = document.getElementById('sobre-negocio-section');
+        const card1 = document.getElementById('sobre-card-1');
+        const card2 = document.getElementById('sobre-card-2');
+        const card3 = document.getElementById('sobre-card-3');
+        const card4 = document.getElementById('sobre-card-4');
+        const card5 = document.getElementById('sobre-card-5');
+
+        if (sobreSection && card1 && card2 && card3 && card4 && card5) {
+            window.addEventListener('scroll', () => {
+                const rect = sobreSection.getBoundingClientRect();
+                const sectionHeight = sobreSection.offsetHeight;
+                const viewHeight = window.innerHeight;
+
+                // --- Dynamic Header Logic ---
+                // If the section is visible (top <= 0 and bottom >= 0), expand header
+                // We add a small buffer so it transitions just as it hits the top
+                if (rect.top <= 50 && rect.bottom >= 100) {
+                    header.classList.add('header-expanded');
+                } else {
+                    header.classList.remove('header-expanded');
+                }
+
+                const cards = [card1, card2, card3, card4, card5];
+                let progress = -rect.top / (sectionHeight - viewHeight);
+                progress = Math.max(0, Math.min(1, progress));
+
+                // Config de Frames para 5 cards: 
+                // Cada card tem um 'platô' e uma 'rampa' de transição
+                const count = cards.length;
+                const frameWidth = 1 / count; // 0.20
+                const transArea = 0.08; // tempo de transição entre os frames
+
+                let activeIdx = -1;
+                let transitioning = false;
+
+                for (let i = 0; i < count; i++) {
+                    const start = i * frameWidth;
+                    const end = (i + 1) * frameWidth;
+
+                    // Dentro do Frame (Platô)
+                    if (progress >= start + transArea && progress < end - transArea) {
+                        activeIdx = i;
+                        updateCards(i + 1);
+                        transitioning = false;
+                        break;
+                    }
+                    // Zona de Transição entre i e i+1
+                    else if (i < count - 1 && progress >= end - transArea && progress < end + transArea) {
+                        const subP = (progress - (end - transArea)) / (2 * transArea);
+                        crossFade(cards[i], cards[i + 1], subP);
+
+                        // Garante que os outros fiquem invisíveis
+                        cards.forEach((c, idx) => {
+                            if (idx !== i && idx !== i + 1) c.style.opacity = "0";
+                        });
+                        transitioning = true;
+                        break;
+                    }
+                }
+
+                // Casos extremos
+                if (progress < transArea) updateCards(1);
+                if (progress > 1 - transArea) updateCards(5);
+            });
+
+            function updateCards(activeIdx) {
+                [card1, card2, card3, card4, card5].forEach((c, i) => {
+                    const isNow = (i + 1) === activeIdx;
+                    c.style.opacity = isNow ? "1" : "0";
+                    c.style.transform = isNow ? "translateY(0) scale(1)" : (i + 1 < activeIdx ? "translateY(-40px) scale(0.95)" : "translateY(40px) scale(0.95)");
+                    c.style.pointerEvents = isNow ? "auto" : "none";
+                });
+            }
+
+            function crossFade(cOut, cIn, p) {
+                cOut.style.opacity = 1 - p;
+                cOut.style.transform = `translateY(${-p * 40}px) scale(${1 - p * 0.05})`;
+                cIn.style.opacity = p;
+                cIn.style.transform = `translateY(${(1 - p) * 40}px) scale(${0.95 + p * 0.05})`;
+                cOut.style.pointerEvents = "none";
+                cIn.style.pointerEvents = "none";
+            }
+        }
+
+    </script>
+
+
+
+
+    <a href="https://wa.me/5551989794082" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" style="overflow: visible;">
+            <path
+                d="M16 0c-8.837 0-16 7.163-16 16 0 2.825.733 5.48 2.015 7.79l-2.015 7.352 7.525-1.975c2.257 1.205 4.832 1.897 7.575 1.897 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.333c-2.454 0-4.757-.655-6.746-1.794l-.484-.28-4.479 1.175 1.197-4.373-.306-.487c-1.226-1.948-1.933-4.25-1.933-6.714 0-7.391 6.009-13.4 13.4-13.4s13.4 6.009 13.4 13.4-6.009 13.4-13.4 13.4zM22.564 18.577c-.36-.18-2.129-1.051-2.459-1.171s-.57-.18-.81.18c-.24.36-.931 1.171-1.141 1.411-.21.24-.42.27-.78.09-.36-.18-1.52-.56-2.894-1.786-1.07-.954-1.791-2.133-2-2.493s-.023-.555.158-.734c.162-.161.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63s-.81-1.951-1.111-2.671c-.293-.701-.59-.607-.81-.618s-.45-.011-.69-.011c-.24 0-.63.09-.961.45s-1.261 1.231-1.261 3.002c0 1.771 1.291 3.483 1.472 3.723.18.24 2.541 3.881 6.156 5.442.859.371 1.531.593 2.054.759.863.275 1.649.236 2.27.144.692-.103 2.129-.871 2.429-1.711s.3-1.561.21-1.711c-.09-.15-.33-.24-.691-.42z">
+            </path>
+        </svg>
+    </a>
+
+    <div id="image-modal" class="image-modal">
+        <div class="close-modal">&times;</div>
+        <img id="modal-img" src="" alt="Zoomed Image">
+    </div>
+
+
+    <div id="v-modal" class="video-modal">
+        <div class="close-modal" id="close-v-modal">&times;</div>
+        <div class="video-modal-content">
+            <video id="modal-video" controls playsinline class="w-full h-auto rounded-xl">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. IMAGE MODAL ---
+            const imgModal = document.getElementById('image-modal');
+            const imgModalImg = document.getElementById('modal-img');
+            const imgCloseBtn = imgModal.querySelector('.close-modal');
+
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('clickable-image')) {
+                    const src = e.target.getAttribute('src');
+                    imgModalImg.setAttribute('src', src);
+                    imgModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+
+            const closeImgModal = () => {
+                imgModal.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            imgCloseBtn.addEventListener('click', closeImgModal);
+            imgModal.addEventListener('click', (e) => {
+                if (e.target === imgModal) closeImgModal();
+            });
+
+            // --- 2. VIDEO MODAL & HOVER ---
+            const vModal = document.getElementById('v-modal');
+            const mVideo = document.getElementById('modal-video');
+            const vCloseBtn = document.getElementById('close-v-modal');
+            const videoCards = document.querySelectorAll('.video-card');
+
+            videoCards.forEach(card => {
+                const videoPreview = card.querySelector('video');
+
+                // Hover: Play Preview
+                card.addEventListener('mouseenter', () => {
+                    videoPreview.play().catch(() => { });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    videoPreview.pause();
+                });
+
+                // Click: Open Modal with Sound
+                card.addEventListener('click', () => {
+                    const videoSrc = videoPreview.querySelector('source').getAttribute('src');
+                    mVideo.querySelector('source').src = videoSrc;
+                    mVideo.load();
+                    vModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    mVideo.play();
+                });
+            });
+
+            const closeVModal = () => {
+                vModal.classList.remove('active');
+                mVideo.pause();
+                document.body.style.overflow = '';
+            };
+
+            vCloseBtn.addEventListener('click', closeVModal);
+            vModal.addEventListener('click', (e) => {
+                if (e.target === vModal) closeVModal();
+            });
+
+            // ESC to close any modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeImgModal();
+                    closeVModal();
+                }
+            });
+
+            // --- 3. REVEAL OBSERVER ---
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                        // Optional: stop observing once revealed
+                        // revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // --- 4. VIDEO FOCUS PREVIEW (AUTO-PLAY ON SCROLL) ---
+            const videoOptions = {
+                threshold: 0.6, // Play when 60% of the video is visible
+                rootMargin: "0px"
+            };
+
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target.querySelector('video');
+                    if (video) {
+                        if (entry.isIntersecting) {
+                            video.play().catch(() => { });
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            }, videoOptions);
+
+            document.querySelectorAll('.video-card').forEach(card => {
+                videoObserver.observe(card);
+            });
+        });
+
+        // --- WHATSAPP CONTACT LOGIC ---
+        function sendToWhatsApp() {
+            const name = document.getElementById('contact-name').value.trim();
+            const subject = document.getElementById('contact-subject').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+
+            if (!name || !message) {
+                alert('Por favor, preencha pelo menos o nome e a mensagem.');
+                return;
+            }
+
+            const phoneNumber = "5551989794082";
+            const formattedMessage = `Olá! Meu nome é *${name}*.\n\n*Assunto:* ${subject || 'Geral'}\n*Mensagem:* ${message}`;
+            const encodedMessage = encodeURIComponent(formattedMessage);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- LOADER LOGIC ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+            const whatsapp = document.querySelector('.whatsapp-float');
+
+            setTimeout(() => {
+                if (preloader) preloader.classList.add('hidden');
+                body.classList.remove('loading');
+                body.classList.add('loaded');
+                if (whatsapp) whatsapp.classList.add('visible');
+            }, 3000);
+        });
+    </script>
+
+    <!-- 3D Cinema Animation -->
+    <div id="brand-source" style="display:none;font-weight:900;font-family:'Outfit', sans-serif;">& CONTI</div>
+    <script src="cinema-animation.js"></script>
+</body>
