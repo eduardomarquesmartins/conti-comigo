@@ -941,6 +941,7 @@
             <nav class="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <ul class="flex space-x-8 text-sm font-normal text-gray-600 tracking-wide">
                     <li><a href="#hero-section" class="nav-link hover:text-blue-600">INÍCIO</a></li>
+                    <li><a href="#sobre-negocio-section" class="nav-link hover:text-blue-600">SOBRE</a></li>
                     <li><a href="#portfolio-section" class="nav-link hover:text-blue-600">PORTFÓLIO</a></li>
                     <li><a href="#contato-section" class="nav-link hover:text-blue-600">CONTATO</a></li>
                 </ul>
@@ -968,6 +969,8 @@
             <nav class="flex flex-col items-center space-y-8">
                 <a href="#hero-section"
                     class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">INÍCIO</a>
+                <a href="#sobre-negocio-section"
+                    class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">SOBRE</a>
                 <a href="#portfolio-section"
                     class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">PORTFÓLIO</a>
                 <a href="#contato-section"
@@ -1075,150 +1078,108 @@
         </div>
     </section>
 
-    <!-- ═══ SEÇÃO: O QUE A &CONTI PODE FAZER (Scroll-Story) ═══ -->
-    <section id="sobre-negocio-section" class="relative min-h-[800vh] bg-[#020617] z-40">
-        <!-- Sticky Container -->
-        <div
-            class="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden bg-[#020617] pt-28 lg:pt-36">
 
-            <!-- CARD 1: POSICIONAMENTO (Original) -->
-            <div id="sobre-card-1"
-                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-100 z-10">
-                <!-- Lado Esquerdo: Imagem -->
-                <div class="w-full lg:w-1/2 h-[45vh] lg:h-auto overflow-hidden">
-                    <img src="./IMG_9080.jpg" alt="Equipe & CONTI em ação"
-                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100"
-                        style="object-position: center 25%;">
-                </div>
 
-                <!-- Lado Direito: Texto Impactante -->
-                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24">
-                    <div class="max-w-2xl bg-[#020617]">
+    <!-- ═══ SEÇÃO: SOBRE NEGÓCIO (Standard Scroll) ═══ -->
+    <section id="sobre-negocio-section" class="bg-[#020617] pt-20 overflow-hidden">
+
+        <!-- CARD 1: POSICIONAMENTO -->
+        <div class="reveal py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./IMG_9080.jpg" alt="Equipe & CONTI"
+                            class="w-full rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="w-full lg:w-1/2">
                         <span class="title-tag">POSICIONAMENTO</span>
                         <h2
-                            class="text-3xl md:text-5xl lg:text-6xl font-thin text-white leading-[0.9] tracking-tighter uppercase italic">
-                            O QUE A <br>
-                            <span class="text-blue-600 block mt-2">& CONTI</span>
-                            PODE <br>
-                            <span
-                                class="text-gray-400 text-3xl md:text-5xl block mt-4 font-light tracking-normal lowercase">
-                                (ou não) fazer
-                            </span>
-                            PELO <br>
-                            <span class="block text-white">SEU NEGÓCIO</span>
+                            class="text-4xl md:text-6xl font-thin text-white leading-tight tracking-tighter uppercase italic mb-6">
+                            O QUE A <span class="text-blue-600">& CONTI</span> PODE <span
+                                class="text-gray-400 font-light block lowercase">(ou não) fazer</span> PELO SEU NEGÓCIO
                         </h2>
-
-                        <div class="w-20 h-1 bg-blue-600 mt-12 mb-8"></div>
-
-                        <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed max-w-lg">
+                        <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed">
                             Não somos apenas uma agência. Somos o seu braço estratégico para transformar presença
-                            digital em
-                            autoridade absoluta e resultados reais.
+                            digital em autoridade absoluta e resultados reais.
                         </p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- CARD 2: PRESENÇA x PROMESSAS (Novo) -->
-            <div id="sobre-card-2"
-                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
-                <!-- Lado Esquerdo: Texto (Trocou de lado) -->
-                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
-                    <div class="max-w-2xl px-4">
+        <!-- CARD 2: PRESENÇA x PROMESSAS -->
+        <div class="reveal py-16 lg:py-24 bg-white/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row-reverse gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./oque.jpg" alt="Construindo Presença"
+                            class="w-full rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="w-full lg:w-1/2">
                         <h2
-                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
-                            O QUE FAZEMOS <br>
-                            É <span class="text-blue-600">CONSTRUIR</span> <br>
-                            <span class="text-white">PRESENÇA E NÃO</span> <br>
-                            <span class="text-gray-500">PROMESSAS.</span>
+                            class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
+                            O QUE FAZEMOS É <span class="text-blue-600">CONSTRUIR</span> PRESENÇA E NÃO <span
+                                class="text-gray-500">PROMESSAS.</span>
                         </h2>
-
-                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8"></div>
-
-                        <p
-                            class="text-white text-lg md:text-xl font-bold leading-tight max-w-lg mb-8 uppercase tracking-widest">
+                        <p class="text-white text-lg md:text-xl font-bold leading-tight uppercase tracking-widest mb-8">
                             A &CONTI TE AJUDA A <span class="text-blue-400">MOSTRAR O VALOR</span> DO QUE VOCÊ ENTREGA,
                             A ORGANIZAR SUA COMUNICAÇÃO.
                         </p>
-
-                        <div
-                            class="bg-blue-600/20 border border-blue-500/50 p-6 md:p-8 rounded-2xl backdrop-blur-sm shadow-xl shadow-blue-900/20">
+                        <div class="bg-blue-600/20 border border-blue-500/50 p-8 rounded-2xl backdrop-blur-sm">
                             <p
-                                class="text-blue-400 text-sm md:text-base font-light uppercase tracking-widest leading-relaxed text-center">
+                                class="text-blue-400 text-base md:text-lg font-light uppercase tracking-widest leading-relaxed text-center">
                                 E TRANSFORMAR O SEU CONTEÚDO EM ALGO QUE REALMENTE TRABALHA POR VOCÊ!
                             </p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Lado Direito: Nova Imagem (Trocou de lado) -->
-                <div class="w-full lg:w-1/2 h-[50vh] lg:h-auto overflow-hidden">
-                    <img src="./oque.jpg" alt="Transformação & CONTI"
-                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100">
-                </div>
             </div>
+        </div>
 
-            <!-- CARD 3: RESULTADOS vs ENVOLVIMENTO (Novo) -->
-            <div id="sobre-card-3"
-                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
-                <!-- Lado Esquerdo: Imagem (Voltou para esquerda) -->
-                <div class="w-full lg:w-1/2 h-[50vh] lg:h-auto overflow-hidden">
-                    <img src="./Untitled3.jpg" alt="Resultados & CONTI"
-                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100">
-                </div>
-
-                <!-- Lado Direito: Texto (Voltou para direita) -->
-                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
-                    <div class="max-w-2xl px-4 text-right lg:text-left">
+        <!-- CARD 3: RESULTADOS vs ENVOLVIMENTO -->
+        <div class="reveal py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./Untitled3.jpg" alt="Resultados"
+                            class="w-full rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="w-full lg:w-1/2">
                         <h2
-                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
-                            MAS NÃO <br>
-                            PODEMOS TE DAR <br>
-                            <span class="text-blue-600">RESULTADOS</span> <br>
-                            SEM ENVOLVIMENTO.
+                            class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
+                            MAS NÃO PODEMOS TE DAR <span class="text-blue-600">RESULTADOS</span> SEM ENVOLVIMENTO.
                         </h2>
-
-                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8 ml-auto lg:ml-0"></div>
-
-                        <div class="flex flex-col gap-4">
-                            <div
-                                class="bg-white/5 border border-white/10 p-4 md:p-6 rounded-2xl backdrop-blur-sm self-end lg:self-start max-w-sm">
-                                <p
-                                    class="text-gray-300 text-sm md:text-base font-medium uppercase tracking-widest leading-tight">
-                                    O DIGITAL É FEITO DE <span class="text-white">CONSTÂNCIA,</span> <br>
-                                    DE TESTES, DE TEMPO
+                        <div class="space-y-6">
+                            <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                                <p class="text-gray-300 text-base md:text-lg font-medium uppercase tracking-widest">
+                                    O DIGITAL É FEITO DE <span class="text-white">CONSTÂNCIA,</span> DE TESTES, DE TEMPO
                                 </p>
                             </div>
-
-                            <div
-                                class="bg-blue-600/30 border border-blue-500/50 p-4 md:p-6 rounded-2xl backdrop-blur-sm self-end lg:self-start">
-                                <p
-                                    class="text-blue-400 text-base md:text-xl font-light uppercase tracking-widest leading-none">
-                                    E É ISSO QUE FAZ <br> A DIFERENÇA!
+                            <div class="bg-blue-600/30 border border-blue-500/50 p-6 rounded-2xl">
+                                <p class="text-blue-400 text-xl md:text-2xl font-light uppercase tracking-widest">
+                                    E É ISSO QUE FAZ A DIFERENÇA!
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- CARD 4: NOSSO PAPEL (Novo) -->
-            <div id="sobre-card-4"
-                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
-                <!-- Lado Esquerdo: Texto (Invertido) -->
-                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
-                    <div class="max-w-2xl px-4">
+        <!-- CARD 4: NOSSO PAPEL -->
+        <div class="reveal py-16 lg:py-24 bg-white/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row-reverse gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./Untitled2.jpg" alt="Estratégia"
+                            class="w-full rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="w-full lg:w-1/2">
                         <h2
-                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
-                            O NOSSO PAPEL É <br>
-                            CRIAR <span class="text-blue-600">ESTRATÉGIA,</span> <br>
-                            CLAREZA E <br> PROPÓSITO.
+                            class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
+                            O NOSSO PAPEL É CRIAR <span class="text-blue-600">ESTRATÉGIA,</span> CLAREZA E PROPÓSITO.
                         </h2>
-
-                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8"></div>
-
-                        <div
-                            class="bg-white/5 border border-white/10 p-6 md:p-10 rounded-3xl backdrop-blur-md shadow-2xl">
+                        <div class="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md shadow-2xl">
                             <p class="text-white text-lg md:text-2xl font-light leading-snug uppercase tracking-tight">
                                 O SEU É ACREDITAR NO PROCESSO, CONFIAR NO QUE FOI CONSTRUÍDO E <span
                                     class="text-blue-400 font-bold italic">DAR ESPAÇO</span> PRO RESULTADO AMADURECER.
@@ -1226,38 +1187,25 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Lado Direito: Foto (Direita conforme pedido) -->
-                <div class="w-full lg:w-1/2 h-[50vh] lg:h-auto overflow-hidden">
-                    <img src="./Untitled2.jpg" alt="Estratégia & CONTI"
-                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100">
-                </div>
             </div>
+        </div>
 
-            <!-- CARD 5: NÃO VENDEMOS MILAGRES (O Fechamento) -->
-            <div id="sobre-card-5"
-                class="absolute inset-0 flex flex-col-reverse lg:flex-row w-full h-full transition-all duration-700 opacity-0 translate-y-10 pointer-events-none">
-                <!-- Lado Esquerdo: Foto (Voltou para esquerda) -->
-                <div class="w-full lg:w-1/2 h-[55vh] lg:h-auto overflow-hidden bg-[#020617]">
-                    <img src="./Untitled4.jpg" alt="Compromisso & CONTI"
-                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100"
-                        style="object-position: center 20%;">
-                </div>
-
-                <!-- Lado Direito: Texto (Voltou para direita) -->
-                <div class="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-16 lg:p-24 bg-[#020617]">
-                    <div class="max-w-2xl px-4 text-right lg:text-left">
+        <!-- CARD 5: NÃO VENDEMOS MILAGRES -->
+        <div class="reveal py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./Untitled4.jpg" alt="Compromisso"
+                            class="w-full rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700"
+                            style="object-position: center 20%;">
+                    </div>
+                    <div class="w-full lg:w-1/2">
                         <h2
-                            class="text-3xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.9] tracking-tighter uppercase italic">
-                            NÃO VENDEMOS <br>
-                            <span class="text-blue-600">MILAGRES.</span>
+                            class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
+                            NÃO VENDEMOS <span class="text-blue-600">MILAGRES.</span>
                         </h2>
-
-                        <div class="w-20 h-1 bg-blue-600 mt-10 mb-8 ml-auto lg:ml-0"></div>
-
                         <div
-                            class="bg-blue-600/10 border border-blue-500/30 p-8 md:p-12 rounded-[2.5rem] backdrop-blur-xl shadow-2xl relative overflow-hidden group">
-                            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent"></div>
+                            class="bg-blue-600/10 border border-blue-500/30 p-8 md:p-12 rounded-[2.5rem] backdrop-blur-xl shadow-2xl relative overflow-hidden">
                             <p
                                 class="text-white text-xl md:text-3xl font-light leading-snug uppercase tracking-tight relative z-10">
                                 ENTREGAMOS ESTRATÉGIA, VISÃO E <span class="text-blue-400 font-bold italic">COMPROMISSO
@@ -1267,14 +1215,12 @@
                                 class="text-gray-400 text-sm md:text-lg font-medium uppercase tracking-widest mt-8 relative z-10">
                                 E QUANDO ISSO SE ENCONTRA COM DEDICAÇÃO, <br>
                                 <span class="text-white font-extralight text-2xl md:text-4xl block mt-2">O RESULTADO
-                                    SEMPRE
-                                    VEM.</span>
+                                    SEMPRE VEM.</span>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -1820,90 +1766,6 @@
             });
         }
 
-        // --- SCROLL STORY: SOBRE NEGÓCIO (5 CARDS) ---
-        const sobreSection = document.getElementById('sobre-negocio-section');
-        const card1 = document.getElementById('sobre-card-1');
-        const card2 = document.getElementById('sobre-card-2');
-        const card3 = document.getElementById('sobre-card-3');
-        const card4 = document.getElementById('sobre-card-4');
-        const card5 = document.getElementById('sobre-card-5');
-
-        if (sobreSection && card1 && card2 && card3 && card4 && card5) {
-            window.addEventListener('scroll', () => {
-                const rect = sobreSection.getBoundingClientRect();
-                const sectionHeight = sobreSection.offsetHeight;
-                const viewHeight = window.innerHeight;
-
-                // --- Dynamic Header Logic ---
-                // If the section is visible (top <= 0 and bottom >= 0), expand header
-                // We add a small buffer so it transitions just as it hits the top
-                if (rect.top <= 50 && rect.bottom >= 100) {
-                    header.classList.add('header-expanded');
-                } else {
-                    header.classList.remove('header-expanded');
-                }
-
-                const cards = [card1, card2, card3, card4, card5];
-                let progress = -rect.top / (sectionHeight - viewHeight);
-                progress = Math.max(0, Math.min(1, progress));
-
-                // Config de Frames para 5 cards: 
-                // Cada card tem um 'platô' e uma 'rampa' de transição
-                const count = cards.length;
-                const frameWidth = 1 / count; // 0.20
-                const transArea = 0.08; // tempo de transição entre os frames
-
-                let activeIdx = -1;
-                let transitioning = false;
-
-                for (let i = 0; i < count; i++) {
-                    const start = i * frameWidth;
-                    const end = (i + 1) * frameWidth;
-
-                    // Dentro do Frame (Platô)
-                    if (progress >= start + transArea && progress < end - transArea) {
-                        activeIdx = i;
-                        updateCards(i + 1);
-                        transitioning = false;
-                        break;
-                    }
-                    // Zona de Transição entre i e i+1
-                    else if (i < count - 1 && progress >= end - transArea && progress < end + transArea) {
-                        const subP = (progress - (end - transArea)) / (2 * transArea);
-                        crossFade(cards[i], cards[i + 1], subP);
-
-                        // Garante que os outros fiquem invisíveis
-                        cards.forEach((c, idx) => {
-                            if (idx !== i && idx !== i + 1) c.style.opacity = "0";
-                        });
-                        transitioning = true;
-                        break;
-                    }
-                }
-
-                // Casos extremos
-                if (progress < transArea) updateCards(1);
-                if (progress > 1 - transArea) updateCards(5);
-            });
-
-            function updateCards(activeIdx) {
-                [card1, card2, card3, card4, card5].forEach((c, i) => {
-                    const isNow = (i + 1) === activeIdx;
-                    c.style.opacity = isNow ? "1" : "0";
-                    c.style.transform = isNow ? "translateY(0) scale(1)" : (i + 1 < activeIdx ? "translateY(-40px) scale(0.95)" : "translateY(40px) scale(0.95)");
-                    c.style.pointerEvents = isNow ? "auto" : "none";
-                });
-            }
-
-            function crossFade(cOut, cIn, p) {
-                cOut.style.opacity = 1 - p;
-                cOut.style.transform = `translateY(${-p * 40}px) scale(${1 - p * 0.05})`;
-                cIn.style.opacity = p;
-                cIn.style.transform = `translateY(${(1 - p) * 40}px) scale(${0.95 + p * 0.05})`;
-                cOut.style.pointerEvents = "none";
-                cIn.style.pointerEvents = "none";
-            }
-        }
 
     </script>
 
