@@ -27,7 +27,7 @@
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
         }
 
         #preloader.hidden {
@@ -1595,12 +1595,12 @@
 
                 <div class="flex flex-col justify-center">
                     <h2 class="text-4xl md:text-5xl font-light tracking-tighter text-gray-900 mb-8 uppercase">
-                        CONHEÇA <span class="text-blue-600 animate-pulse-blue">& </span> CONTI
+                        CONHEÇA <span class="text-blue-600">& </span> CONTI
                     </h2>
 
                     <div class="space-y-6 text-gray-700 leading-relaxed text-sm md:text-base">
                         <p>
-                            A <span class="font-normal text-blue-600 animate-pulse-blue">&CONTI</span> nasceu da paixão
+                            A <span class="font-normal text-blue-600">&CONTI</span> nasceu da paixão
                             por transformar negócios através
                             de
                             soluções completas de marketing, tanto online quanto offline.
@@ -1608,7 +1608,7 @@
                         </p>
 
                         <p>
-                            O símbolo <span class="text-blue-600 animate-pulse-blue">&</span> (ampersand) representa
+                            O símbolo <span class="text-blue-600">&</span> (ampersand) representa
                             parceria, adição e crescimento. Nossa proposta é
                             proporcionar excelência com atendimento personalizado, valorizando a proximidade e o
                             relacionamento genuíno com nossos clientes.
@@ -1654,55 +1654,7 @@
         </div>
     </section>
 
-    <!-- ═══ SEÇÃO FALE CONOSCO ═══ -->
-    <section id="contato-section" class="py-20 bg-[#020617] border-y border-white/5 reveal">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="title-tag">CONTATO</span>
-                <h2 class="text-4xl md:text-5xl font-light tracking-tighter text-white mt-4 uppercase">
-                    Fale <span class="text-blue-500">Conosco</span>
-                </h2>
-                <div class="w-20 h-1 bg-blue-600 mx-auto mt-6 opacity-50"></div>
-            </div>
-
-            <form class="space-y-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Nome -->
-                    <div class="space-y-2 group">
-                        <label class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Nome
-                            Completo</label>
-                        <input type="text" id="contact-name" placeholder="Seu nome"
-                            class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300">
-                    </div>
-                    <!-- Assunto -->
-                    <div class="space-y-2 group">
-                        <label
-                            class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Assunto</label>
-                        <input type="text" id="contact-subject" placeholder="Ex: Orçamento, Parceria..."
-                            class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300">
-                    </div>
-                </div>
-
-                <!-- Mensagem -->
-                <div class="space-y-2 group">
-                    <label
-                        class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Mensagem</label>
-                    <textarea id="contact-message" rows="6" placeholder="Como podemos ajudar seu negócio hoje?"
-                        class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300 resize-none"></textarea>
-                </div>
-
-                <!-- Botão Enviar -->
-                <div class="flex justify-center pt-4">
-                    <button type="button" onclick="sendToWhatsApp()"
-                        class="px-12 py-5 bg-blue-600 text-white rounded-full font-normal tracking-[0.2em] uppercase text-xs hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-500/20 active:scale-95">
-                        Enviar Mensagem
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <section class="py-16 bg-slate-50 border-t border-gray-100 overflow-hidden reveal">
+     <section class="py-16 bg-slate-50 border-t border-gray-100 overflow-hidden reveal">
         <div class="max-w-7xl mx-auto px-4 mb-12 text-center">
             <h2 class="text-3xl md:text-4xl font-normal  tracking-tighter text-gray-900 mb-2 uppercase">
                 Nossos Parceiros
@@ -1758,6 +1710,56 @@
             </div>
         </div>
     </section>
+
+    <!-- ═══ SEÇÃO FALE CONOSCO ═══ -->
+    <section id="contato-section" class="py-20 bg-[#020617] border-y border-white/5 reveal">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="title-tag">CONTATO</span>
+                <h2 class="text-4xl md:text-5xl font-light tracking-tighter text-white mt-4 uppercase">
+                    Fale <span class="text-blue-500">Conosco</span>
+                </h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mt-6 opacity-50"></div>
+            </div>
+
+            <form class="space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Nome -->
+                    <div class="space-y-2 group">
+                        <label class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Nome
+                            Completo</label>
+                        <input type="text" id="contact-name" placeholder="Seu nome"
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300">
+                    </div>
+                    <!-- Assunto -->
+                    <div class="space-y-2 group">
+                        <label
+                            class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Assunto</label>
+                        <input type="text" id="contact-subject" placeholder="Ex: Orçamento, Parceria..."
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300">
+                    </div>
+                </div>
+
+                <!-- Mensagem -->
+                <div class="space-y-2 group">
+                    <label
+                        class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-medium ml-1">Mensagem</label>
+                    <textarea id="contact-message" rows="6" placeholder="Como podemos ajudar seu negócio hoje?"
+                        class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all duration-300 resize-none"></textarea>
+                </div>
+
+                <!-- Botão Enviar -->
+                <div class="flex justify-center pt-4">
+                    <button type="button" onclick="sendToWhatsApp()"
+                        class="px-12 py-5 bg-blue-600 text-white rounded-full font-normal tracking-[0.2em] uppercase text-xs hover:bg-blue-700 hover:scale-105 transition-all shadow-xl shadow-blue-500/20 active:scale-95">
+                        Enviar Mensagem
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+   
 
     <footer class="bg-black">
         <div class="max-w-7xl mx-auto px-6">
@@ -2007,7 +2009,7 @@
                 body.classList.remove('loading');
                 body.classList.add('loaded');
                 if (whatsapp) whatsapp.classList.add('visible');
-            }, 2000);
+            }, 1000);
         });
     </script>
 
