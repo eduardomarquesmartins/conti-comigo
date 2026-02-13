@@ -454,8 +454,20 @@
                 return { x, y, z: 0 };
             }
             // Inner circle for profile
-            const a = Math.random() * Math.PI * 2;
-            return { x: Math.cos(a) * 40 - 80, y: -h / 2 + 60, z: 10 };
+            if (r < 0.65) {
+                const a = Math.random() * Math.PI * 2;
+                return { x: Math.cos(a) * 40 - 80, y: -h / 2 + 60, z: 10 };
+            }
+            // 35% Pen (Thin cylinder on the right)
+            const penX = w / 2 + 30;
+            const t = Math.random();
+            const angle = Math.random() * Math.PI * 2;
+            const rad = 6;
+            return {
+                x: penX + Math.cos(angle) * rad,
+                y: -h / 2 + 100 + t * (h - 200),
+                z: Math.sin(angle) * rad
+            };
         },
         drone: () => {
             const r = Math.random();
@@ -505,14 +517,14 @@
                     const t = Math.random();
                     const x = side * (40 + t * 90);
                     const y = -10 + t * 180;
-                    // Add some girth to the struts
-                    const offset = (Math.random() - 0.5) * 15;
-                    return { x: x + offset, y: y, z: (Math.random() - 0.5) * 40 };
+                    // Add significant girth to the struts
+                    const offset = (Math.random() - 0.5) * 25; // Thickened legs
+                    return { x: x + offset, y: y, z: (Math.random() - 0.5) * 45 };
                 } else {
-                    // Heavy Skids (Longer, thicker horizontal base)
+                    // Heavy Skids (Shorter base as requested)
                     const t = Math.random();
-                    const x = side * (20 + t * 180);
-                    const y = 175 + (Math.random() - 0.5) * 10; // Thicker skid
+                    const x = side * (100 + t * 60); // Centered and shrunk skids
+                    const y = 175 + (Math.random() - 0.5) * 15; // Solid footing
                     return { x: x, y: y, z: (Math.random() - 0.5) * 60 };
                 }
             }
@@ -603,9 +615,9 @@
             this.size = sizeBase + Math.random() * sizeVar;
 
             const dice = Math.random();
-            if (dice > 0.6) this.color = [37, 99, 235];  // Blue-600
-            else if (dice > 0.3) this.color = [59, 130, 246]; // Blue-500
-            else this.color = [96, 165, 250]; // Blue-400
+            if (dice > 0.6) this.color = [15, 23, 42];  // Slate-900 (Deep Black)
+            else if (dice > 0.3) this.color = [30, 41, 59]; // Slate-800 (Dark Gray)
+            else this.color = [51, 65, 85]; // Slate-700 (Steel Gray)
 
             this.junk = {
                 x: (Math.random() - 0.5) * W * 3,

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* ── Fixed Canvas (Background Layer) ── */
 #cinema-canvas {
@@ -93,7 +93,8 @@
 
 .step-section .content-box h2 {
     font-size: 5rem;
-    font-weight: 300;
+    font-weight: 800;
+    font-style: italic;
     color: #0f172a;
     /* Slate-900 */
     margin-bottom: 2rem;
@@ -164,8 +165,8 @@
 
     .step-section .content-box h2 {
         font-size: 2.8rem;
-        font-weight: 300;
-        /* Bolder than 100 for better visibility */
+        font-weight: 800;
+        font-style: italic;
         line-height: 0.9;
         margin-bottom: 1.5rem;
         text-shadow: 0 1px 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5);
