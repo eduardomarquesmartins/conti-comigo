@@ -12,7 +12,8 @@
         ASSEMBLE_DURATION: 0.15,
         HOLD_DURATION: 0.45,
         FOCAL_LENGTH: 1200,
-        SHARD_COUNT: 1800
+        SHARD_COUNT: 1800,
+        IA_TEXT: "I A"
     };
 
     const canvas = document.getElementById('cinema-canvas');
@@ -43,10 +44,10 @@
     // ═══════════════════════════════════════════
     const Geometries = {
         cloud: () => ({
-            x: (Math.random() - 0.5) * (W * 1.5 + 1000),
-            y: (Math.random() - 0.5) * (H * 1.5 + 800),
-            z: (Math.random() - 0.5) * 1000
-        }), // Widened distribution
+            x: (Math.random() - 0.5) * (W * 0.5 + 400),
+            y: (Math.random() - 0.5) * (H * 0.5 + 400),
+            z: (Math.random() - 0.5) * 600
+        }), // More compact initial state
         iphone: () => {
             const r = Math.random();
             const w = 340, h = 680, rad = 50; // Main dimensions
@@ -125,42 +126,133 @@
             // 10% Filament (Center line)
             return { x: 0, y: (Math.random() - 0.5) * 100 - 80, z: 0 };
         },
+        penTool: () => {
+            const r = Math.random();
+            const size = 450;
+            const handleLen = 220;
+
+            // 20% Main Anchor Point (Square in the middle)
+            if (r < 0.20) {
+                const s = 40;
+                return {
+                    x: (Math.random() - 0.5) * s,
+                    y: (Math.random() - 0.5) * s,
+                    z: 10
+                };
+            }
+
+            // 30% Tangent Handles (Two straight lines)
+            if (r < 0.50) {
+                const side = Math.random() > 0.5 ? 1 : -1;
+                const t = Math.random();
+                // Angled handles
+                const angle = -Math.PI / 6 * side;
+                return {
+                    x: Math.cos(angle) * (t * handleLen) * side,
+                    y: Math.sin(angle) * (t * handleLen) * side,
+                    z: 0
+                };
+            }
+
+            // 15% Control Points (Little squares at ends of handles)
+            if (r < 0.65) {
+                const side = Math.random() > 0.5 ? 1 : -1;
+                const angle = -Math.PI / 6 * side;
+                const s = 25;
+                return {
+                    x: Math.cos(angle) * handleLen * side + (Math.random() - 0.5) * s,
+                    y: Math.sin(angle) * handleLen * side + (Math.random() - 0.5) * s,
+                    z: 5
+                };
+            }
+
+            // 35% Bezier Curve Segments (Two arcs)
+            const side = Math.random() > 0.5 ? 1 : -1;
+            const p = Math.random(); // Progress along curve
+            // Simple Quadratic Bezier approximation for the shard target
+            // P0=(0,0), P1=(side*150, -200), P2=(side*300, 50)
+            const x = (1 - p) * (1 - p) * 0 + 2 * (1 - p) * p * (side * 150) + p * p * (side * 300);
+            const y = (1 - p) * (1 - p) * 0 + 2 * (1 - p) * p * (-250) + p * p * (100);
+
+            return { x, y, z: -10 };
+        },
         camera: () => {
             const r = Math.random();
-            const bodyW = 500, bodyH = 320, bodyD = 120;
-
-            // 50% Body (Structured)
+            // 50% Body (Larger Box)
             if (r < 0.5) {
+                const w = 340, h = 240, d = 80;
                 return {
-                    x: (Math.random() - 0.5) * bodyW,
-                    y: (Math.random() - 0.5) * bodyH,
-                    z: (Math.random() - 0.5) * bodyD
+                    x: (Math.random() - 0.5) * w,
+                    y: (Math.random() - 0.5) * h,
+                    z: (Math.random() - 0.5) * d
                 };
             }
-
-            // 35% Lens (Advanced Concentric Rings)
-            if (r < 0.85) {
-                const ringId = Math.floor(Math.random() * 3);
+            // 30% Lens (Larger Cylinder)
+            if (r < 0.8) {
                 const angle = Math.random() * Math.PI * 2;
-                const ringRadii = [60, 100, 130];
-                const radius = ringRadii[ringId] + (Math.random() - 0.5) * 10;
-                const length = 200;
+                const rad = 95; // Bigger lens
+                const len = 100;
                 return {
-                    x: Math.cos(angle) * radius,
-                    y: Math.sin(angle) * radius,
-                    z: bodyD / 2 + Math.random() * length
+                    x: Math.cos(angle) * rad,
+                    y: Math.sin(angle) * rad,
+                    z: 60 + Math.random() * len
+                };
+            }
+            // 20% Flash / Buttons
+            const isFlash = Math.random() > 0.5;
+            if (isFlash) {
+                // Flash Box
+                return {
+                    x: 120 + Math.random() * 50,
+                    y: -140 - Math.random() * 30,
+                    z: (Math.random() - 0.5) * 50
+                };
+            } else {
+                // Shutter Button
+                return {
+                    x: -120 + Math.random() * 40,
+                    y: -130 - Math.random() * 20,
+                    z: 0
+                };
+            }
+        },
+        rocket: () => {
+            const r = Math.random();
+            const bodyW = 140;
+            const bodyH = 340;
+
+            // 50% Main Body (Cylindrical/Bullet shape)
+            if (r < 0.5) {
+                const angle = Math.random() * Math.PI * 2;
+                const h = (Math.random() - 0.5) * bodyH;
+                const rad = 60 + (1 - Math.abs(h) / (bodyH / 2)) * 20; // Taper top/bottom
+                return {
+                    x: Math.cos(angle) * rad,
+                    y: h,
+                    z: Math.sin(angle) * rad
                 };
             }
 
-            // 15% Details (Buttons & Viewfinder)
-            if (r < 0.95) {
+            // 30% Fins (3 fins at bottom)
+            if (r < 0.8) {
+                const finId = Math.floor(Math.random() * 3);
+                const angle = (finId * Math.PI * 2) / 3;
+                const dist = 70 + Math.random() * 60;
+                const h = bodyH / 2 - Math.random() * 80;
                 return {
-                    x: (Math.random() - 0.5) * bodyW * 0.8,
-                    y: -bodyH / 2 - 20,
-                    z: (Math.random() - 0.5) * bodyD
+                    x: Math.cos(angle) * dist,
+                    y: h,
+                    z: Math.sin(angle) * dist
                 };
             }
-            return { x: bodyW * 0.4, y: -bodyH / 2 - 40, z: 0 };
+
+            // 20% Window / Exhaust
+            const angle = Math.random() * Math.PI * 2;
+            return {
+                x: Math.cos(angle) * 30,
+                y: -bodyH / 2 + Math.random() * 40 - 20, // Window near top
+                z: Math.sin(angle) * 30 + 10
+            };
         },
         mediaControls: () => {
             const r = Math.random();
@@ -269,6 +361,184 @@
                 return { x: p.x, y: p.y, z: 0, isLogo: true };
             }
             return { x: 0, y: 0, z: 0 };
+        },
+        iaText: (iaPts) => {
+            if (iaPts && iaPts.length) {
+                const p = iaPts[Math.floor(Math.random() * iaPts.length)];
+                return { x: p.x, y: p.y, z: 0 };
+            }
+            return { x: 0, y: 0, z: 0 };
+        },
+        megaphone: () => {
+            const r = Math.random();
+            const L = 320;
+            const minR = 40;
+            const maxR = 180;
+
+            // 60% Conical Shell (Profile view along X axis)
+            if (r < 0.6) {
+                const t = Math.random(); // 0 to 1 along length
+                const angle = Math.random() * Math.PI * 2;
+                const radius = minR + t * (maxR - minR);
+                return {
+                    x: t * L - L / 2,
+                    y: Math.cos(angle) * radius,
+                    z: Math.sin(angle) * radius
+                };
+            }
+            // 15% Handle (Vertical box at the back)
+            if (r < 0.75) {
+                return {
+                    x: -L / 2 + Math.random() * 60,
+                    y: Math.random() * 120,
+                    z: (Math.random() - 0.5) * 40
+                };
+            }
+            // 10% Back cap
+            if (r < 0.85) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * minR;
+                return { x: -L / 2, y: Math.cos(angle) * dist, z: Math.sin(angle) * dist };
+            }
+            // 15% Sound Waves (Arcs in front)
+            const waveId = Math.floor(Math.random() * 3);
+            const waveDist = L / 2 + 40 + waveId * 60;
+            const waveAngle = (Math.random() - 0.5) * Math.PI * 0.6; // Arc
+            const spread = 1.2;
+            return {
+                x: waveDist + Math.random() * 10,
+                y: Math.sin(waveAngle) * waveDist * spread,
+                z: Math.cos(waveAngle) * waveDist * 0.2 // Slight depth
+            };
+        },
+        aiChip: () => {
+            const r = Math.random();
+            const size = 420;
+
+            // 60% Chip Square (Grid-like texture)
+            if (r < 0.6) {
+                // Focus on edges and a few internal grid lines
+                if (Math.random() > 0.4) {
+                    const isX = Math.random() > 0.5;
+                    const gridPos = (Math.round(Math.random() * 8) / 8 - 0.5) * size;
+                    const vary = (Math.random() - 0.5) * size;
+                    return { x: isX ? gridPos : vary, y: isX ? vary : gridPos, z: 0 };
+                }
+                return {
+                    x: (Math.random() - 0.5) * size,
+                    y: (Math.random() - 0.5) * size,
+                    z: 5
+                };
+            }
+            // 40% Connection Pins (Protruding lines)
+            const side = Math.floor(Math.random() * 4);
+            const t = (Math.random() - 0.5) * (size * 0.8);
+            const pinLen = 120;
+            const depth = (Math.random() - 0.5) * 20;
+            if (side === 0) return { x: -size / 2 - Math.random() * pinLen, y: t, z: depth };
+            if (side === 1) return { x: size / 2 + Math.random() * pinLen, y: t, z: depth };
+            if (side === 2) return { x: t, y: -size / 2 - Math.random() * pinLen, z: depth };
+            return { x: t, y: size / 2 + Math.random() * pinLen, z: depth };
+        },
+        stories: () => {
+            // Simplified Instagram Stories layout (Portrait rect)
+            const r = Math.random();
+            const w = 320, h = 560;
+            if (r < 0.5) {
+                const edge = Math.floor(Math.random() * 4);
+                let x, y;
+                if (edge === 0) { x = (Math.random() - 0.5) * w; y = -h / 2; }
+                else if (edge === 1) { x = w / 2; y = (Math.random() - 0.5) * h; }
+                else if (edge === 2) { x = (Math.random() - 0.5) * w; y = h / 2; }
+                else { x = -w / 2; y = (Math.random() - 0.5) * h; }
+                return { x, y, z: 0 };
+            }
+            // Inner circle for profile
+            const a = Math.random() * Math.PI * 2;
+            return { x: Math.cos(a) * 40 - 80, y: -h / 2 + 60, z: 10 };
+        },
+        drone: () => {
+            const r = Math.random();
+            const armW = 350; // Total horizontal span
+
+            // 20% Central Body (Rounded core)
+            if (r < 0.20) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 80;
+                return {
+                    x: Math.cos(angle) * dist,
+                    y: Math.sin(angle) * dist - 20,
+                    z: (Math.random() - 0.5) * 80
+                };
+            }
+
+            // 20% Horizontal Arms (Profile view)
+            if (r < 0.40) {
+                const side = Math.random() > 0.5 ? 1 : -1;
+                const px = side * (80 + Math.random() * (armW - 80));
+                const py = -40 + (Math.random() - 0.5) * 20;
+                return { x: px, y: py, z: (Math.random() - 0.5) * 20 };
+            }
+
+            // 15% Gimbal & Camera (Hanging below)
+            if (r < 0.55) {
+                if (Math.random() > 0.4) {
+                    // Camera lens/box
+                    return {
+                        x: (Math.random() - 0.5) * 60,
+                        y: 80 + (Math.random() - 0.5) * 60,
+                        z: 40
+                    };
+                } else {
+                    // Gimbal neck
+                    return { x: (Math.random() - 0.5) * 20, y: 30 + Math.random() * 50, z: 10 };
+                }
+            }
+
+            // 25% Heavy Landing Gear (Robust Trapezoidal Structure)
+            if (r < 0.70) {
+                const side = Math.random() > 0.5 ? 1 : -1;
+                const gearR = Math.random();
+
+                if (gearR < 0.7) {
+                    // Main Struts (Thicker, angled)
+                    const t = Math.random();
+                    const x = side * (40 + t * 90);
+                    const y = -10 + t * 180;
+                    // Add some girth to the struts
+                    const offset = (Math.random() - 0.5) * 15;
+                    return { x: x + offset, y: y, z: (Math.random() - 0.5) * 40 };
+                } else {
+                    // Heavy Skids (Longer, thicker horizontal base)
+                    const t = Math.random();
+                    const x = side * (20 + t * 180);
+                    const y = 175 + (Math.random() - 0.5) * 10; // Thicker skid
+                    return { x: x, y: y, z: (Math.random() - 0.5) * 60 };
+                }
+            }
+
+            // 30% Rotors & Spinning Propellers
+            const side = Math.random() > 0.5 ? 1 : -1;
+            const rx = side * armW;
+            const ry = -60;
+            const rotorId = side === 1 ? 0 : 1;
+
+            if (Math.random() > 0.4) {
+                // Motor/Rotor Base
+                return { x: rx + (Math.random() - 0.5) * 40, y: ry + Math.random() * 40, z: 0 };
+            } else {
+                // Propeller Blades (Animated)
+                const dist = (Math.random() - 0.5) * 180;
+                return {
+                    x: rx + dist,
+                    y: ry,
+                    z: 20,
+                    rotorX: rx,
+                    rotorY: ry,
+                    isPropeller: true,
+                    rotorId: rotorId
+                };
+            }
         }
     };
 
@@ -276,29 +546,48 @@
     //  LOGO SAMPLING
     // ═══════════════════════════════════════════
     let logoPoints = [];
-    function sampleLogo() {
+    let iaPoints = [];
+    function sampleTexts() {
         const off = document.createElement('canvas');
         const ox = off.getContext('2d');
-        const tw = W > 1200 ? 1800 : 1200;
+
+        // 1. Sample LOGO
+        let tw = W > 1200 ? 1800 : 1200;
         off.width = tw; off.height = 600;
-        const fs = tw > 1400 ? 280 : 160;
+        let fs = tw > 1400 ? 280 : 160;
         ox.font = `900 ${fs}px 'Outfit', sans-serif`;
         ox.textAlign = "center";
         ox.textBaseline = "middle";
         ox.fillStyle = "black";
         ox.fillText("& CONTI", tw / 2, 300);
 
-        const data = ox.getImageData(0, 0, tw, 600).data;
-        const pts = [];
-        const step = 3;
+        let data = ox.getImageData(0, 0, tw, 600).data;
+        let pts = [];
+        let step = 3;
         for (let y = 0; y < 600; y += step) {
             for (let x = 0; x < tw; x += step) {
-                if (data[(y * tw + x) * 4 + 3] > 140) {
+                if (data[(y * tw + x) * 4 + 3] > 80) { // Increased density
                     pts.push({ x: x - tw / 2, y: y - 300 });
                 }
             }
         }
         logoPoints = pts;
+
+        // 2. Sample "I A"
+        ox.clearRect(0, 0, tw, 600);
+        fs = tw > 1400 ? 500 : 350; // Bigger letters for IA
+        ox.font = `900 ${fs}px 'Outfit', sans-serif`;
+        ox.fillText(CONFIG.IA_TEXT, tw / 2, 300);
+        data = ox.getImageData(0, 0, tw, 600).data;
+        pts = [];
+        for (let y = 0; y < 600; y += step) {
+            for (let x = 0; x < tw; x += step) {
+                if (data[(y * tw + x) * 4 + 3] > 80) { // Increased density
+                    pts.push({ x: x - tw / 2, y: y - 300 });
+                }
+            }
+        }
+        iaPoints = pts;
     }
 
     // ═══════════════════════════════════════════
@@ -308,15 +597,15 @@
         constructor() {
             this.targets = [];
 
-            // Smaller particles on mobile
-            const sizeBase = (W < 900) ? 1.5 : 3;
-            const sizeVar = (W < 900) ? 2.5 : 5;
+            // Larger particles on mobile for visibility
+            const sizeBase = (W < 900) ? 2.5 : 3;
+            const sizeVar = (W < 900) ? 3.5 : 5;
             this.size = sizeBase + Math.random() * sizeVar;
 
             const dice = Math.random();
-            if (dice > 0.6) this.color = [15, 23, 42];  // Slate-900 (Black/Charcoal)
-            else if (dice > 0.3) this.color = [51, 65, 85]; // Slate-700 (Dark Gray)
-            else this.color = [100, 116, 139]; // Slate-500 (Gray)
+            if (dice > 0.6) this.color = [37, 99, 235];  // Blue-600
+            else if (dice > 0.3) this.color = [59, 130, 246]; // Blue-500
+            else this.color = [96, 165, 250]; // Blue-400
 
             this.junk = {
                 x: (Math.random() - 0.5) * W * 3,
@@ -328,13 +617,25 @@
 
         generateAllTargets() {
             this.targets = [
+                // 0. Intro (Cloud)
                 Geometries.cloud(),
-                Geometries.iphone(),
-                Geometries.bulb(),
+                // 1. REDES SOCIAIS -> Megaphone
+                Geometries.megaphone(),
+                // 2. CONTEÚDO -> Stories (New mapping)
+                Geometries.stories(),
+                // 3. AUDIOVISUAL -> Camera (Swapped)
                 Geometries.camera(),
+                // 4. EVENTOS -> Play/Pause (Swapped)
                 Geometries.mediaControls(),
+                // 5. TRÁFEGO -> Target
                 Geometries.target(),
+                // 6. BRANDING -> Atom
                 Geometries.atom(),
+                // 7. SITES -> iPhone
+                Geometries.iphone(),
+                // 8. DRONE -> Drone
+                Geometries.drone(),
+                // 9. Final Reveal -> Logo
                 Geometries.logo(logoPoints)
             ];
             this.junk = {
@@ -353,13 +654,36 @@
 
             let ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
-            const lx = T1.x + (T2.x - T1.x) * ease;
-            const ly = T1.y + (T2.y - T1.y) * ease;
-            const lz = T1.z + (T2.z - T1.z) * ease;
+            let lx = T1.x + (T2.x - T1.x) * ease;
+            let ly = T1.y + (T2.y - T1.y) * ease;
+            let lz = T1.z + (T2.z - T1.z) * ease;
+
+            // --- ANIMATION OVERRIDE: Spinning Propellers ---
+            // Rotate only if both T1 and T2 are propellers (keeps spinning during hold, stops during move to non-propeller)
+            if (T1.isPropeller && T2.isPropeller) {
+                const rx = T1.rotorX;
+                const ry = T1.rotorY;
+                const rID = T1.rotorId;
+
+                const relX = lx - rx;
+                const relY = ly - ry;
+
+                const speed = 12.0;
+                const dir = (rID === 0 || rID === 2) ? 1 : -1;
+                const angle = time * speed * dir;
+
+                const cosA = Math.cos(angle);
+                const sinA = Math.sin(angle);
+
+                lx = rx + (relX * cosA - relY * sinA);
+                ly = ry + (relX * sinA + relY * cosA);
+            }
+            // -----------------------------------------------
 
             let explosion = 0;
-            if (idx > 0 && idx < 7) {
-                explosion = Math.sin(Math.PI * t);
+            // Calmed explosion for a more "solid" feel during transitions
+            if (idx >= 0 && idx < 8) {
+                explosion = Math.sin(Math.PI * t) * 0.4; // Cap explosion scatter at 40%
                 explosion = Math.pow(explosion, 0.5);
             }
 
@@ -368,105 +692,108 @@
             const z = lz * (1 - explosion) + this.junk.z * explosion;
 
             let noiseAmp = 0;
-            if (t > 0.05 && t < 0.95) noiseAmp = Math.sin(t * Math.PI) * 150;
+            if (t > 0.05 && t < 0.95) noiseAmp = Math.sin(t * Math.PI) * 70; // Halved noise for stability
 
             const nx = x + Math.cos(this.phase + time) * noiseAmp;
             const ny = y + Math.sin(this.phase + time) * noiseAmp;
             const nz = z + Math.sin(this.phase * 2.5) * noiseAmp;
 
-            // Mobile scaling for objects
-            const objScale = (W < 900) ? 0.6 : 1.0;
+            // Mobile scaling for objects (Increased for better visibility)
+            const objScale = (W < 900) ? 0.85 : 1.0;
             const scale = (CONFIG.FOCAL_LENGTH / (CONFIG.FOCAL_LENGTH + nz + cameraZ)) * objScale;
 
             let curOffset = centerOffset.x;
-            if (idx > 0 && idx < 7) {
+
+            // CONSOLIDATED ALIGNMENT LOGIC
+            if (idx === 0) {
+                // 0. Intro -> Marketing: Move from center to side
+                curOffset = centerOffset.x * ease;
+            } else if (idx === 8) {
+                // 8. Drone -> Logo: Move from side back to center
+                curOffset = centerOffset.x * (1 - ease);
+            } else if (idx >= 9) {
+                // 9. Logo Reveal: Permanent center
+                curOffset = 0;
+            } else {
+                // 1-7. Services: Stay on side, but "gather" in center during the flip transition
                 const centerBias = Math.sin(Math.PI * t);
                 curOffset = centerOffset.x * (1 - centerBias);
             }
-
-            if (idx === 0) curOffset = centerOffset.x * ease;
-            if (idx === 6) curOffset = centerOffset.x * (1 - ease);
-            if (idx === 7) curOffset = 0;
 
             const px = (W / 2 + curOffset) + nx * scale;
             const py = (H / 2 + centerOffset.y) + ny * scale;
             const rot = this.phase + time + t * 4;
 
             if (scale > 0 && px > -W && px < W * 2 && py > -H && py < H * 2) {
-                const light = Math.sin(rot + time);
-                const alpha = 0.4 + (light + 1) * 0.3;
-
                 ctx.save();
                 ctx.translate(px, py);
                 ctx.scale(scale * this.size, scale * this.size);
                 ctx.rotate(rot);
+                const alpha = (W < 900) ? 0.8 : 0.7; // Brighter and more solid on mobile
                 ctx.fillStyle = `rgba(${this.color[0]},${this.color[1]},${this.color[2]},${alpha})`;
-                ctx.fillRect(-1, -1, 2, 2);
-                if (light > 0.8) {
-                    ctx.fillStyle = '#fff';
-                    ctx.fillRect(0, 0, 1, 1);
-                }
+
+                // Draw as sharp Digital Dust (Small precise squares)
+                ctx.fillRect(-1, -1, 1.5, 1.5);
                 ctx.restore();
             }
         }
     }
 
-    // ═══════════════════════════════════════════
-    //  SCROLL CALCULATION
-    // ═══════════════════════════════════════════
     function getFloatStep() {
         const scrollY = window.scrollY;
-        const assembleTime = CONFIG.ASSEMBLE_DURATION;
-        const holdTime = CONFIG.HOLD_DURATION;
-
-        // Use the cinema-wrapper as the anchor for starting the step calculations
         const wrapper = document.getElementById('cinema-wrapper');
         if (!wrapper) return 0;
         const spacerH = wrapper.offsetTop;
+        const stepH = steps[0].offsetHeight;
 
-        // While above the cinema animation, just show a subtle tease or keep hidden
+        // Intro Tease
         if (scrollY < spacerH) {
-            // Only start showing particles when we are close to the section (e.g., within 800px)
             const entryDistance = 800;
             if (scrollY < spacerH - entryDistance) return 0;
-
             const progress = 1 - ((spacerH - scrollY) / entryDistance);
-            return progress * 0.1; // Very subtle teasing assembly
+            return progress * 0.1;
         }
 
-        // After hero, calculate based on step sections
-        const stepH = steps[0].offsetHeight;
         const relativeScroll = scrollY - spacerH;
+        // Total steps = 8 service steps
+        const totalServiceScroll = 8 * stepH;
 
-        const stepIndex = Math.floor(relativeScroll / stepH);
-        const p = (relativeScroll % stepH) / stepH;
+        if (relativeScroll < totalServiceScroll) {
+            const stepIndex = Math.floor(relativeScroll / stepH);
+            const p = (relativeScroll % stepH) / stepH;
+            const assembleTime = CONFIG.ASSEMBLE_DURATION;
+            let currentHold = CONFIG.HOLD_DURATION;
 
-        const currentTarget = stepIndex + 1;
+            // CUSTOM: Drone (Step 7) stays on screen for much less time
+            if (stepIndex === 7) currentHold = 0.2;
 
-        // If past all step sections, start fading out towards the end of the final section
-        if (currentTarget >= 8) {
-            const finalSection = document.getElementById('step-final');
-            if (finalSection) {
-                const rect = finalSection.getBoundingClientRect();
-                const progressPast = 1 - (rect.bottom / window.innerHeight);
-                return 8 + Math.max(0, progressPast); // Goes 8.0 -> 9.0+
+            let val = stepIndex;
+
+            if (p < assembleTime) {
+                const subP = p / assembleTime;
+                const ease = subP * subP * (3 - 2 * subP);
+                val = (stepIndex + 0.5) + ease * 0.5;
+            } else if (p < assembleTime + currentHold) {
+                val = stepIndex + 1;
+            } else {
+                const subP = (p - (assembleTime + currentHold)) / (1 - (assembleTime + currentHold));
+                // CUSTOM: Drone transitions more aggressively towards Logo within its own section
+                if (stepIndex === 7) {
+                    val = 8.0 + subP * 0.7; // Reaches 8.7 (70% morph) before section ends
+                } else {
+                    const ease = subP * subP;
+                    val = (stepIndex + 1) + ease * 0.5;
+                }
             }
-            return 8;
-        }
-
-        if (p < assembleTime) {
-            const startVal = currentTarget - 0.5;
-            const endVal = currentTarget;
-            const mp = p / assembleTime;
-            return startVal + (endVal - startVal) * (mp * mp * (3 - 2 * mp));
-        } else if (p < assembleTime + holdTime) {
-            return currentTarget;
+            return val;
         } else {
-            const startVal = currentTarget;
-            const endVal = currentTarget + 0.5;
-            const startP = assembleTime + holdTime;
-            const mp = (p - startP) / (1 - startP);
-            return startVal + (endVal - startVal) * (mp * mp);
+            // Final Section (Logo Assembly)
+            const extraScroll = relativeScroll - totalServiceScroll;
+            const logoScrollEnd = stepH * 0.2; // Super fast assembly (20% of a section height)
+            const progress = Math.min(1.0, extraScroll / logoScrollEnd);
+
+            // Continue from where Step 7 left off (8.7) to reach 9.0 (Logo) and beyond
+            return 8.7 + progress * 0.8;
         }
     }
 
@@ -476,11 +803,9 @@
     let shards = [];
     function init() {
         updateLayout();
-        sampleLogo();
+        sampleTexts();
         shards = [];
-
-        // Use fewer particles on mobile for performance and clarity
-        const particleCount = (W < 900) ? 800 : CONFIG.SHARD_COUNT;
+        const particleCount = (W < 900) ? 1200 : 2500; // Increased sample size for better definition
 
         setTimeout(() => {
             for (let i = 0; i < particleCount; i++) {
@@ -496,21 +821,15 @@
         time += 0.02;
         ctx.clearRect(0, 0, W, H);
         const fStepRaw = getFloatStep();
-        const fStep = Math.min(fStepRaw, 7.99);
+        const fStep = Math.min(fStepRaw, 9.0); // 9 is the Logo reveal
 
-        // Global Fade-in / Fade-out
+        // Fade logic
         let globalAlpha = 1;
-
-        // Fade-in at the start (from approaching to first object)
-        if (fStepRaw < 1.0) {
-            // Since fStepRaw starts from 0 to 0.1 while approaching, and 0.5+ while assembling
-            // We want a smooth ramp
-            globalAlpha = Math.min(1, Math.max(0, fStepRaw / 0.8));
-        }
-        // Fade-out past step 8 (Final reveal)
-        else if (fStepRaw > 8.0) {
-            // Ultra-aggressive fade-out: disappears almost instantly
-            globalAlpha = Math.max(0, 1 - (fStepRaw - 8.0) * 10);
+        if (fStepRaw < 0.8) {
+            globalAlpha = fStepRaw / 0.8;
+        } else if (fStepRaw > 9.8) {
+            // Immediate fade out after logo reveal
+            globalAlpha = Math.max(0, 1 - (fStepRaw - 9.8) * 10);
         }
 
         ctx.globalAlpha = globalAlpha;
@@ -522,26 +841,22 @@
             canvas.style.display = 'none';
         }
 
-        // Card visibility (scroll-synced fade-in/out)
+        // Content boxes opacity/transform
         steps.forEach((step) => {
             const box = step.querySelector('.content-box');
             if (!box) return;
             const boxRect = box.getBoundingClientRect();
-
             const viewH = window.innerHeight;
+
             const startReveal = viewH * 0.95;
             const endReveal = viewH * 0.60;
-
-            let fadeP = (startReveal - boxRect.top) / (startReveal - endReveal);
-            fadeP = Math.max(0, Math.min(1, fadeP));
+            let fadeP = Math.max(0, Math.min(1, (startReveal - boxRect.top) / (startReveal - endReveal)));
 
             const startFadeOut = viewH * 0.1;
             const endFadeOut = -viewH * 0.2;
-            let fadeOutP = (boxRect.top - endFadeOut) / (startFadeOut - endFadeOut);
-            fadeOutP = Math.max(0, Math.min(1, fadeOutP));
+            let fadeOutP = Math.max(0, Math.min(1, (boxRect.top - endFadeOut) / (startFadeOut - endFadeOut)));
 
             const totalAlpha = fadeP * fadeOutP;
-
             box.style.opacity = totalAlpha;
             box.style.transform = `translateY(${(1 - totalAlpha) * 80}px) scale(${0.95 + totalAlpha * 0.05})`;
 
@@ -557,7 +872,7 @@
     // ═══════════════════════════════════════════
     window.addEventListener('resize', () => {
         updateLayout();
-        sampleLogo();
+        sampleTexts();
         shards.forEach(s => s.generateAllTargets());
     });
 
