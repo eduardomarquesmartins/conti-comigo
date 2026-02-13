@@ -914,6 +914,26 @@
                 transition: opacity 0.2s ease-in, transform 0.2s ease-in;
             }
         }
+
+        @keyframes pulse-blue {
+
+            0%,
+            100% {
+                text-shadow: 0 0 0px rgba(37, 99, 235, 0);
+                transform: scale(1);
+            }
+
+            50% {
+                text-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+                transform: scale(1.02);
+            }
+        }
+
+        .animate-pulse-blue {
+            display: inline-block;
+            animation: pulse-blue 2s ease-in-out infinite;
+            will-change: transform, text-shadow;
+        }
     </style>
     <link rel="stylesheet" href="cinema-animation.css">
 </head>
@@ -984,14 +1004,9 @@
         class="relative w-screen max-w-full overflow-hidden flex flex-col justify-center py-0 bg-[#020617] z-40"
         style="height: 100dvh;">
 
-        <!-- FUNDO DIVIDIDO (Desktop) -->
-        <div class="hidden lg:flex absolute top-0 left-0 w-full h-full flex-row z-0">
-            <div id="hero-bg-left" class="flex-1 h-full bg-cover relative"
-                style="background-image: url('./3.jpg'); background-position: center 15%;">
-            </div>
-            <div id="hero-bg-right" class="flex-1 h-full bg-cover relative"
-                style="background-image: url('./2.jpg'); background-position: center 15%;">
-            </div>
+        <!-- FUNDO ÚNICO (Desktop) -->
+        <div class="hidden lg:block absolute top-0 left-0 w-full h-full z-0 bg-cover bg-center"
+            style="background-image: url('./backgroundprincp\ -\ Editado.jpg'); background-position: center 15%;">
         </div>
 
         <!-- FUNDO ÚNICO (Mobile) -->
@@ -1012,7 +1027,7 @@
                     <h1
                         class="text-6xl lg:text-8xl font-thin text-white lg:text-gray-900 tracking-tighter leading-none flex flex-col items-center">
                         <span
-                            class="animate-amp text-3xl lg:text-4xl text-blue-400 lg:text-blue-600 mb-2 font-extralight">&</span>
+                            class="animate-amp text-4xl lg:text-6xl text-blue-400 lg:text-blue-500 mb-2 font-light drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">&</span>
                         <div class="flex">
                             <span class="animate-co">CO</span>
                             <span class="animate-nti">NTI</span>
@@ -1089,10 +1104,9 @@
                             class="w-full rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
                     </div>
                     <div class="w-full lg:w-1/2">
-                        <span class="title-tag">POSICIONAMENTO</span>
                         <h2
                             class="text-4xl md:text-6xl font-thin text-white leading-tight tracking-tighter uppercase italic mb-6">
-                            O QUE A <span class="text-blue-600">& CONTI</span> PODE <span
+                            O QUE A <span class="text-blue-600 animate-pulse-blue">& CONTI</span> PODE <span
                                 class="text-gray-400 font-light block lowercase">(ou não) fazer</span> PELO SEU NEGÓCIO
                         </h2>
                         <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed">
@@ -1115,11 +1129,12 @@
                     <div class="w-full lg:w-1/2">
                         <h2
                             class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
-                            O QUE FAZEMOS É <span class="text-blue-600">CONSTRUIR</span> PRESENÇA E NÃO <span
-                                class="text-gray-500">PROMESSAS.</span>
+                            O QUE FAZEMOS É <span class="text-blue-600 animate-pulse-blue">CONSTRUIR</span> PRESENÇA E
+                            NÃO <span class="text-gray-500">PROMESSAS.</span>
                         </h2>
                         <p class="text-white text-lg md:text-xl font-bold leading-tight uppercase tracking-widest mb-8">
-                            A &CONTI TE AJUDA A <span class="text-blue-400">MOSTRAR O VALOR</span> DO QUE VOCÊ ENTREGA,
+                            A &CONTI TE AJUDA A <span class="text-blue-400 animate-pulse-blue">MOSTRAR O VALOR</span> DO
+                            QUE VOCÊ ENTREGA,
                             A ORGANIZAR SUA COMUNICAÇÃO.
                         </p>
                         <div class="bg-blue-600/20 border border-blue-500/50 p-8 rounded-2xl backdrop-blur-sm">
@@ -1144,7 +1159,8 @@
                     <div class="w-full lg:w-1/2">
                         <h2
                             class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
-                            MAS NÃO PODEMOS TE DAR <span class="text-blue-600">RESULTADOS</span> SEM ENVOLVIMENTO.
+                            MAS NÃO PODEMOS TE DAR <span class="text-blue-600 animate-pulse-blue">RESULTADOS</span> SEM
+                            ENVOLVIMENTO.
                         </h2>
                         <div class="space-y-6">
                             <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
@@ -1174,12 +1190,14 @@
                     <div class="w-full lg:w-1/2">
                         <h2
                             class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
-                            O NOSSO PAPEL É CRIAR <span class="text-blue-600">ESTRATÉGIA,</span> CLAREZA E PROPÓSITO.
+                            O NOSSO PAPEL É CRIAR <span class="text-blue-600 animate-pulse-blue">ESTRATÉGIA,</span>
+                            CLAREZA E PROPÓSITO.
                         </h2>
                         <div class="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md shadow-2xl">
                             <p class="text-white text-lg md:text-2xl font-light leading-snug uppercase tracking-tight">
                                 O SEU É ACREDITAR NO PROCESSO, CONFIAR NO QUE FOI CONSTRUÍDO E <span
-                                    class="text-blue-400 font-bold italic">DAR ESPAÇO</span> PRO RESULTADO AMADURECER.
+                                    class="text-blue-400 animate-pulse-blue font-bold italic">DAR ESPAÇO</span> PRO
+                                RESULTADO AMADURECER.
                             </p>
                         </div>
                     </div>
@@ -1199,13 +1217,14 @@
                     <div class="w-full lg:w-1/2">
                         <h2
                             class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
-                            NÃO VENDEMOS <span class="text-blue-600">MILAGRES.</span>
+                            NÃO VENDEMOS <span class="text-blue-600 animate-pulse-blue">MILAGRES.</span>
                         </h2>
                         <div
                             class="bg-blue-600/10 border border-blue-500/30 p-8 md:p-12 rounded-[2.5rem] backdrop-blur-xl shadow-2xl relative overflow-hidden">
                             <p
                                 class="text-white text-xl md:text-3xl font-light leading-snug uppercase tracking-tight relative z-10">
-                                ENTREGAMOS ESTRATÉGIA, VISÃO E <span class="text-blue-400 font-bold italic">COMPROMISSO
+                                ENTREGAMOS ESTRATÉGIA, VISÃO E <span
+                                    class="text-blue-400 animate-pulse-blue font-bold italic">COMPROMISSO
                                     REAL</span> COM O SEU CRESCIMENTO.
                             </p>
                             <p
