@@ -716,17 +716,58 @@
         @keyframes scroll-dot {
             0% {
                 transform: translateY(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
                 opacity: 1;
             }
 
             100% {
-                transform: translateY(12px);
+                transform: translateY(16px);
                 opacity: 0;
             }
         }
 
+        @keyframes chevron-down {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
         .mouse-dot {
-            animation: scroll-dot 2s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+            animation: scroll-dot 2.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+        }
+
+        .chevron-staggered {
+            opacity: 0;
+            animation: chevron-down 2s ease-in-out infinite;
+        }
+
+        .chevron-1 {
+            animation-delay: 0s;
+        }
+
+        .chevron-2 {
+            animation-delay: 0.4s;
+        }
+
+        .chevron-3 {
+            animation-delay: 0.8s;
         }
 
         /* Animações do Logo Sequencial */
@@ -842,13 +883,13 @@
 
             0%,
             100% {
-                opacity: 0.7;
-                transform: scale(1);
+                opacity: 0.5;
+                letter-spacing: 0.4em;
             }
 
             50% {
                 opacity: 1;
-                transform: scale(1.05);
+                letter-spacing: 0.5em;
             }
         }
 
@@ -1050,21 +1091,33 @@
                 </div>
             </div>
 
-            <!-- Indicador de Scroll Aprimorado -->
-            <div
-                class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 scroll-indicator-container">
-                <!-- Ícone de Mouse Minimalista com Flutuação -->
-                <div class="mouse-icon-floating">
-                    <div
-                        class="w-6 h-10 border-2 border-white/80 rounded-full flex justify-center p-1.5 shadow-lg backdrop-blur-sm">
-                        <div class="w-1 h-2 bg-white rounded-full mouse-dot"></div>
-                    </div>
-                </div>
+            <!-- Indicador de Scroll Chevron Clicável (Sem Mouse) -->
+            <a href="#sobre-negocio-section"
+                class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 scroll-indicator-container cursor-pointer z-50 hover:opacity-80 transition-opacity no-underline">
                 <span
-                    class="text-[9px] tracking-[0.4em] uppercase text-white font-light scroll-indicator-text text-pulse-animation">
+                    class="text-[10px] tracking-[0.4em] uppercase text-white/80 font-light scroll-indicator-text mb-2">
                     Descubra mais
                 </span>
-            </div>
+
+                <!-- Chevrons Area -->
+                <div class="flex flex-col items-center -space-y-2">
+                    <svg class="w-5 h-5 text-white chevron-staggered chevron-1" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7">
+                        </path>
+                    </svg>
+                    <svg class="w-5 h-5 text-white chevron-staggered chevron-2" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7">
+                        </path>
+                    </svg>
+                    <svg class="w-5 h-5 text-white chevron-staggered chevron-3" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7">
+                        </path>
+                    </svg>
+                </div>
+            </a>
         </div>
 
     </section>
@@ -1579,26 +1632,26 @@
 
 
 
-    <section class="py-10 bg-white overflow-hidden reveal">
+    <section class="py-24 lg:py-32 bg-white overflow-hidden reveal">
         <div class="max-w-7xl mx-auto px-4 md:px-10">
-            <div class="flex flex-col-reverse lg:flex-row lg:items-center gap-16 md:gap-24">
+            <div class="flex flex-col lg:flex-row lg:items-center gap-16 md:gap-24">
 
-                <div class="relative flex justify-center lg:justify-start">
+                <div class="relative flex justify-center lg:justify-start flex-1">
                     <div
-                        class="w-full max-w-[500px] aspect-[4/5] rounded-[2.5rem] bg-gray-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.25)] overflow-hidden relative">
+                        class="w-full max-w-[650px] aspect-[4/5] rounded-[3rem] bg-gray-100 shadow-[0_50px_120px_-30px_rgba(0,0,0,0.3)] overflow-hidden relative">
 
-                        <img src="back.jpg" alt="Fundadores &CONTI"
+                        <img src="logo 3.jpg.jpeg" alt="Fundadores &CONTI"
                             class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
                     </div>
                 </div>
 
 
-                <div class="flex flex-col justify-center">
-                    <h2 class="text-4xl md:text-5xl font-light tracking-tighter text-gray-900 mb-8 uppercase">
+                <div class="flex flex-col justify-center flex-1">
+                    <h2 class="text-4xl md:text-6xl font-light tracking-tighter text-gray-900 mb-10 uppercase">
                         CONHEÇA <span class="text-blue-600">& </span> CONTI
                     </h2>
 
-                    <div class="space-y-6 text-gray-700 leading-relaxed text-sm md:text-base">
+                    <div class="space-y-8 text-gray-700 leading-relaxed text-base md:text-lg">
                         <p>
                             A <span class="font-normal text-blue-600">&CONTI</span> nasceu da paixão
                             por transformar negócios através
@@ -1654,7 +1707,7 @@
         </div>
     </section>
 
-     <section class="py-16 bg-slate-50 border-t border-gray-100 overflow-hidden reveal">
+    <section class="py-16 bg-slate-50 border-t border-gray-100 overflow-hidden reveal">
         <div class="max-w-7xl mx-auto px-4 mb-12 text-center">
             <h2 class="text-3xl md:text-4xl font-normal  tracking-tighter text-gray-900 mb-2 uppercase">
                 Nossos Parceiros
@@ -1759,7 +1812,7 @@
         </div>
     </section>
 
-   
+
 
     <footer class="bg-black">
         <div class="max-w-7xl mx-auto px-6">
