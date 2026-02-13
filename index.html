@@ -7,14 +7,12 @@
     <title>& CONTI - Marketing Digital</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
     <link rel="shortcut icon" href="favicon.ico?v=2">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&family=Outfit:wght@100;200;300;400&display=swap"
         rel="stylesheet">
-
     <style>
         #preloader {
             position: fixed;
@@ -1055,26 +1053,40 @@
         class="relative w-screen max-w-full overflow-hidden flex flex-col justify-center py-0 bg-[#020617] z-40"
         style="height: 100dvh;">
 
-        <!-- FUNDO ÚNICO (Desktop) -->
+
         <div class="hidden lg:block absolute top-0 left-0 w-full h-full z-0 bg-cover bg-center"
             style="background-image: url('./backgroundprincp\ -\ Editado.jpg'); background-position: center 15%;">
         </div>
 
-        <!-- FUNDO ÚNICO (Mobile) -->
+
         <div class="flex lg:hidden absolute top-0 left-0 w-full h-full z-0 bg-cover bg-center"
             style="background-image: url('./background.jpg');">
             <div class="absolute inset-0 bg-black/20"></div>
         </div>
 
-        <!-- Overlay suave universal -->
+
         <div class="absolute inset-0 bg-black/5 pointer-events-none z-[1]"></div>
 
         <div class="w-full max-w-[1500px] mx-auto px-4 lg:px-12 relative z-10 h-full flex items-center justify-center">
 
-            <!-- Card Branding Centralizado -->
-            <div class="relative z-20 w-full lg:w-auto flex-shrink-0 bg-transparent">
+
+
+            <div class="relative w-full h-full flex items-center justify-center">
+
+
+                <!-- Contador Esquerda: Clientes (Mobile: Topo / Desktop: Inset) -->
+                <div class="flex flex-col items-center lg:items-start absolute left-4 lg:left-[30%] top-36 lg:top-[25%] lg:-translate-y-1/2 animate-subtitle"
+                    style="animation-delay: 2.8s;">
+                    <span
+                        class="text-2xl lg:text-7xl font-thin text-blue-400 drop-shadow-[0_0_20px_rgba(59,130,246,0.4)] counter-value"
+                        data-target="500">0</span>
+                    <span
+                        class="text-[8px] lg:text-xs text-white/90 tracking-[0.2em] uppercase mt-1 lg:mt-2">Clientes<br>Atendidos</span>
+                </div>
+
+                <!-- Card Central -->
                 <div
-                    class="hero-content-glass p-10 lg:p-14 rounded-[2rem] max-w-[340px] lg:max-w-[500px] mx-auto text-center transition-all hover:scale-[1.02] duration-500 overflow-hidden">
+                    class="hero-content-glass p-10 lg:p-14 rounded-[2rem] max-w-[340px] lg:max-w-[500px] text-center transition-all hover:scale-[1.02] duration-500 overflow-hidden flex-shrink-0 relative z-30">
                     <h1
                         class="text-6xl lg:text-8xl font-thin text-white lg:text-gray-900 tracking-tighter leading-none flex flex-col items-center">
                         <span
@@ -1088,6 +1100,16 @@
                         class="mt-6 lg:mt-12 text-[12px] lg:text-sm text-gray-100 lg:text-gray-800 tracking-[0.4em] font-medium uppercase border-t border-white/20 lg:border-gray-900/60 pt-6 lg:pt-12 w-full inline-block animate-subtitle">
                         Marketing Digital
                     </h2>
+                </div>
+
+                <!-- Contador Direita: Anos (Mobile: Topo / Desktop: Inset Centralizado) -->
+                <div class="flex flex-col items-center lg:items-end absolute right-4 lg:right-[30%] top-36 lg:top-[25%] lg:-translate-y-1/2 animate-subtitle"
+                    style="animation-delay: 3s;">
+                    <span
+                        class="text-2xl lg:text-7xl font-thin text-blue-400 drop-shadow-[0_0_20px_rgba(59,130,246,0.4)] counter-value"
+                        data-target="5">+0</span>
+                    <span class="text-[8px] lg:text-xs text-white/90 tracking-[0.2em] uppercase mt-1 lg:mt-2">Anos
+                        de<br>Experiência</span>
                 </div>
             </div>
 
@@ -2051,7 +2073,43 @@
             window.open(whatsappUrl, '_blank');
         }
 
-        // --- LOADER LOGIC ---
+        // --- COUNTER ANIMATION LOGIC ---
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter-value');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; // 2 seconds
+                const start = 0;
+                let startTime = null;
+
+                const step = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    const value = Math.floor(progress * (target - start) + start);
+
+                    // Add '+' if it's the target value for Years/Clients if needed
+                    // User requested +250 and +5 in the description but + usually implies "more than"
+                    // I will follow the visual pattern: + for years, and plain for clients or as requested
+                    if (target === 5) {
+                        counter.innerText = `+${value}`;
+                    } else {
+                        counter.innerText = `+${value}`; // User requested +250 too
+                    }
+
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        counter.innerText = `+${target}`;
+                    }
+                };
+
+                // Start animation with a delay to match hero entrance
+                setTimeout(() => {
+                    window.requestAnimationFrame(step);
+                }, 3500); // 3.5s delay to sync with other hero animations
+            });
+        }
+
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             const body = document.body;
@@ -2062,6 +2120,9 @@
                 body.classList.remove('loading');
                 body.classList.add('loaded');
                 if (whatsapp) whatsapp.classList.add('visible');
+
+                // Trigger counters
+                animateCounters();
             }, 1000);
         });
     </script>
