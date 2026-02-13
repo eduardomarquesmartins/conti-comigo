@@ -240,8 +240,8 @@
 
         .image-modal img,
         .video-modal video {
-            max-width: 90%;
-            max-height: 85vh;
+            max-width: 95%;
+            max-height: 90vh;
             object-fit: contain;
             border-radius: 8px;
             transform: scale(0.9);
@@ -280,10 +280,20 @@
 
         .video-modal-content {
             width: 100%;
-            max-width: 500px;
-
+            max-width: 1000px;
             position: relative;
-            padding: 0 20px;
+            padding: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .video-modal-content {
+                padding: 5px;
+            }
+
+            .video-modal video {
+                max-width: 100%;
+                border-radius: 0;
+            }
         }
 
 
@@ -919,13 +929,13 @@
 
             0%,
             100% {
-                text-shadow: 0 0 0px rgba(37, 99, 235, 0);
+                text-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
                 transform: scale(1);
             }
 
             50% {
-                text-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
-                transform: scale(1.02);
+                text-shadow: 0 0 20px rgba(37, 99, 235, 0.8), 0 0 35px rgba(37, 99, 235, 0.4);
+                transform: scale(1.05);
             }
         }
 
@@ -1250,7 +1260,7 @@
                 </span>
                 <h2
                     class="text-4xl md:text-6xl lg:text-7xl font-thin text-white leading-[0.9] tracking-tighter uppercase italic mb-8">
-                    NOSSAS <span class="text-blue-600 block md:inline">SOLUÇÕES</span>
+                    NOSSAS <span class="text-blue-600 animate-pulse-blue block md:inline">SOLUÇÕES</span>
                 </h2>
                 <div class="w-12 h-1 bg-blue-600 mb-8 mt-2"></div>
                 <p
@@ -1585,19 +1595,21 @@
 
                 <div class="flex flex-col justify-center">
                     <h2 class="text-4xl md:text-5xl font-light tracking-tighter text-gray-900 mb-8 uppercase">
-                        CONHEÇA <span class="text-blue-600">& </span>CONTI
+                        CONHEÇA <span class="text-blue-600 animate-pulse-blue">& </span> CONTI
                     </h2>
 
                     <div class="space-y-6 text-gray-700 leading-relaxed text-sm md:text-base">
                         <p>
-                            A <span class="font-normal">&CONTI</span> nasceu da paixão por transformar negócios através
+                            A <span class="font-normal text-blue-600 animate-pulse-blue">&CONTI</span> nasceu da paixão
+                            por transformar negócios através
                             de
                             soluções completas de marketing, tanto online quanto offline.
                             Fundada por Eduarda Conti, nosso nome simboliza a ideia de sempre contar com a gente.
                         </p>
 
                         <p>
-                            O símbolo & (ampersand) representa parceria, adição e crescimento. Nossa proposta é
+                            O símbolo <span class="text-blue-600 animate-pulse-blue">&</span> (ampersand) representa
+                            parceria, adição e crescimento. Nossa proposta é
                             proporcionar excelência com atendimento personalizado, valorizando a proximidade e o
                             relacionamento genuíno com nossos clientes.
                         </p>
@@ -1923,8 +1935,8 @@
 
             // --- 3. REVEAL OBSERVER ---
             const revealOptions = {
-                threshold: 0.15,
-                rootMargin: "0px 0px -50px 0px"
+                threshold: 0.05, // Lowered for better mobile trigger
+                rootMargin: "0px 0px -20px 0px"
             };
 
             const revealObserver = new IntersectionObserver((entries) => {
@@ -1995,7 +2007,7 @@
                 body.classList.remove('loading');
                 body.classList.add('loaded');
                 if (whatsapp) whatsapp.classList.add('visible');
-            }, 3000);
+            }, 2000);
         });
     </script>
 
