@@ -12,7 +12,7 @@
         ASSEMBLE_DURATION: 0.15,
         HOLD_DURATION: 0.45,
         FOCAL_LENGTH: 1200,
-        SHARD_COUNT: 1800,
+        SHARD_COUNT: 3000,
         IA_TEXT: "I A"
     };
 
@@ -817,15 +817,25 @@
         updateLayout();
         sampleTexts();
         shards = [];
-        const particleCount = (W < 900) ? 1200 : 2500; // Increased sample size for better definition
+        const particleCount = CONFIG.SHARD_COUNT;
 
-        setTimeout(() => {
-            for (let i = 0; i < particleCount; i++) {
+        // Distribuímos a criação em pequenos blocos para não travar o navegador
+        let i = 0;
+        function createBatch() {
+            const batchSize = 200;
+            const end = Math.min(i + batchSize, particleCount);
+
+            for (; i < end; i++) {
                 const s = new Shard();
                 s.generateAllTargets();
                 shards.push(s);
             }
-        }, 50);
+
+            if (i < particleCount) {
+                setTimeout(createBatch, 5);
+            }
+        }
+        createBatch();
     }
 
     let time = 0;
@@ -882,10 +892,15 @@
     // ═══════════════════════════════════════════
     //  EVENT LISTENERS
     // ═══════════════════════════════════════════
+    // Debounced Resize
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-        updateLayout();
-        sampleTexts();
-        shards.forEach(s => s.generateAllTargets());
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            updateLayout();
+            sampleTexts();
+            shards.forEach(s => s.generateAllTargets());
+        }, 250);
     });
 
     init();
