@@ -2145,27 +2145,32 @@
             });
         }
 
+        const hidePreloader = () => {
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+            const whatsapp = document.querySelector('.whatsapp-float');
+
+            if (preloader && !preloader.classList.contains('hidden')) {
+                preloader.classList.add('hidden');
+                body.classList.remove('loading');
+                body.classList.add('loaded');
+                if (whatsapp) whatsapp.classList.add('visible');
+                animateCounters();
+            }
+        };
+
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             const body = document.body;
             const whatsapp = document.querySelector('.whatsapp-float');
 
-            const hidePreloader = () => {
-                if (preloader && !preloader.classList.contains('hidden')) {
-                    preloader.classList.add('hidden');
-                    body.classList.remove('loading');
-                    body.classList.add('loaded');
-                    if (whatsapp) whatsapp.classList.add('visible');
-                    animateCounters();
-                }
-            };
-
             // Main load trigger (with small grace delay)
             setTimeout(hidePreloader, 1000);
-
-            // Safety fallback (Max 3s)
-            setTimeout(hidePreloader, 3000);
         });
+
+        // Safety fallback (Max 4s) - Moved outside load listener for robustness
+        setTimeout(hidePreloader, 4000);
+
     </script>
 
     <!-- 3D Cinema Animation -->
