@@ -374,14 +374,44 @@
 @media (max-width: 900px) {
     .process-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
+    }
+
+    .process-step {
+        padding: 1.5rem 0.75rem;
     }
 
     .process-step:not(:last-child)::after,
     .process-step:not(:last-child)::before {
         display: none;
     }
+
+    .process-number {
+        width: 52px;
+        height: 52px;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .process-title {
+        font-size: 1rem;
+    }
+
+    .process-desc {
+        font-size: 0.8rem;
+        max-width: 100%;
+    }
 }
+
+@media (max-width: 480px) {
+    .process-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+
 
 .step-section {
     height: 150vh;
