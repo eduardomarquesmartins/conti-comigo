@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Apresentação | & CONTI</title>
+    <link rel="icon" type="image/png" href="assets/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --accent: #7dd3fc;
+            --bg-dark: #020617;
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .premium-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: -0.04em;
+        }
+
+        /* Initial Setup for Reveals */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body class="bg-dark antialiased">
+    <div class="glow-overlay"></div>
+
+    <main class="relative z-10">
+        <!-- Hero Section with Parallax -->
+        <section id="slide-0" class="parallax-wrap h-screen flex items-center justify-center">
+            <img src="assets/backgroundprincp - Editado.jpg" class="parallax-bg" alt="Hero Background">
+            <div class="max-w-7xl mx-auto px-10 text-center">
+                <div class="section-reveal">
+                    <span class="text-sky-300 text-sm font-light tracking-[0.6em] uppercase mb-6 block">Sua história,
+                        nosso motor</span>
+                    <h1 class="premium-title text-6xl md:text-9xl leading-none mb-4 underline-animate">CONTI <span
+                            class="text-sky-400 block md:inline">COMIGO</span></h1>
+                    <div class="w-20 h-px bg-sky-400/50 mx-auto mb-10"></div>
+
+                    <!-- Presentation Start Button -->
+                    <button onclick="startPresentation()"
+                        class="group relative px-8 py-4 bg-transparent border border-sky-400/30 rounded-full overflow-hidden transition-all hover:border-sky-400">
+                        <div
+                            class="absolute inset-0 bg-sky-400/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        </div>
+                        <span
+                            class="relative premium-title text-xs tracking-[0.2em] text-sky-300 group-hover:text-white">Iniciar
+                            Apresentação</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+                <span class="text-[10px] uppercase tracking-[0.4em]">Explore</span>
+                <div class="w-px h-12 bg-gradient-to-b from-blue-600 to-transparent"></div>
+            </div>
+        </section>
+
+        <!-- Slide 1: Conheça nossa história - Parte 1 (Images 1 & 2) -->
+        <section id="slide-1" class="relative min-h-screen overflow-hidden flex flex-col bg-[#0a0a0a] text-white">
+            <div class="flex-1 flex flex-col md:flex-row h-full">
+                <div class="flex-1 relative overflow-hidden group">
+                    <img src="conheça nossa historia/1.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 1">
+                </div>
+                <div class="flex-1 relative overflow-hidden group border-t md:border-t-0 md:border-l border-white/5">
+                    <img src="conheça nossa historia/2.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 2">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Conheça nossa história - Parte 2 (Images 3 & 4) -->
+        <!-- Slide 2: Conheça nossa história - Parte 2 (Images 3 & 4) -->
+        <section id="slide-2" class="relative min-h-screen overflow-hidden flex flex-col bg-[#0a0a0a] text-white">
+            <div class="flex-1 flex flex-col md:flex-row h-full">
+                <div class="flex-1 relative overflow-hidden group">
+                    <img src="conheça nossa historia/3.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 3">
+                </div>
+                <div class="flex-1 relative overflow-hidden group border-t md:border-t-0 md:border-l border-white/5">
+                    <img src="conheça nossa historia/4.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 4">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Conheça nossa história - Parte 3 (Images 5 & 6) -->
+        <!-- Slide 3: Conheça nossa história - Parte 3 (Images 5 & 6) -->
+        <section id="slide-3" class="relative min-h-screen overflow-hidden flex flex-col bg-[#0a0a0a] text-white">
+            <div class="flex-1 flex flex-col md:flex-row h-full">
+                <div class="flex-1 relative overflow-hidden group">
+                    <img src="conheça nossa historia/5.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 5">
+                </div>
+                <div class="flex-1 relative overflow-hidden group border-t md:border-t-0 md:border-l border-white/5">
+                    <img src="conheça nossa historia/6.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 6">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Conheça nossa história - Parte 4 (Images 7 & 8) -->
+        <!-- Slide 4: Conheça nossa história - Parte 4 (Images 7 & 8) -->
+        <section id="slide-4" class="relative min-h-screen overflow-hidden flex flex-col bg-[#0a0a0a] text-white">
+            <div class="flex-1 flex flex-col md:flex-row h-full">
+                <div class="flex-1 relative overflow-hidden group">
+                    <img src="conheça nossa historia/7.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 7">
+                </div>
+                <div class="flex-1 relative overflow-hidden group border-t md:border-t-0 md:border-l border-white/5">
+                    <img src="conheça nossa historia/8.jpg"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        alt="História 8">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Conheça nossa história - Parte 5 (Image 9) -->
+        <!-- Slide 5: Conheça nossa história - Parte 5 (Image 9) -->
+        <section id="slide-5"
+            class="relative min-h-screen overflow-hidden flex flex-col items-center justify-center bg-[#0a0a0a] text-white">
+            <img src="conheça nossa historia/9.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90"
+                alt="História 9">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/20"></div>
+        </section>
+
+        <!-- Slide 6: Portfólio Intro -->
+        <section id="slide-6"
+            class="relative min-h-screen overflow-hidden flex flex-col items-center justify-center bg-premium-silk text-white">
+            <div
+                class="absolute inset-0 opacity-10 bg-[url('grain-transparent.png')] pointer-events-none mix-blend-overlay">
+            </div>
+            <!-- Huge Background Watermark -->
+            <div
+                class="absolute inset-x-0 bottom-[-10%] flex items-end justify-center opacity-[0.03] select-none pointer-events-none">
+                <span class="text-[30vw] font-bold tracking-tighter leading-none whitespace-nowrap">& CONTI</span>
+            </div>
+
+            <div class="relative z-10 text-center section-reveal">
+                <h2
+                    class="text-7xl md:text-9xl font-bold tracking-tighter mb-4 logo-gradient bg-clip-text text-transparent">
+                    & CONTI
+                </h2>
+                <p class="text-2xl md:text-4xl font-normal tracking-widest uppercase opacity-90">
+                    Nosso Portfólio
+                </p>
+            </div>
+            <!-- Small Footer Watermark -->
+            <div class="absolute bottom-10 right-10 opacity-50">
+                <span class="text-sm font-light tracking-widest uppercase">& CONTI</span>
+            </div>
+        </section>
+
+        <!-- Slide 7: Serviços & Ecossistema -->
+        <section id="slide-7"
+            class="relative min-h-screen overflow-hidden flex items-center bg-[#121212] text-white py-20">
+            <div
+                class="absolute inset-0 opacity-10 bg-[url('grain-transparent.png')] pointer-events-none mix-blend-overlay">
+            </div>
+
+            <div
+                class="max-w-7xl mx-auto px-10 relative z-10 w-full grid grid-cols-1 md:grid-cols-2 gap-20 items-center h-full">
+                <!-- Left Column: Services Text -->
+                <div class="flex flex-col items-start gap-8 section-reveal h-full justify-center">
+                    <h2 class="text-3xl md:text-5xl font-light leading-tight tracking-wide">
+                        Design,<br>
+                        Audiovisual,<br>
+                        Gestão digital,<br>
+                        <span class="font-light">Tráfego pago.</span>
+                    </h2>
+
+                    <div class="pill-gradient-border p-[1px] rounded-full mt-4">
+                        <div class="bg-[#121212] rounded-full px-8 py-3">
+                            <span class="text-sm md:text-base tracking-widest uppercase font-light">alto padrão</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Digital Ecosystem "Solar System" -->
+                <div
+                    class="relative h-[600px] w-full section-reveal delay-100 flex items-center justify-center overflow-visible">
+
+                    <!-- Central Core (Sun) -->
+                    <div
+                        class="relative z-20 w-24 h-24 rounded-full bg-white flex items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.4)] animate-pulse">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48">
+                            <path fill="#FFC107"
+                                d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                            <path fill="#FF3D00"
+                                d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                            <path fill="#4CAF50"
+                                d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                            <path fill="#1976D2"
+                                d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                        </svg>
+                    </div>
+
+                    <!-- Orbiting Rings & Planets -->
+
+                    <!-- Meta Orbit -->
+                    <div class="orbit-wrap orbit-meta ring-1 ring-white/10">
+                        <div
+                            class="orbit-node orbit-node-meta w-14 h-14 rounded-full bg-blue-600 flex flex-col items-center justify-center shadow-lg">
+                            <span
+                                class="text-[8px] text-white/90 font-light uppercase tracking-tighter mb-0">Meta</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M8.217 5.243C9.145 3.988 10.171 3 11.483 3 13.96 3 16 6.153 16.001 9.907c0 2.29-.986 3.725-2.757 3.725-1.543 0-2.395-.866-3.924-3.424l-.667-1.123-.118-.197a55 55 0 0 0-.53-.877l-1.178 2.08c-1.673 2.925-2.615 3.541-3.923 3.541C1.086 13.632 0 12.217 0 9.973 0 6.388 1.995 3 4.598 3q.477-.001.924.122c.31.086.611.22.913.407.577.359 1.154.915 1.782 1.714m1.516 2.224q-.378-.615-.727-1.133L9 6.326c.845-1.305 1.543-1.954 2.372-1.954 1.723 0 3.102 2.537 3.102 5.653 0 1.188-.39 1.877-1.195 1.877-.773 0-1.142-.51-2.61-2.87zM4.846 4.756c.725.1 1.385.634 2.34 2.001A212 212 0 0 0 5.551 9.3c-1.357 2.126-1.826 2.603-2.581 2.603-.777 0-1.24-.682-1.24-1.9 0-2.602 1.298-5.264 2.846-5.264q.137 0 .27.018" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Instagram Orbit -->
+                    <div class="orbit-wrap orbit-insta ring-1 ring-white/10">
+                        <div
+                            class="orbit-node orbit-node-insta w-24 h-24 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] flex items-center justify-center shadow-lg shadow-purple-900/40">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76c-.198.509-.333 1.078-.373 1.931C.01 5.556 0 5.829 0 8s.01 2.444.048 3.297c.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.828 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.172 16 8s-.01-2.444-.048-3.297c-.04-.852-.175-1.433-.372-1.942a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 8 0zm0 1.44c2.168 0 2.427.01 3.283.048.785.037 1.21.167 1.491.276.374.145.64.319.92.599.28.28.453.546.598.92.11.281.24.706.275 1.491.038.855.048 1.114.048 3.283s-.01 2.427-.048 3.283c-.037.785-.167 1.21-.276 1.491-.145.374-.319.64-.599.92-.28.28-.546.453-.92.598-.281.11-.706.24-1.491.275-.855.038-1.114.048-3.283.048s-2.427-.01-3.283-.048c-.785-.037-1.21-.167-1.491-.276a2.486 2.486 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.706-.275-1.491-.038-.856-.048-1.114-.048-3.283s.01-2.427.048-3.283c.037-.785.167-.1.276-1.491.145-.374.319-.64.599-.92.28-.28.546-.453.92-.598.281-.11.706-.24 1.491-.275.855-.038 1.114-.048 3.283-.048zm0 2.44a3.878 3.878 0 1 0 0 7.756 3.878 3.878 0 0 0 0-7.756zm0 6.316a2.438 2.438 0 1 1 0-4.876 2.438 2.438 0 0 1 0 4.876zM13.168 3.32a.96.96 0 1 1-1.92 0 .96.96 0 0 1 1.92 0z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Facebook Orbit -->
+                    <div class="orbit-wrap orbit-fb ring-1 ring-white/10">
+                        <div
+                            class="orbit-node orbit-node-fb w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Orbit -->
+                    <div class="orbit-wrap orbit-analytics ring-1 ring-white/10">
+                        <div
+                            class="orbit-node orbit-node-analytics w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Small Footer Watermark -->
+            <div class="absolute bottom-10 right-10 opacity-50 z-10">
+                <span class="text-sm font-bold tracking-widest uppercase">& CONTI</span>
+            </div>
+        </section>
+
+        <!-- Slide 8: Quem Somos Section -->
+        <section id="slide-8"
+            class="relative bg-[#f7f5f2] text-[#1e293b] py-32 overflow-hidden min-h-screen flex items-center">
+            <!-- Background Grain/Texture (Pseudo-element or helper) -->
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style="background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');"></div>
+
+            <div class="max-w-7xl mx-auto px-10 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+                    <!-- Left Content: Text & Socials -->
+                    <div class="section-reveal">
+                        <!-- Branding / Logo Badge -->
+                        <div class="mb-12">
+                            <div class="inline-flex items-center bg-[#2563eb] px-6 py-3 rounded-xl shadow-lg">
+                                <span class="premium-title text-white text-2xl tracking-tighter italic">& CONTI</span>
+                            </div>
+                        </div>
+
+                        <h2 class="premium-title text-6xl md:text-8xl mb-12 leading-tight italic tracking-tight">
+                            <span class="text-[#0089d0]">quem</span> <span class="text-[#1e3a8a]">somos</span>
+                        </h2>
+
+                        <div class="space-y-6 text-[#475569] font-light leading-relaxed text-lg max-w-xl">
+                            <p>Somos uma empresa dedicada a impulsionar o crescimento do seu negócio por meio de imagem,
+                                design, performance e audiovisual!</p>
+                            <p>Oferecemos soluções abrangentes de marketing, tanto online quanto offline!</p>
+                            <p>Nosso compromisso é proporcionar excelência com um atendimento personalizado, valorizando
+                                a proximidade e o relacionamento com os nossos clientes, e tudo isso por um valor que
+                                cabe no seu bolso.</p>
+                            <p class="italic text-blue-900 font-medium">Conti com a gente!</p>
+                        </div>
+
+                        <!-- Social & Buttons -->
+                        <div class="mt-12 flex flex-wrap items-center gap-6">
+                            <!-- Switch/Pill Button -->
+                            <div
+                                class="flex items-center bg-blue-100 rounded-full p-1 group cursor-pointer hover:bg-blue-200 transition-colors">
+                                <div
+                                    class="bg-blue-600 text-white p-3 rounded-full shadow-lg group-hover:scale-105 transition-transform">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                    </svg>
+                                </div>
+                                <span class="px-5 text-blue-900 text-xs uppercase tracking-widest font-light">Agendar
+                                    Consultoria</span>
+                            </div>
+
+                            <!-- Social Icons -->
+                            <div class="flex items-center gap-5 opacity-80">
+                                <a href="#" class="text-gray-900 hover:text-blue-600 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063c.632 1.896 2.405 3.304 4.492 3.304 1.108 0 2.04-.293 2.756-.793 1.017-.708 1.625-1.742 1.764-3.085H8.34V6.558h7.205z" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="text-gray-900 hover:text-blue-600 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="text-gray-900 hover:text-blue-600 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76c-.198.509-.333 1.078-.373 1.931C.01 5.556 0 5.829 0 8s.01 2.444.048 3.297c.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.828 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.172 16 8s-.01-2.444-.048-3.297c-.04-.852-.175-1.433-.372-1.942a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 8 0zm0 1.44c2.168 0 2.427.01 3.283.048.785.037 1.21.167 1.491.276.374.145.64.319.92.599.28.28.453.546.598.92.11.281.24.706.275 1.491.038.855.048 1.114.048 3.283s-.01 2.427-.048 3.283c-.037.785-.167 1.21-.276 1.491-.145.374-.319.64-.599.92-.28.28-.546.453-.92.598-.281.11-.706.24-1.491.275-.855.038-1.114.048-3.283.048s-2.427-.01-3.283-.048c-.785-.037-1.21-.167-1.491-.276a2.486 2.486 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.706-.275-1.491-.038-.856-.048-1.114-.048-3.283s.01-2.427.048-3.283c.037-.785.167-.1.276-1.491.145-.374.319-.64.599-.92.28-.28.546-.453.92-.598.281-.11.706-.24 1.491-.275.855-.038 1.114-.048 3.283-.048zm0 2.44a3.878 3.878 0 1 0 0 7.756 3.878 3.878 0 0 0 0-7.756zm0 6.316a2.438 2.438 0 1 1 0-4.876 2.438 2.438 0 0 1 0 4.876zM13.168 3.32a.96.96 0 1 1-1.92 0 .96.96 0 0 1 1.92 0z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content: Pixel-Perfect Brand Mark -->
+                    <div class="relative section-reveal delay-200">
+                        <div class="watermark-container flex justify-center md:justify-end">
+                            <div class="relative inline-block select-none transform rotate-[-3deg]">
+                                <!-- Stacked Text -->
+                                <div class="flex flex-col text-black leading-[0.7] tracking-tighter">
+                                    <span
+                                        class="premium-title text-[9rem] md:text-[13rem] font-black brand-grain">CO</span>
+                                    <span
+                                        class="premium-title text-[9rem] md:text-[13rem] font-black brand-grain flex items-start">
+                                        NT<span class="nti-fade">I</span>
+                                    </span>
+                                </div>
+                                <!-- Ampersand positioned relatively to the text -->
+                                <span
+                                    class="premium-title absolute top-1/2 -left-12 md:-left-16 -translate-y-1/2 text-4xl md:text-6xl text-black font-black">&</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        </section>
+
+        <!-- Slide 9: Produtos e Serviços -->
+        <section id="slide-9"
+            class="relative bg-[#f7f5f2] text-[#1e293b] py-32 overflow-hidden min-h-screen flex items-center border-t border-gray-200">
+            <!-- Vertical Watermark (Right Side) -->
+            <div
+                class="absolute right-[-5%] top-1/2 -translate-y-1/2 opacity-[0.08] pointer-events-none transform rotate-90 select-none">
+                <span
+                    class="premium-title text-[15rem] md:text-[25rem] text-blue-900 font-light tracking-tighter">CONTI</span>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-10 relative z-10 w-full">
+                <!-- Header of the slide -->
+                <div class="flex flex-col md:flex-row items-center gap-6 mb-16 section-reveal">
+                    <div class="bg-blue-600 px-4 py-2 rounded-lg">
+                        <span class="premium-title text-white text-lg italic">& CONTI</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="bg-blue-600 text-white p-2 rounded-full transform rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                            </svg>
+                        </div>
+                        <h2 class="premium-title text-3xl md:text-5xl italic tracking-tight font-light">
+                            Conheça nossos <span class="text-blue-900 font-normal">produtos e serviços.</span>
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Service Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Marketing Digital -->
+                    <div
+                        class="section-reveal glass-light p-10 rounded-[2.5rem] border-2 border-blue-900/10 hover:border-blue-600 transition-all duration-500">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="premium-title text-2xl font-normal text-blue-900">Marketing Digital</h3>
+                            <div class="text-blue-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 text-gray-600 font-light text-sm leading-relaxed">
+                            <li>- Criação, gestão e mentoria de redes sociais;</li>
+                            <li>- Elaboração de conteúdos e pautas;</li>
+                            <li>- Embelezamento e organização de feed;</li>
+                            <li>- Estratégias de tráfego pago e impulsionamento;</li>
+                            <li>- Ficha do google meu negócio;</li>
+                            <li>- Criação de sites.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Audiovisual -->
+                    <div
+                        class="section-reveal delay-100 glass-light p-10 rounded-[2.5rem] border-2 border-blue-900/10 hover:border-blue-600 transition-all duration-500">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="premium-title text-2xl font-normal text-blue-900">Audiovisual</h3>
+                            <div class="text-blue-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 text-gray-600 font-light text-sm leading-relaxed">
+                            <li>- Serviço de fotografia;</li>
+                            <li>- Direção, roteiro e sonorização de vídeos;</li>
+                            <li>- Vídeos aéreos com drone;</li>
+                            <li>- Produção para reels, IGTV e vídeos institucionais;</li>
+                            <li>- Edição de fotos e vídeos.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Design -->
+                    <div
+                        class="section-reveal delay-200 glass-light p-10 rounded-[2.5rem] border-2 border-blue-900/10 hover:border-blue-600 transition-all duration-500">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="premium-title text-2xl font-normal text-blue-900">Design</h3>
+                            <div class="text-blue-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 text-gray-600 font-light text-sm leading-relaxed">
+                            <li>- Criação de manual de identidade visual;</li>
+                            <li>- Criação e/ou edição de logos;</li>
+                            <li>- Artes digitais para as redes sociais, powerpoint e PDF's;</li>
+                            <li>- Artes offline como cartões, panfletos e outros;</li>
+                            <li>- Criação de catálogos;</li>
+                            <li>- Estratégias de layout de diferentes documentos.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </section>
+
+        <!-- Slide 10: Porque ter a &CONTI -->
+        <section id="slide-10"
+            class="relative bg-[#f7f5f2] text-[#1e293b] py-32 overflow-hidden min-h-screen flex items-center border-t border-gray-200">
+            <!-- Background Decoration -->
+            <div class="absolute inset-0 opacity-[0.05] pointer-events-none bg-grain"></div>
+
+            <div class="max-w-7xl mx-auto px-10 relative z-10 w-full">
+                <h2 class="premium-title text-4xl md:text-6xl mb-20 leading-tight italic tracking-tight section-reveal">
+                    Porque ter a <span class="text-blue-600">&</span><span class="text-blue-900">CONTI</span> <br
+                        class="hidden md:block">
+                    <span class="font-light">para gerenciar suas redes?</span>
+                </h2>
+
+                <!-- Benefits Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Somos especialistas -->
+                    <div
+                        class="section-reveal benefit-card p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600"></div>
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="premium-title text-xl font-normal text-slate-800 leading-tight">
+                                Somos<br>especialistas</h3>
+                            <div class="bg-blue-600 text-white p-2 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-500 font-light text-sm leading-relaxed">Nossa equipe é especializada e
+                            experiente em estratégias de marketing digital, gerenciamento de mídias sociais e produção
+                            audiovisual.</p>
+                    </div>
+
+                    <!-- Constância -->
+                    <div
+                        class="section-reveal delay-100 benefit-card p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-red-500"></div>
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="premium-title text-xl font-normal text-slate-800 leading-tight">Constância</h3>
+                            <div class="text-blue-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-500 font-light text-sm leading-relaxed">Asseguramos que sua marca seja
+                            constantemente visível nas redes sociais, construindo uma identidade sólida e facilmente
+                            identificável.</p>
+                    </div>
+
+                    <!-- Análise -->
+                    <div
+                        class="section-reveal delay-200 benefit-card p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-cyan-500">
+                        </div>
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="premium-title text-xl font-normal text-slate-800 leading-tight">Análise</h3>
+                            <div class="text-blue-900 border-2 border-blue-900 rounded-full p-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-500 font-light text-sm leading-relaxed">Conduzimos análises detalhadas de
+                            desempenho, o que possibilita decisões mais precisas e bem-sucedidas, gerando assim
+                            estratégias eficientes.</p>
+                    </div>
+
+                    <!-- Criatividade -->
+                    <div
+                        class="section-reveal delay-300 benefit-card p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+                        <div
+                            class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-300 via-orange-500 to-red-500">
+                        </div>
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="premium-title text-xl font-normal text-slate-800 leading-tight">Criatividade</h3>
+                            <div class="text-blue-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 8.5 13h-1a.5.5 0 0 1-.46-.3l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-gray-500 font-light text-sm leading-relaxed">Acompanhamos as trends e mudanças,
+                            oferecendo ideias novas e criativas para engajar sua audiência.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Slide 11: Feedback -->
+        <section id="slide-11"
+            class="relative bg-[#f7f5f2] text-[#1e293b] pt-32 pb-48 overflow-hidden min-h-screen flex items-center border-t border-gray-200">
+            <!-- Decorative "feedback" Background Text -->
+            <div
+                class="absolute bottom-[-2%] md:bottom-[-5%] left-1/2 -translate-x-1/2 opacity-[0.1] pointer-events-none select-none w-[120%] text-center">
+                <span
+                    class="premium-title text-[15rem] md:text-[28rem] text-blue-900 font-light tracking-tighter lowercase leading-none">feedback</span>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-10 relative z-10 w-full mb-20">
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row items-center gap-6 mb-16 section-reveal">
+                    <div class="bg-blue-600 px-4 py-2 rounded-lg">
+                        <span class="premium-title text-white text-lg italic">& CONTI</span>
+                    </div>
+                    <h2 class="premium-title text-3xl md:text-5xl italic tracking-tight font-light">
+                        O que <span class="text-blue-900 font-normal">falam da &CONTI?</span>
+                    </h2>
+                </div>
+
+                <!-- Testimonials Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- SOS Casa Limpa -->
+                    <div
+                        class="section-reveal testimonial-card p-10 rounded-[2.5rem] bg-white/80 backdrop-blur-md border border-gray-100 shadow-xl relative group">
+                        <div
+                            class="absolute inset-0 rounded-[2.5rem] border-2 border-transparent bg-gradient-to-br from-blue-400/20 via-transparent to-orange-400/20 pointer-events-none">
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="premium-title text-xl font-bold text-slate-800">@soscasalimpapoa</h4>
+                        </div>
+                        <p class="text-gray-600 font-light text-sm leading-relaxed mb-8">
+                            Olá, bom dia! Eu, da SOS Casa Limpa, só tenho a agradecer à &Conti por todo o desempenho e
+                            dedicação nesse trabalho. Minha empresa está crescendo nas redes sociais.
+                        </p>
+                        <div class="flex gap-1 text-yellow-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Sul Rádio Web -->
+                    <div
+                        class="section-reveal delay-100 testimonial-card p-10 rounded-[2.5rem] bg-white/80 backdrop-blur-md border border-gray-100 shadow-xl relative group">
+                        <div
+                            class="absolute inset-0 rounded-[2.5rem] border-2 border-transparent bg-gradient-to-br from-blue-400/20 via-transparent to-orange-400/20 pointer-events-none">
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="premium-title text-xl font-bold text-slate-800">@sulradioweb.rs</h4>
+                        </div>
+                        <p class="text-gray-600 font-light text-sm leading-relaxed mb-8">
+                            A parceria com vocês da &Conti tem sido fundamental para o nosso sucesso. O comprometimento
+                            e dedicação à nossa marca são evidentes em cada projeto que realizamos juntos. Nós, da Sul
+                            Rádio Web, só temos a agradecer.
+                        </p>
+                        <div class="flex gap-1 text-yellow-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- @cliqueurbanofotos -->
+                    <div
+                        class="section-reveal delay-200 testimonial-card p-10 rounded-[2.5rem] bg-white/80 backdrop-blur-md border border-gray-100 shadow-xl relative group">
+                        <div
+                            class="absolute inset-0 rounded-[2.5rem] border-2 border-transparent bg-gradient-to-br from-blue-400/20 via-transparent to-orange-400/20 pointer-events-none">
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="premium-title text-xl font-bold text-slate-800">@cliqueurbanofotos</h4>
+                        </div>
+                        <p class="text-gray-600 font-light text-sm leading-relaxed mb-8">
+                            Sem dúvidas o pessoal da &Conti é o melhor para cuidar do marketing da sua empresa! Tenho
+                            uma parceria com eles e estou muito satisfeito! Estamos sempre trocando ideias para que o
+                            resultado da minha empresa seja alcançado. Sempre vou recomendá-los, pois são ótimos no que
+                            fazem!
+                        </p>
+                        <div class="flex gap-1 text-yellow-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Footer -->
+            <footer
+                class="absolute bottom-10 left-0 w-full px-10 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-light tracking-widest uppercase gap-4">
+                <div class="flex items-center gap-4">
+                    <span>&copy; 2024 & CONTI COMIGO</span>
+                    <span class="opacity-30">|</span>
+                    <span>Marketing Digital de Alto Padrão</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hover:text-blue-600 transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-blue-600 transition-colors">Behance</a>
+                    <a href="#" class="hover:text-blue-600 transition-colors">Contato</a>
+                </div>
+            </footer>
+        </section>
+    </main>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

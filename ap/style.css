@@ -1,0 +1,322 @@
+/* ap/style.css */
+
+:root {
+    --accent: #7dd3fc;
+    --accent-glow: rgba(125, 211, 252, 0.3);
+    --bg-dark: #020617;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Glassmorphism utility */
+.glass {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-hover:hover {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px var(--accent-glow);
+}
+
+/* Section transitions */
+.section-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom underline animation */
+.underline-animate {
+    position: relative;
+    display: inline-block;
+}
+
+.underline-animate::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--accent);
+    transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.section-reveal.active .underline-animate::after {
+    width: 100%;
+}
+
+/* Parallax Effect */
+.parallax-wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+.parallax-bg {
+    position: absolute;
+    top: -10%;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.2;
+    transition: transform 0.1s ease-out;
+}
+
+/* Quem Somos Specific Styles */
+.brand-grain {
+    position: relative;
+    color: #111;
+}
+
+/* Texture overlay for the whole logo area - using a more pronounced grain */
+.watermark-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.15;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 5;
+}
+
+.nti-fade {
+    background: linear-gradient(to bottom, #111 40%, rgba(17, 17, 17, 0.1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+/* Light Glassmorphism for Service Cards */
+.glass-light {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Benefit Cards Specific Styles */
+.benefit-card {
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.benefit-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+/* Background Feedback Text Refinement */
+#slide-6 .premium-title {
+    user-select: none;
+}
+
+/* Coded Portfolio Slides - Phase 11 */
+.logo-gradient {
+    background-image: linear-gradient(90deg, #3b82f6 0%, #1e3a8a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-premium-silk {
+    background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+        linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+}
+
+.pill-gradient-border {
+    background: linear-gradient(90deg, #3b82f6 0%, #1e3a8a 100%);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) scale(1);
+    }
+
+    50% {
+        transform: translateY(-15px) scale(1.05);
+    }
+
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.delay-150 {
+    animation-delay: 1.5s;
+}
+
+.delay-300 {
+    animation-delay: 3s;
+}
+
+.delay-500 {
+    animation-delay: 5s;
+}
+
+.watermark-container span {
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Solar System Orbital Animations - Precise Centering Logic */
+@keyframes orbit-rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes orbit-counter-rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}
+
+.orbit-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Consistent orbital ring visibility */
+    animation: orbit-rotate linear infinite;
+    pointer-events: none;
+}
+
+.orbit-node {
+    position: absolute;
+    /* Centered at the top of its ring */
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbit-counter-rotate linear infinite;
+    pointer-events: auto;
+}
+
+/* Reverse orbit helper */
+.orbit-reverse {
+    animation-name: orbit-counter-rotate;
+}
+
+.orbit-reverse .orbit-node {
+    animation-name: orbit-rotate;
+}
+
+/* Specific Orbit Distances (Diameters) & Speeds */
+.orbit-meta {
+    width: 170px;
+    height: 170px;
+    animation-duration: 25s;
+    animation-delay: -5s;
+}
+
+.orbit-insta {
+    width: 290px;
+    height: 290px;
+    animation-duration: 40s;
+    animation-delay: -20s;
+}
+
+.orbit-fb {
+    width: 410px;
+    height: 410px;
+    animation-duration: 55s;
+    animation-delay: -10s;
+}
+
+.orbit-analytics {
+    width: 530px;
+    height: 530px;
+    animation-duration: 70s;
+    animation-delay: -40s;
+}
+
+/* Match node animation duration & delay to its parent ring */
+.orbit-node-meta {
+    animation-duration: 25s;
+    animation-delay: -5s;
+}
+
+.orbit-node-insta {
+    animation-duration: 40s;
+    animation-delay: -20s;
+}
+
+.orbit-node-fb {
+    animation-duration: 55s;
+    animation-delay: -10s;
+}
+
+.orbit-node-analytics {
+    animation-duration: 70s;
+    animation-delay: -40s;
+}
+
+.bg-grain {
+    background-image: url("https://www.transparenttextures.com/patterns/p6.png");
+}
+
+/* Custom shadow for the social pill */
+.social-pill-shadow {
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2), 0 8px 10px -6px rgba(37, 99, 235, 0.2);
+}
+
+/* History Slider Styles */
+.history-dot {
+    transition: all 0.3s ease !important;
+}
+
+.history-dot.active {
+    background-color: var(--accent) !important;
+    width: 24px !important;
+}
+
+.history-slider {
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5), 0 18px 36px -18px rgba(0, 0, 0, 0.5);
+}
+
+#history-slides-container {
+    will-change: transform;
+}
+
+@media (max-width: 768px) {
+    .history-slider {
+        aspect-ratio: 4/5 !important;
+    }
+}
