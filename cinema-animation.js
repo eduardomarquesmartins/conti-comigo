@@ -296,7 +296,7 @@
             return (stepI === 3) ? 4.0 + sP * 1.0 : (stepI + 1) + (sP * sP) * 0.5;
         }
         const extraS = relS - totalS, logoS = 500;
-        return 5.0 + Math.min(1.0, extraS / logoS) * 0.5;
+        return 5.0 + (extraS / logoS) * 0.5;
     }
 
     let shards = [];
@@ -322,7 +322,7 @@
         const fSR = getFloatStep(), fS = Math.min(fSR, 5.0);
         let alpha = 1;
         if (fSR < 0.8) alpha = fSR / 0.8;
-        else if (fSR > 5.8) alpha = Math.max(0, 1 - (fSR - 5.8) * 10);
+        else if (fSR > 5.5) alpha = Math.max(0, 1 - (fSR - 5.5) * 10);
         ctx.globalAlpha = alpha;
         if (alpha > 0) { canvas.style.display = 'block'; shards.forEach(s => s.draw(ctx, fS, time)); }
         else { canvas.style.display = 'none'; }
