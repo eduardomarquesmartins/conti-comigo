@@ -1,0 +1,2326 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>& CONTI - Marketing Digital</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+        }
+
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loader-text {
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.95);
+            }
+        }
+
+        html {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden !important;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body.loading {
+            overflow: hidden !important;
+        }
+
+
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            min-width: 100%;
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scroller {
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
+        }
+
+        .scroller-inner {
+            display: flex;
+            width: max-content;
+        }
+
+        .animate-scroll-left {
+            animation: scrollLeft 60s linear infinite;
+        }
+
+        .animate-scroll-right {
+            animation: scrollRight 60s linear infinite;
+        }
+
+        .scroller:hover .scroller-inner {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes scrollRight {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+
+        .portfolio-carousel {
+            width: 100%;
+            overflow: hidden;
+            padding: 80px 0;
+
+            background: #2563eb;
+
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .carousel-track {
+            width: 100%;
+            overflow: visible;
+            padding: 10px 0;
+            position: relative;
+            z-index: 1;
+            transition: z-index 0s;
+        }
+
+        .carousel-track:hover {
+            z-index: 10;
+        }
+
+        .carousel-inner {
+            display: flex;
+            gap: 60px;
+            animation: scrollLeft 90s linear infinite;
+            width: max-content;
+            align-items: center;
+        }
+
+
+        .image-modal,
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100001;
+
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+        }
+
+        .image-modal.active,
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .image-modal img,
+        .video-modal video {
+            max-width: 95%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-modal.active img,
+        .video-modal.active video {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 100002;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .video-modal-content {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            padding: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .video-modal-content {
+                padding: 5px;
+            }
+
+            .video-modal video {
+                max-width: 100%;
+                border-radius: 0;
+            }
+        }
+
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #000;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 99999;
+            transition: all 0.3s ease, opacity 0.8s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .whatsapp-float.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            background-color: #111;
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        .carousel-inner.reverse {
+            animation-direction: reverse;
+        }
+
+        .carousel-inner:hover {
+            animation-play-state: paused;
+        }
+
+        .carousel-inner img {
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+
+        .carousel-inner img:hover {
+            transform: scale(1.35);
+            z-index: 9999;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+
+        .parceiro-card {
+            background: transparent;
+            padding: 10px;
+            width: 220px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            overflow: visible;
+            border: none;
+        }
+
+        .parceiro-card:hover {
+            transform: scale(1.1);
+        }
+
+        .parceiro-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 36px;
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.12));
+            opacity: 1;
+            transition: all 0.4s ease;
+        }
+
+        .parceiro-card:hover img {
+            filter: drop-shadow(0 12px 25px rgba(0,0,0,0.18));
+            transform: scale(1.05);
+        }
+
+
+
+        .mobile-menu {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s;
+        }
+
+        .mobile-menu.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.open .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 768px) {
+            .parceiro-card {
+                width: 180px;
+                height: 110px;
+                padding: 12px;
+            }
+        }
+
+
+        footer {
+            background-color: #000;
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo span {
+            color: #2563eb;
+        }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .footer-social-link {
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .footer-social-link:hover {
+            transform: translateY(-5px);
+            filter: brightness(1.2);
+        }
+
+        .footer-social-link.social-instagram:hover {
+            color: #E4405F;
+        }
+
+        .footer-social-link.social-facebook:hover {
+            color: #3d87e7;
+        }
+
+        .footer-social-link.social-email:hover {
+            color: #ffffff;
+        }
+
+        .footer-social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .footer-copyright {
+            text-align: center;
+            color: #ffffff;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+
+        .video-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.4);
+            border-color: #2563eb;
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .video-card .video-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: scale(1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .play-icon {
+            transform: scale(1.1);
+            background: rgba(37, 99, 235, 0.6);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal.delay-100 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal.delay-200 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal.delay-300 {
+            transition-delay: 0.3s;
+        }
+
+        .title-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 99px;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .title-underline {
+            width: 40px;
+            height: 2px;
+            background: #fff;
+            margin: 15px auto 0;
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-active .title-underline {
+            width: 80px;
+        }
+
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #2563eb;
+
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Split Background Hero */
+        .hero-split-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bg-half {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .bg-half::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.2);
+            /* Subtle overlay for readability */
+        }
+
+        /* Hero Layout Responsivity - Mantendo lado a lado */
+        .hero-split-bg {
+            display: flex;
+            flex-direction: row;
+        }
+
+        /* Ajustes Individuais de Enquadramento no Mobile */
+        /* Ajustes Individuais de Enquadramento no Mobile */
+        @media (max-width: 768px) {
+            #hero-bg-left {
+                background-position: 75% 20% !important;
+                /* Foco agressivo na direita (Moça) */
+            }
+
+            #hero-bg-right {
+                background-position: 25% 20% !important;
+                /* Foco agressivo na esquerda (Rapaz) */
+            }
+
+            /* Remover Card Glass no Mobile */
+            .hero-content-glass {
+                background: transparent !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+
+            /* Ajuste de Velocidade de Animação para Mobile */
+            body.loaded .animate-co {
+                animation-duration: 1.0s !important;
+            }
+
+            body.loaded .animate-nti {
+                animation-duration: 0.8s !important;
+                animation-delay: 0.6s !important;
+            }
+
+            body.loaded .animate-amp {
+                animation-duration: 0.6s !important;
+                animation-delay: 1.4s !important;
+            }
+
+            body.loaded .animate-subtitle {
+                animation-duration: 1.2s !important;
+                animation-delay: 2.0s !important;
+            }
+
+            body.loaded .scroll-indicator-container {
+                animation-delay: 3.0s !important;
+            }
+        }
+
+        /* Garantir que o conteúdo da hero se destaque sobre o fundo */
+        /* Animação do Mouse Scroll */
+        @keyframes scroll-dot {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(16px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes chevron-down {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+
+        .mouse-dot {
+            animation: scroll-dot 2.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+        }
+
+        .chevron-staggered {
+            opacity: 0;
+            animation: chevron-down 2s ease-in-out infinite;
+        }
+
+        .chevron-1 {
+            animation-delay: 0s;
+        }
+
+        .chevron-2 {
+            animation-delay: 0.4s;
+        }
+
+        .chevron-3 {
+            animation-delay: 0.8s;
+        }
+
+        /* Animações do Logo Sequencial */
+        @keyframes co-slide-in {
+            0% {
+                transform: translateX(-150%);
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            60% {
+                transform: translateX(10%);
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes nti-slide-in {
+            0% {
+                transform: translateX(150%);
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            60% {
+                transform: translateX(-10%);
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes amp-drop {
+            0% {
+                transform: translateY(-200%);
+                opacity: 0;
+            }
+
+            70% {
+                transform: translateY(20%);
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Estado Inicial (Escondido enquanto carrega) */
+        .animate-co,
+        .animate-nti,
+        .animate-amp {
+            opacity: 0;
+        }
+
+        /* Disparar Animações apenas após carregar (DESACELERADO) */
+        body.loaded .animate-co {
+            display: inline-block;
+            animation: co-slide-in 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        body.loaded .animate-nti {
+            display: inline-block;
+            animation: nti-slide-in 1.0s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.8s;
+        }
+
+        body.loaded .animate-amp {
+            display: inline-block;
+            animation: amp-drop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.8s;
+        }
+
+        @keyframes subtitle-reveal {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-subtitle {
+            opacity: 0;
+        }
+
+        body.loaded .animate-subtitle {
+            animation: subtitle-reveal 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards 2.6s;
+        }
+
+        /* Animação Premium do Indicador de Scroll */
+        @keyframes mouse-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes text-pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                letter-spacing: 0.4em;
+            }
+
+            50% {
+                opacity: 1;
+                letter-spacing: 0.5em;
+            }
+        }
+
+        @keyframes indicator-reveal {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .scroll-indicator-container {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body.loaded .scroll-indicator-container {
+            animation: indicator-reveal 1.2s ease-out forwards 3.8s;
+            pointer-events: auto;
+        }
+
+        .mouse-icon-floating {
+            animation: mouse-float 3s ease-in-out infinite;
+        }
+
+        .text-pulse-animation {
+            animation: text-pulse 3s ease-in-out infinite;
+        }
+
+        /* --- Dynamic Header State --- */
+        #main-header.header-expanded {
+            max-width: 100% !important;
+            width: 100% !important;
+            border-radius: 0 !important;
+            top: 0 !important;
+            background-color: #020617 !important;
+            /* Matches section bg */
+            padding-top: 1rem !important;
+            /* py-4 */
+            padding-bottom: 1rem !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        #main-header.header-expanded .max-w-7xl {
+            max-width: 100% !important;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        #main-header.header-expanded .nav-link {
+            color: #ffffff !important;
+        }
+
+        #main-header.header-expanded .nav-link:hover {
+            color: #2563eb !important;
+            /* blue-600 */
+        }
+
+        #main-header.header-expanded .hamburger-line {
+            background-color: #ffffff !important;
+        }
+
+        @media (max-width: 768px) {
+            #main-header.header-expanded {
+                transform: translateY(-100%) !important;
+                pointer-events: none;
+                opacity: 0 !important;
+                transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+            }
+        }
+
+        @keyframes pulse-blue {
+
+            0%,
+            100% {
+                text-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
+                transform: scale(1);
+            }
+
+            50% {
+                text-shadow: 0 0 20px rgba(37, 99, 235, 0.8), 0 0 35px rgba(37, 99, 235, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        .animate-pulse-blue {
+            display: inline-block;
+            animation: pulse-blue 2s ease-in-out infinite;
+            will-change: transform, text-shadow;
+        }
+    </style>
+    <link rel="stylesheet" href="cinema-animation.css">
+</head>
+
+<body class="bg-slate-50 text-gray-900 loading">
+
+
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <div class="loader-text">
+                <img src="./logo.png" alt="& CONTI" class="h-12 w-auto">
+            </div>
+        </div>
+    </div>
+
+    <header id="main-header"
+        class="fixed top-0 w-full z-[1000] px-4 md:px-10 py-4 md:py-6 transition-all duration-300 bg-transparent">
+        <div class="flex items-center justify-between w-full max-w-7xl mx-auto">
+
+            <a href="#" class="hover:opacity-80 transition-opacity z-50">
+                <img src="./logo.png" alt="& CONTI" class="h-8 md:h-10 w-auto">
+            </a>
+
+            <nav class="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <ul class="flex space-x-8 text-sm font-normal text-gray-300 tracking-wide">
+                    <li><a href="#hero-section" class="nav-link hover:text-blue-600">INÍCIO</a></li>
+                    <li><a href="#sobre-negocio-section" class="nav-link hover:text-blue-600">SOBRE</a></li>
+                    <li><a href="#contato-section" class="nav-link hover:text-blue-600">CONTATO</a></li>
+                </ul>
+            </nav>
+
+
+            <button id="hamburger-btn"
+                class="hamburger md:hidden flex flex-col justify-center items-center w-8 h-8 z-50" aria-label="Menu">
+                <span class="hamburger-line block w-6 h-0.5 bg-white mb-1"></span>
+                <span class="hamburger-line block w-6 h-0.5 bg-white mb-1"></span>
+                <span class="hamburger-line block w-6 h-0.5 bg-white"></span>
+            </button>
+
+            <div class="hidden md:block">
+                <a href="https://compresuafoto.econticomigo.com.br" target="_blank"
+                    class="inline-flex items-center justify-center px-6 py-3 md:px-10 md:py-3 bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-full hover:to-blue-400 hover:scale-105 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_rgba(37,99,235,0.8)] border border-blue-400/30 text-xs md:text-sm font-medium tracking-widest">
+                    COMPRE SUA FOTO
+                </a>
+            </div>
+        </div>
+
+
+        <div id="mobile-menu"
+            class="mobile-menu fixed top-0 right-0 w-full h-screen bg-[#030303]/95 backdrop-blur-3xl border-l border-white/10 z-40 flex flex-col items-center justify-center md:hidden">
+            <nav class="flex flex-col items-center space-y-8">
+                <a href="#hero-section"
+                    class="nav-link text-2xl text-white hover:text-blue-400 tracking-wide">INÍCIO</a>
+                <a href="#sobre-negocio-section"
+                    class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">SOBRE</a>
+                <a href="#contato-section"
+                    class="nav-link text-2xl text-gray-800 hover:text-blue-600 tracking-wide">CONTATO</a>
+                <a href="https://compresuafoto-comigo.vercel.app/" target="_blank"
+                    class="mt-8 inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-full hover:to-blue-400 hover:scale-105 transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] border border-blue-400/30 text-sm font-medium tracking-widest">
+                    COMPRE SUA FOTO
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero-section"
+        class="relative w-screen max-w-full overflow-hidden flex flex-col justify-center py-0 bg-[#020617] z-40"
+        style="height: 100dvh;">
+
+
+        <div class="hidden lg:block absolute top-0 left-0 w-full h-full z-0 bg-cover bg-center"
+            style="background-image: url('./backgroundprincp\ -\ Editado.jpg'); background-position: center 15%;">
+        </div>
+
+
+        <div class="flex lg:hidden absolute top-0 left-0 w-full h-full z-0 bg-cover bg-center"
+            style="background-image: url('./background.jpg');">
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+
+
+        <div class="absolute inset-0 bg-black/5 pointer-events-none z-[1]"></div>
+
+        <div class="w-full mx-auto relative z-10 h-full flex items-center justify-center">
+            <div class="relative w-full h-full flex items-center justify-center">
+                <!-- Contador Esquerda: Clientes (BEM MAIS À ESQUERDA, FORA DA MARGEM) -->
+
+
+                <!-- Card Central -->
+                <div
+                    class="hero-content-glass p-8 lg:p-14 rounded-[2rem] max-w-[95%] lg:max-w-[500px] text-center transition-all hover:scale-[1.02] duration-500 flex-shrink-0 relative z-30">
+                    <h1
+                        class="text-7xl lg:text-9xl font-thin text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] tracking-tighter leading-none flex flex-row items-center justify-center gap-2 lg:gap-4">
+                        <span
+                            class="animate-amp text-7xl lg:text-9xl text-blue-400 lg:text-blue-500 font-light drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">&</span>
+                        <div class="flex">
+                            <span class="animate-co">CO</span>
+                            <span class="animate-nti">NTI</span>
+                        </div>
+                    </h1>
+                    <h2
+                        class="mt-6 lg:mt-12 text-xs lg:text-base text-gray-200 tracking-[0.4em] lg:tracking-[0.55em] drop-shadow-md font-medium uppercase border-t border-white/20 lg:border-gray-900/60 pt-6 lg:pt-12 w-full inline-block animate-subtitle">
+                        Marketing Digital
+                    </h2>
+                </div>
+
+                <!-- Contador Direita: Anos (BEM MAIS À DIREITA, FORA DA MARGEM) -->
+
+            </div>
+        </div>
+
+        <!-- Indicador de Scroll Chevron Clicável (Sem Mouse) -->
+        <a href="#sobre-negocio-section"
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 scroll-indicator-container cursor-pointer z-50 hover:opacity-80 transition-opacity no-underline">
+            <span class="text-[10px] tracking-[0.4em] uppercase text-white/80 font-light scroll-indicator-text mb-2">
+                Descubra mais
+            </span>
+
+            <!-- Chevrons Area -->
+            <div class="flex flex-col items-center -space-y-2">
+                <svg class="w-5 h-5 text-white chevron-staggered chevron-1" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7">
+                    </path>
+                </svg>
+                <svg class="w-5 h-5 text-white chevron-staggered chevron-2" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7">
+                    </path>
+                </svg>
+                <svg class="w-5 h-5 text-white chevron-staggered chevron-3" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7">
+                    </path>
+                </svg>
+            </div>
+        </a>
+        </div>
+
+    </section>
+
+    <!-- ═══ MARQUEE TRANSITION (Option 1) ═══ -->
+    <section class="bg-[#020617] py-0 overflow-hidden border-y border-white/5 relative z-20">
+        <div class="marquee-container opacity-50">
+            <div
+                class="marquee-content gap-8 text-white text-3xl md:text-6xl font-extralight uppercase tracking-[0.2em] whitespace-nowrap">
+                <span>Estratégia</span> <span>•</span>
+                <span>Conexão</span> <span>•</span>
+                <span>Resultado</span> <span>•</span>
+                <span>Criatividade</span> <span>•</span>
+                <span>Branding</span> <span>•</span>
+                <span>Performance</span> <span>•</span>
+                <span>Design</span> <span>•</span>
+                <span>Inovação</span> <span>•</span>
+                <span class="text-blue-500 font-light">Conti Comigo</span> <span>•</span>
+            </div>
+            <!-- Duplicate for infinite loop -->
+            <div class="marquee-content gap-8 text-white text-3xl md:text-6xl font-extralight uppercase tracking-[0.2em] whitespace-nowrap"
+                aria-hidden="true">
+                <span>Estratégia</span> <span>•</span>
+                <span>Conexão</span> <span>•</span>
+                <span>Resultado</span> <span>•</span>
+                <span>Criatividade</span> <span>•</span>
+                <span>Branding</span> <span>•</span>
+                <span>Performance</span> <span>•</span>
+                <span>Design</span> <span>•</span>
+                <span>Inovação</span> <span>•</span>
+                <span class="text-blue-500 font-light">Conti Comigo</span> <span>•</span>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ═══ SEÇÃO: SOBRE NEGÓCIO (Standard Scroll) ═══ -->
+    <section id="sobre-negocio-section" class="bg-[#020617] pt-0 overflow-hidden">
+
+        <!-- CARD 1: POSICIONAMENTO -->
+        <div class="reveal pb-16 lg:pb-24 pt-0">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./IMG_9080.jpg" alt="Equipe & CONTI"
+                            class="w-full rounded-[3.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.7)] grayscale hover:grayscale-0 transition-all duration-1000 hover:scale-[1.03] ring-1 ring-white/10 hover:ring-white/20">
+                    </div>
+                    <div class="w-full lg:w-1/2">
+                        <h2
+                            class="text-5xl md:text-7xl font-extralight text-white leading-[1.1] tracking-tighter uppercase italic drop-shadow-xl mb-6">
+                            O QUE A <span class="text-blue-600 animate-pulse-blue">& CONTI</span> PODE <span
+                                class="text-gray-400 font-light block lowercase">(ou não) fazer</span> PELO SEU NEGÓCIO
+                        </h2>
+                        <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed">
+                            Não somos apenas uma agência. Somos o seu braço estratégico para transformar presença
+                            digital em autoridade absoluta e resultados reais.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2: PRESENÇA x PROMESSAS -->
+        <div class="reveal py-16 lg:py-24 bg-white/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row-reverse gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./oque.jpg" alt="Construindo Presença"
+                            class="w-full rounded-[3.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.7)] grayscale hover:grayscale-0 transition-all duration-1000 hover:scale-[1.03] ring-1 ring-white/10 hover:ring-white/20">
+                    </div>
+                    <div class="w-full lg:w-1/2">
+                        <h2
+                            class="text-4xl md:text-6xl font-extralight text-white leading-[1.1] tracking-tighter uppercase italic drop-shadow-xl mb-8">
+                            O QUE FAZEMOS É <span class="text-blue-600 animate-pulse-blue">CONSTRUIR</span> PRESENÇA E
+                            NÃO <span class="text-gray-500">PROMESSAS.</span>
+                        </h2>
+                        <p class="text-white text-lg md:text-xl font-bold leading-tight uppercase tracking-widest mb-8">
+                            A &CONTI TE AJUDA A <span class="text-blue-400 animate-pulse-blue">MOSTRAR O VALOR</span> DO
+                            QUE VOCÊ ENTREGA,
+                            A ORGANIZAR SUA COMUNICAÇÃO.
+                        </p>
+                        <div
+                            class="bg-gradient-to-br from-blue-600/15 to-blue-900/10 border border-blue-500/30 p-10 rounded-[2.5rem] backdrop-blur-2xl shadow-2xl transition-all duration-500 hover:border-blue-400/50 hover:shadow-[0_0_40px_rgba(37,99,235,0.2)] hover:-translate-y-1">
+                            <p
+                                class="text-blue-400 text-base md:text-lg font-light uppercase tracking-widest leading-relaxed text-center">
+                                E TRANSFORMAR O SEU CONTEÚDO EM ALGO QUE REALMENTE TRABALHA POR VOCÊ!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3: RESULTADOS vs ENVOLVIMENTO -->
+        <div class="reveal py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./Untitled3.jpg" alt="Resultados"
+                            class="w-full rounded-[3.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.7)] grayscale hover:grayscale-0 transition-all duration-1000 hover:scale-[1.03] ring-1 ring-white/10 hover:ring-white/20">
+                    </div>
+                    <div class="w-full lg:w-1/2">
+                        <h2
+                            class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
+                            MAS NÃO PODEMOS TE DAR <span class="text-blue-600 animate-pulse-blue">RESULTADOS</span> SEM
+                            ENVOLVIMENTO.
+                        </h2>
+                        <div class="space-y-6">
+                            <div
+                                class="bg-white/[0.03] border border-white/[0.05] p-8 rounded-[2.5rem] backdrop-blur-xl transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.1]">
+                                <p class="text-gray-300 text-base md:text-lg font-medium uppercase tracking-widest">
+                                    O DIGITAL É FEITO DE <span class="text-white">CONSTÂNCIA,</span> DE TESTES, DE TEMPO
+                                </p>
+                            </div>
+                            <div
+                                class="bg-gradient-to-r from-blue-600/20 to-transparent border-l-4 border-l-blue-500 border-y border-r border-y-white/[0.05] border-r-white/[0.05] p-8 rounded-r-3xl rounded-l-md backdrop-blur-xl transition-all duration-500 hover:-translate-y-1">
+                                <p class="text-blue-400 text-xl md:text-2xl font-light uppercase tracking-widest">
+                                    E É ISSO QUE FAZ A DIFERENÇA!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4: NOSSO PAPEL -->
+        <div class="reveal py-16 lg:py-24 bg-white/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row-reverse gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./Untitled2.jpg" alt="Estratégia"
+                            class="w-full rounded-[3.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.7)] grayscale hover:grayscale-0 transition-all duration-1000 hover:scale-[1.03] ring-1 ring-white/10 hover:ring-white/20">
+                    </div>
+                    <div class="w-full lg:w-1/2">
+                        <h2
+                            class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
+                            O NOSSO PAPEL É CRIAR <span class="text-blue-600 animate-pulse-blue">ESTRATÉGIA,</span>
+                            CLAREZA E PROPÓSITO.
+                        </h2>
+                        <div
+                            class="bg-white/[0.02] border border-white/[0.08] p-10 rounded-[2.5rem] backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-2 hover:bg-white/[0.04] hover:border-white/[0.12]">
+                            <p class="text-white text-lg md:text-2xl font-light leading-snug uppercase tracking-tight">
+                                O SEU É ACREDITAR NO PROCESSO, CONFIAR NO QUE FOI CONSTRUÍDO E <span
+                                    class="text-blue-400 animate-pulse-blue font-bold italic">DAR ESPAÇO</span> PRO
+                                RESULTADO AMADURECER.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5: NÃO VENDEMOS MILAGRES -->
+        <div class="reveal pt-16 lg:pt-24 pb-0">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="w-full lg:w-1/2">
+                        <img src="./logo 3.jpg.jpeg" alt="Logo &CONTI"
+                            class="w-full rounded-2xl shadow-2xl transition-all duration-700">
+                    </div>
+                    <div class="w-full lg:w-1/2">
+                        <h2
+                            class="text-3xl md:text-5xl font-extralight text-white leading-tight tracking-tighter uppercase italic mb-8">
+                            NÃO VENDEMOS <span class="text-blue-600 animate-pulse-blue">MILAGRES.</span>
+                        </h2>
+                        <div
+                            class="bg-gradient-to-br from-blue-600/10 to-transparent border border-blue-500/20 backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] transition-all duration-700 hover:-translate-y-2 hover:border-blue-500/40 hover:shadow-[0_40px_80px_rgba(37,99,235,0.2)] p-8 md:p-12 rounded-[2.5rem] backdrop-blur-xl shadow-2xl relative overflow-hidden">
+                            <p
+                                class="text-white text-xl md:text-3xl font-light leading-snug uppercase tracking-tight relative z-10">
+                                ENTREGAMOS ESTRATÉGIA, VISÃO E <span
+                                    class="text-blue-400 animate-pulse-blue font-bold italic">COMPROMISSO
+                                    REAL</span> COM O SEU CRESCIMENTO.
+                            </p>
+                            <p
+                                class="text-gray-400 text-sm md:text-lg font-medium uppercase tracking-widest mt-8 relative z-10">
+                                E QUANDO ISSO SE ENCONTRA COM DEDICAÇÃO, <br>
+                                <span class="text-white font-extralight text-2xl md:text-4xl block mt-2">O RESULTADO
+                                    SEMPRE VEM.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SEÇÃO: VÍDEOS INSTITUCIONAIS ═══ -->
+    <section id="videos-institucionais-section" class="pt-4 pb-12 md:pb-20 bg-[#020617] relative overflow-hidden z-40">
+        <div class="max-w-7xl mx-auto px-4 md:px-10">
+            <div class="premium-header reveal">
+                <span class="premium-label">SHOWCASE</span>
+                <h2 class="premium-title">Produções Institucionais</h2>
+                <p class="premium-subtitle">O audiovisual é a ferramenta mais poderosa para conectar marcas e pessoas.
+                    Assista a alguns de nossos projetos recentes e sinta o impacto visual que podemos gerar na sua <span
+                        class="text-blue-400 font-bold">MARCA.</span></p>
+            </div>
+
+            <!-- CSS Grid for videos - Adjusted to 2 columns on desktop for larger visibility -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 lg:gap-16">
+
+                <!-- Video 1: Mercado Livre -->
+                <div
+                    class="video-card rounded-[3rem] overflow-hidden shadow-2xl border border-white/10 bg-[#0a0f25] aspect-video group relative reveal">
+                    <video muted loop playsinline preload="metadata"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <source src="./videosinstitu/Vídeo Mercado Livre.mp4" type="video/mp4">
+                    </video>
+                    <!-- Client Badge -->
+                    <div
+                        class="absolute top-4 left-4 z-20 px-3 py-1.5 bg-[#0a0f25]/80 backdrop-blur-md border border-white/10 rounded-full text-[10px] text-white font-medium tracking-[0.2em] uppercase">
+                        Mercado Livre
+                    </div>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-8 h-8 text-white fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 2: Stock Car -->
+                <div
+                    class="video-card rounded-[3rem] overflow-hidden shadow-2xl border border-white/10 bg-[#0a0f25] aspect-video group relative reveal delay-100">
+                    <video muted loop playsinline preload="metadata"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <source src="./videosinstitu/Vídeo Valor Fiscal _ Stock Car.mp4" type="video/mp4">
+                    </video>
+                    <!-- Client Badge -->
+                    <div
+                        class="absolute top-4 left-4 z-20 px-3 py-1.5 bg-[#0a0f25]/80 backdrop-blur-md border border-white/10 rounded-full text-[10px] text-white font-medium tracking-[0.2em] uppercase">
+                        Stock Car
+                    </div>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-8 h-8 text-white fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3: Starta -->
+                <div
+                    class="video-card rounded-[3rem] overflow-hidden shadow-2xl border border-white/10 bg-[#0a0f25] aspect-video group relative reveal delay-200">
+                    <video muted loop playsinline preload="metadata"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <source src="./videosinstitu/REELSSTARTAINSITUCIONAL.mp4" type="video/mp4">
+                    </video>
+                    <!-- Client Badge -->
+                    <div
+                        class="absolute top-4 left-4 z-20 px-3 py-1.5 bg-[#0a0f25]/80 backdrop-blur-md border border-white/10 rounded-full text-[10px] text-white font-medium tracking-[0.2em] uppercase">
+                        Starta
+                    </div>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-8 h-8 text-white fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 4: Cybernet -->
+                <div
+                    class="video-card rounded-[3rem] overflow-hidden shadow-2xl border border-white/10 bg-[#0a0f25] aspect-video group relative reveal">
+                    <video muted loop playsinline preload="metadata"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <source src="./videosinstitu/INSTITUCIONAL CYBERNET - LEGENDADO.mp4" type="video/mp4">
+                    </video>
+                    <!-- Client Badge -->
+                    <div
+                        class="absolute top-4 left-4 z-20 px-3 py-1.5 bg-[#0a0f25]/80 backdrop-blur-md border border-white/10 rounded-full text-[10px] text-white font-medium tracking-[0.2em] uppercase">
+                        Cybernet
+                    </div>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-8 h-8 text-white fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 5: Luxton 4 -->
+                <div
+                    class="video-card rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#0a0f25] aspect-video group relative reveal delay-100">
+                    <video muted loop playsinline preload="metadata"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <source src="./videosinstitu/VIDEO INSTITUCIONAL LUXTON 4.mp4" type="video/mp4">
+                    </video>
+                    <!-- Client Badge -->
+                    <div
+                        class="absolute top-4 left-4 z-20 px-3 py-1.5 bg-[#0a0f25]/80 backdrop-blur-md border border-white/10 rounded-full text-[10px] text-white font-medium tracking-[0.2em] uppercase">
+                        Luxton
+                    </div>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-8 h-8 text-white fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 6: Luxton -->
+                <div
+                    class="video-card rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#0a0f25] aspect-video group relative reveal delay-200">
+                    <video muted loop playsinline preload="metadata"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <source src="./videosinstitu/Luxton.mp4" type="video/mp4">
+                    </video>
+                    <!-- Client Badge -->
+                    <div
+                        class="absolute top-4 left-4 z-20 px-3 py-1.5 bg-[#0a0f25]/80 backdrop-blur-md border border-white/10 rounded-full text-[10px] text-white font-medium tracking-[0.2em] uppercase">
+                        Luxton
+                    </div>
+                    <div class="video-overlay">
+                        <div class="play-icon">
+                            <svg class="w-8 h-8 text-white fill-current translate-x-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ═══ SEÇÃO: SOCIAL MEDIA & BRANDING (Moved here) ═══ -->
+    <section id="portfolio-section" class="portfolio-carousel relative z-[100] bg-blue-600">
+        <div class="premium-header reveal">
+            <h2 class="premium-title">Social Media & Branding</h2>
+            <p class="premium-subtitle">Sua marca não pode ser apenas mais uma no feed. Transformamos sua identidade em
+                um ativo visual impossível de ignorar.</p>
+        </div>
+
+        <div class="carousel-track">
+            <div class="carousel-inner">
+
+                <img src="carrosel/port1.jpg" class="clickable-image h-48 md:h-72 object-contain rounded-xl shadow-lg"
+                    alt="1" loading="lazy" decoding="async">
+                <img src="carrosel/port2.jpg" class="clickable-image h-48 md:h-72 object-contain rounded-xl shadow-lg"
+                    alt="2" loading="lazy" decoding="async">
+                <img src="carrosel/port3.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="3"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port4.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="4"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port5.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="5"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port6.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="6"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port7.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="7"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port8.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="8"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port9.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="9"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port10.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="10"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port11.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="11"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port12.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="12"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port13.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="13"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port14.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="14"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port15.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="15"
+                    loading="lazy" decoding="async">
+
+
+                <img src="carrosel/port1.jpg" class="clickable-image h-48 md:h-72 object-contain rounded-xl shadow-lg"
+                    alt="1" loading="lazy" decoding="async">
+                <img src="carrosel/port2.jpg" class="clickable-image h-48 md:h-72 object-contain rounded-xl shadow-lg"
+                    alt="2" loading="lazy" decoding="async">
+                <img src="carrosel/port3.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="3"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port4.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="4"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port5.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="5"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port6.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="6"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port7.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="7"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port8.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="8"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port9.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="9"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port10.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="10"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port11.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="11"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port12.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="12"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port13.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="13"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port14.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="14"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port15.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="15"
+                    loading="lazy" decoding="async">
+            </div>
+        </div>
+
+        <div class="carousel-track">
+            <div class="carousel-inner reverse">
+
+                <img src="carrosel/port16.jpg" class="clickable-image h-48 md:h-72 object-contain rounded-xl shadow-lg"
+                    alt="16" loading="lazy" decoding="async">
+                <img src="carrosel/port17.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="17"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port18.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="18"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port19.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="19"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port20.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="20"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port22.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="22"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port23.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="23"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port24.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="24"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port25.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="25"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port26.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="26"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port27.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="27"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port28.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="28"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port29.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="29"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port30.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="30"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port31.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="31"
+                    loading="lazy" decoding="async">
+
+
+                <img src="carrosel/port16.jpg" class="clickable-image h-48 md:h-72 object-contain rounded-xl shadow-lg"
+                    alt="16" loading="lazy" decoding="async">
+                <img src="carrosel/port17.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="17"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port18.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="18"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port19.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="19"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port20.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="20"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port22.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="22"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port23.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="23"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port24.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="24"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port25.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="25"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port26.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="26"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port27.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="27"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port28.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="28"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port29.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="29"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port30.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="30"
+                    loading="lazy" decoding="async">
+                <img src="carrosel/port31.jpg" class="h-48 md:h-72 object-contain rounded-xl shadow-lg" alt="31"
+                    loading="lazy" decoding="async">
+            </div>
+        </div>
+    </section>
+
+    <section id="brand-scale-section" class="brand-scale-redesign reveal">
+        <div class="brand-scale-shell">
+            <div class="brand-scale-top">
+                <div class="brand-scale-heading">
+                    <span class="brand-scale-kicker">Escala comercial</span>
+                    <h2>Como a & CONTI transforma marca em demanda</h2>
+                    <p>Não vendemos presença bonita sem consequência. Montamos um sistema para sua marca parecer maior,
+                        vender melhor e crescer com mais controle.</p>
+                </div>
+                <div class="brand-scale-proof">
+                    <div class="proof-card">
+                        <span class="proof-number">4</span>
+                        <span class="proof-label">frentes conectadas</span>
+                    </div>
+                    <div class="proof-card">
+                        <span class="proof-number">1</span>
+                        <span class="proof-label">direção estratégica</span>
+                    </div>
+                    <div class="proof-card">
+                        <span class="proof-number">100%</span>
+                        <span class="proof-label">&CONTI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="brand-scale-grid">
+                <article class="scale-card scale-card-primary">
+                    <div class="scale-card-index">01</div>
+                    <span class="scale-card-tag">Posicionamento</span>
+                    <h3>Clareza para sua marca parar de competir por preço.</h3>
+                    <p>Definimos mensagem, identidade, diferencial e leitura de mercado para sua empresa comunicar valor
+                        antes mesmo da venda começar.</p>
+                    <ul>
+                        <li>Reposicionamento da mensagem</li>
+                        <li>Análise de concorrência e categoria</li>
+                        <li>Direção visual e linguagem da marca</li>
+                    </ul>
+                </article>
+
+                <article class="scale-card">
+                    <div class="scale-card-index">02</div>
+                    <span class="scale-card-tag">Autoridade</span>
+                    <h3>Presença que faz sua empresa parecer maior e mais confiável.</h3>
+                    <p>Conteúdo, foto, vídeo e copy entram com a mesma direção para construir repertório, recorrência e
+                        percepção premium.</p>
+                    <ul>
+                        <li>Direção editorial por canal</li>
+                        <li>Produção audiovisual com acabamento forte</li>
+                        <li>Copy estratégica orientada a valor</li>
+                    </ul>
+                </article>
+
+                <article class="scale-card">
+                    <div class="scale-card-index">03</div>
+                    <span class="scale-card-tag">Conversão</span>
+                    <h3>Marketing deixa de ser vitrine e começa a empurrar o comercial.</h3>
+                    <p>Estruturamos campanhas, páginas e funis para transformar atenção em conversa, lead qualificado e
+                        oportunidade real de fechamento.</p>
+                    <ul>
+                        <li>Mídia paga com leitura de performance</li>
+                        <li>Páginas e ofertas com CTA claro</li>
+                        <li>CRM e automação no pós-captura</li>
+                    </ul>
+                </article>
+
+                <article class="scale-card scale-card-accent">
+                    <div class="scale-card-index">04</div>
+                    <span class="scale-card-tag">Expansão</span>
+                    <h3>Escala com consistência, leitura e menos achismo.</h3>
+                    <p>Depois da base pronta, ampliamos operação, distribuição e otimização contínua para crescer sem
+                        perder padrão de marca.</p>
+                    <ul>
+                        <li>Distribuição inteligente dos ativos</li>
+                        <li>Ecossistema digital para sustentar crescimento</li>
+                        <li>Otimização contínua orientada a retorno</li>
+                    </ul>
+                </article>
+            </div>
+
+            <div class="brand-scale-banner">
+                <div>
+                    <span class="banner-label">Em resumo</span>
+                    <p>Sua marca ganha direção, presença, demanda e escala dentro do mesmo sistema.</p>
+                </div>
+                <a href="#contato-section" class="brand-scale-cta">Quero estruturar minha marca</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SEÇÃO: NOSSO PROCESSO ═══ -->
+    <section id="processo-section" class="execution-system-section reveal">
+        <div class="execution-shell">
+            <div class="execution-header">
+                <span class="execution-kicker">Operação clara</span>
+                <h2>O que acontece quando entramos na sua marca</h2>
+                <p>Sem fórmula vaga. A operação é desenhada para tirar sua comunicação do improviso e colocar seu
+                    marketing para trabalhar junto com o comercial.</p>
+            </div>
+
+            <div class="execution-grid">
+                <article class="execution-card">
+                    <span class="execution-index">01</span>
+                    <h3>Diagnóstico direto</h3>
+                    <p>Lemos a marca, o mercado e o material atual para encontrar onde sua percepção de valor está
+                        travando.</p>
+                </article>
+
+                <article class="execution-card">
+                    <span class="execution-index">02</span>
+                    <h3>Plano de ataque</h3>
+                    <p>Definimos narrativa, canais, prioridades, metas e ritmo de execução para parar de desperdiçar
+                        energia.</p>
+                </article>
+
+                <article class="execution-card">
+                    <span class="execution-index">03</span>
+                    <h3>Produção com direção</h3>
+                    <p>Conteúdo, mídia, páginas e ativos entram em campo com a mesma linha de mensagem e posicionamento.</p>
+                </article>
+
+                <article class="execution-card">
+                    <span class="execution-index">04</span>
+                    <h3>Leitura e ajuste</h3>
+                    <p>Monitoramos resposta, afinamos criativos e redistribuímos esforço para escalar o que funciona.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- ═══ SEÇÃO: RESULTADOS EM NÚMEROS ═══ -->
+    <section id="resultados-section" class="proof-section reveal">
+        <div class="proof-shell">
+            <div class="proof-header">
+                <span class="proof-kicker">Prova de entrega</span>
+                <h2>Número sem contexto não vende. Prova com leitura, sim.</h2>
+                <p>Os indicadores abaixo mostram volume, recorrência e capacidade operacional para atender marcas em
+                    diferentes momentos de crescimento.</p>
+            </div>
+
+            <div class="proof-metrics">
+                <div class="proof-metric">
+                    <div class="proof-metric-value"><span class="counter-value" data-target="500">0</span><span>+</span></div>
+                    <div class="proof-metric-title">entregas criativas</div>
+                    <p>Projetos produzidos entre branding, social media, audiovisual e campanhas.</p>
+                </div>
+
+                <div class="proof-metric">
+                    <div class="proof-metric-value"><span class="counter-value" data-target="100">0</span><span>+</span></div>
+                    <div class="proof-metric-title">marcas atendidas</div>
+                    <p>Negócios que confiaram na & CONTI para estruturar presença e operação de marketing.</p>
+                </div>
+
+                <div class="proof-metric">
+                    <div class="proof-metric-value"><span class="counter-value" data-target="50">0</span><span>+</span></div>
+                    <div class="proof-metric-title">projetos por mês</div>
+                    <p>Capacidade de execução contínua sem depender de uma operação artesanal lenta.</p>
+                </div>
+
+                <div class="proof-metric">
+                    <div class="proof-metric-value"><span class="counter-value" data-target="5">0</span><span>+</span></div>
+                    <div class="proof-metric-title">anos de operação</div>
+                    <p>Experiência prática em posicionamento, produção e crescimento digital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ═══ SEÇÃO: DEPOIMENTOS DE CLIENTES ═══ -->
+    <section id="depoimentos-section" class="social-proof-section reveal">
+        <div class="social-proof-shell">
+            <div class="social-proof-header">
+                <span class="social-proof-kicker">Confiança construída</span>
+                <h2>Quando a entrega é séria, o cliente vira prova.</h2>
+                <p>Selecionamos alguns feedbacks reais para mostrar a percepção de quem já colocou a marca nas nossas
+                    mãos.</p>
+            </div>
+
+            <div class="feedback-carousel">
+                <div class="feedback-carousel-head">
+                    <p class="feedback-carousel-note">Arraste ou use as setas para navegar pelos feedbacks.</p>
+                </div>
+
+                <button type="button" class="feedback-nav feedback-nav-prev" id="feedback-prev"
+                    aria-label="Feedback anterior">←</button>
+                <button type="button" class="feedback-nav feedback-nav-next" id="feedback-next"
+                    aria-label="Próximo feedback">→</button>
+
+                <div class="feedback-track" id="feedback-track">
+                    <figure class="feedback-slide">
+                        <img src="FEEDBACKS/457327739_17950501628821093_587317938806725167_n..jpg" alt="Feedback de Cliente" class="clickable-image">
+                        <figcaption>Feedback real de cliente atendido pela & CONTI.</figcaption>
+                    </figure>
+                    <figure class="feedback-slide">
+                        <img src="FEEDBACKS/460530763_17953103654821093_6397500399900889765_n..jpg" alt="Feedback de Cliente" class="clickable-image">
+                        <figcaption>Percepção de atendimento, entrega e resultado.</figcaption>
+                    </figure>
+                    <figure class="feedback-slide">
+                        <img src="FEEDBACKS/465160270_17958642389821093_8294017608611683325_n..jpg" alt="Feedback de Cliente" class="clickable-image">
+                        <figcaption>Mais uma validação de consistência e execução.</figcaption>
+                    </figure>
+                    <figure class="feedback-slide">
+                        <img src="FEEDBACKS/559213400_17996271686821093_5558661213623429254_n..jpg" alt="Feedback de Cliente" class="clickable-image">
+                        <figcaption>Marca percebendo valor na operação construída.</figcaption>
+                    </figure>
+                    <figure class="feedback-slide">
+                        <img src="FEEDBACKS/565213973_18002205527821093_6355632110014004726_n..jpg" alt="Feedback de Cliente" class="clickable-image">
+                        <figcaption>Mais um retorno direto sobre a consistência da entrega.</figcaption>
+                    </figure>
+                    <figure class="feedback-slide">
+                        <img src="FEEDBACKS/587732269_18002205494821093_1654297306920086653_n..jpg" alt="Feedback de Cliente" class="clickable-image">
+                        <figcaption>Confiança construída em atendimento, execução e resultado percebido.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SEÇÃO FALE CONOSCO ═══ -->
+    <section id="contato-section" class="contact-conversion-section reveal">
+        <div class="contact-shell">
+            <div class="contact-copy">
+                <span class="contact-kicker">Próximo passo</span>
+                <h2>Se a sua marca precisa vender melhor, essa conversa já deveria ter começado.</h2>
+                <p>Nos chame com contexto real do seu negócio. A partir disso, entendemos o cenário e te mostramos por
+                    onde começar sem perda de tempo.</p>
+            </div>
+
+            <div class="contact-form-panel">
+                <div class="contact-panel-head">
+                    <span class="panel-label">Brief inicial</span>
+                    <p>Preencha o básico e abrimos sua mensagem no WhatsApp com a estrutura certa.</p>
+                </div>
+
+                <form class="contact-form-grid">
+                    <div class="space-y-2 group">
+                        <label class="text-[10px] uppercase tracking-[0.3em] text-white/55 font-medium ml-1">Seu nome</label>
+                        <input type="text" id="contact-name" placeholder="Quem está falando?"
+                            class="contact-input">
+                    </div>
+
+                    <div class="space-y-2 group">
+                        <label class="text-[10px] uppercase tracking-[0.3em] text-white/55 font-medium ml-1">Empresa</label>
+                        <input type="text" id="contact-subject" placeholder="Nome da empresa ou segmento"
+                            class="contact-input">
+                    </div>
+
+                    <div class="space-y-2 group contact-message-wrap">
+                        <label class="text-[10px] uppercase tracking-[0.3em] text-white/55 font-medium ml-1">Momento atual</label>
+                        <textarea id="contact-message" rows="6"
+                            placeholder="Ex: precisamos melhorar posicionamento, organizar conteúdo, aumentar demanda ou estruturar campanhas."
+                            class="contact-input contact-textarea"></textarea>
+                    </div>
+
+                    <button type="button" onclick="sendToWhatsApp()" class="contact-submit">
+                        ABRIR CONVERSA
+                    </button>
+
+                    <div class="contact-benefits mt-6" style="grid-column: 1 / -1;">
+                        <div class="contact-benefit">
+                            <strong>Direção clara</strong>
+                            <span>Saída prática sobre posicionamento, conteúdo e aquisição.</span>
+                        </div>
+                        <div class="contact-benefit">
+                            <strong>Contato rápido</strong>
+                            <span>Conversa direta pelo WhatsApp, sem formulário burocrático.</span>
+                        </div>
+                        <div class="contact-benefit">
+                            <strong>Leitura comercial</strong>
+                            <span>Foco no que aumenta percepção, demanda e conversão.</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="py-16 bg-white border-t border-gray-100 overflow-hidden reveal relative z-20">
+        <div class="max-w-7xl mx-auto px-4 mb-12 text-center">
+            <h2 class="text-3xl md:text-4xl font-normal  tracking-tighter text-gray-900 mb-2 uppercase">
+                Nossos Parceiros
+            </h2>
+            <p class="text-black text-sm md:text-base">
+                Empresas que confiam em nosso trabalho
+            </p>
+        </div>
+
+        <div class="carousel-track">
+            <div class="carousel-inner" style="animation-duration: 40s;">
+                <!-- Conjunto 1 -->
+                <div class="parceiro-card"><img src="partner/01_(1).jpg" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/FIXADOS-TMULTIMARCAS_02.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO%20OEMPORIO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGOMARCA%20-%20DEISE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGOMARCA_-_AGROPETSCAO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGOMARCA_COM_SLOGAN-_DIVINO_SONO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_-_BOX24_-_COM_SLOGAN_-_VERDE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_ANDR_C3_89_DUARTE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_EVELIN_BOUTIQUE.jpeg" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_GRENAL_-G_C3_81S_E__C3_81GUA_MINERAL_-_ATUALIZADA_3.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_MADEPOX_SEM_FUNDO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_PARA_PERFIL_-_AUTO_PROTEGE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/Logo%20final%20Oficial%20proporcional.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/SUPER_VIAMAR-01.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/casa_do_Gelo.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/logo-vivenda-cor.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/logo_divinovest.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/Logotipo_Desenvolver-02.jpg" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/Marketing_digital_preto_e_dourado_logo_-_2.JPG" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(3).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(4).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(5).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(7).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(8).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(10).png" alt="Parceiro"></div>
+
+                <!-- Conjunto 2 (Clone para loop infinito) -->
+                <div class="parceiro-card"><img src="partner/01_(1).jpg" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/FIXADOS-TMULTIMARCAS_02.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO%20OEMPORIO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGOMARCA%20-%20DEISE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGOMARCA_-_AGROPETSCAO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGOMARCA_COM_SLOGAN-_DIVINO_SONO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_-_BOX24_-_COM_SLOGAN_-_VERDE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_ANDR_C3_89_DUARTE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_EVELIN_BOUTIQUE.jpeg" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_GRENAL_-G_C3_81S_E__C3_81GUA_MINERAL_-_ATUALIZADA_3.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_MADEPOX_SEM_FUNDO.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/LOGO_PARA_PERFIL_-_AUTO_PROTEGE.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/Logo%20final%20Oficial%20proporcional.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/SUPER_VIAMAR-01.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/casa_do_Gelo.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/logo-vivenda-cor.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/logo_divinovest.png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/Logotipo_Desenvolver-02.jpg" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/Marketing_digital_preto_e_dourado_logo_-_2.JPG" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(3).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(4).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(5).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(7).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(8).png" alt="Parceiro"></div>
+                <div class="parceiro-card"><img src="partner/foto%20(10).png" alt="Parceiro"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-black relative z-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="footer-logo">
+                <img src="logo.png" alt="& CONTI Logo"
+                    class="h-10 md:h-12 w-auto opacity-90 transition-opacity hover:opacity-100">
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://www.instagram.com/econticomigo/" class="footer-social-link social-instagram"
+                    aria-label="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 0C8.74 0 8.333 0.015 7.053 0.072 5.775 0.132 4.905 0.333 4.14 0.632 3.351 0.938 2.682 1.347 2.016 2.016 1.347 2.682 0.938 3.351 0.632 4.14 0.333 4.905 0.132 5.775 0.072 7.053 0.015 8.333 0 8.74 0 12s0.015 3.667 0.072 4.947c0.06 1.277 0.261 2.148 0.56 2.911 0.306 0.788 0.715 1.457 1.38 2.122 0.665 0.665 1.334 1.074 2.122 1.38 0.763 0.299 1.634 0.499 2.911 0.56 1.28 0.058 1.688 0.072 4.947 0.072s3.667 -0.015 4.947 -0.072c1.277 -0.06 2.148 -0.261 2.911 -0.56 0.788 -0.306 1.457 -0.715 2.122 -1.38 0.665 -0.665 1.074 -1.334 1.38 -2.122 0.299 -0.763 0.499 -1.634 0.56 -2.911 0.058 -1.28 0.072 -1.688 0.072 -4.947s-0.015 -3.667 -0.072 -4.947c-0.06 -1.277 -0.261 -2.148 -0.56 -2.911 -0.306 -0.788 -0.715 -1.457 -1.38 -2.122 -0.665 -0.665 -1.334 -1.074 -2.122 -1.38 -0.763 -0.299 -1.634 -0.499 -2.911 -0.56C15.667 0.015 15.26 0 12 0zm0 5.838c3.403 0 6.162 2.759 6.162 6.162s-2.759 6.162-6.162 6.162-6.162-2.759-6.162-6.162 2.759-6.162 6.162-6.162zm0 10.162c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4zm6.406-11.845c.796 0 1.441.645 1.441 1.44s-.645 1.44-1.441 1.44-1.441-.645-1.441-1.44.645-1.44 1.441-1.44z" />
+                    </svg>
+                </a>
+                <a href="#" class="footer-social-link social-facebook" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+                <a href="mailto:marketing@econticomigo.com.br" class="footer-social-link social-email"
+                    aria-label="Email">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M20,4H4C2.895,4,2,4.895,2,6v12c0,1.105,0.895,2,2,2h16c1.105,0,2-0.895,2-2V6C22,4.895,21.105,4,20,4z M20,8.236 l-8,4.882L4,8.236V6l8,4.882L20,6V8.236z" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="footer-copyright">
+                © 2026 & CONTI - Todos os direitos reservados
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.remove('bg-transparent', 'py-4', 'md:py-6');
+                header.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-2', 'md:py-3');
+            } else {
+                header.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-md', 'py-2', 'md:py-3');
+                header.classList.add('bg-transparent', 'py-4', 'md:py-6');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.classList.toggle('overflow-hidden');
+            });
+
+            // Close menu when clicking on a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburgerBtn.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            });
+        }
+
+
+    </script>
+
+
+
+
+    <a href="https://wa.me/5551989794082" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" style="overflow: visible;">
+            <path
+                d="M16 0c-8.837 0-16 7.163-16 16 0 2.825.733 5.48 2.015 7.79l-2.015 7.352 7.525-1.975c2.257 1.205 4.832 1.897 7.575 1.897 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.333c-2.454 0-4.757-.655-6.746-1.794l-.484-.28-4.479 1.175 1.197-4.373-.306-.487c-1.226-1.948-1.933-4.25-1.933-6.714 0-7.391 6.009-13.4 13.4-13.4s13.4 6.009 13.4 13.4-6.009 13.4-13.4 13.4zM22.564 18.577c-.36-.18-2.129-1.051-2.459-1.171s-.57-.18-.81.18c-.24.36-.931 1.171-1.141 1.411-.21.24-.42.27-.78.09-.36-.18-1.52-.56-2.894-1.786-1.07-.954-1.791-2.133-2-2.493s-.023-.555.158-.734c.162-.161.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63s-.81-1.951-1.111-2.671c-.293-.701-.59-.607-.81-.618s-.45-.011-.69-.011c-.24 0-.63.09-.961.45s-1.261 1.231-1.261 3.002c0 1.771 1.291 3.483 1.472 3.723.18.24 2.541 3.881 6.156 5.442.859.371 1.531.593 2.054.759.863.275 1.649.236 2.27.144.692-.103 2.129-.871 2.429-1.711s.3-1.561.21-1.711c-.09-.15-.33-.24-.691-.42z">
+            </path>
+        </svg>
+    </a>
+
+    <div id="image-modal" class="image-modal">
+        <div class="close-modal">&times;</div>
+        <img id="modal-img" src="" alt="Zoomed Image">
+    </div>
+
+
+    <div id="v-modal" class="video-modal">
+        <div class="close-modal" id="close-v-modal">&times;</div>
+        <div class="video-modal-content">
+            <video id="modal-video" controls playsinline class="w-full h-auto rounded-xl">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. IMAGE MODAL ---
+            const imgModal = document.getElementById('image-modal');
+            const imgModalImg = document.getElementById('modal-img');
+            const imgCloseBtn = imgModal.querySelector('.close-modal');
+
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('clickable-image')) {
+                    const src = e.target.getAttribute('src');
+                    imgModalImg.setAttribute('src', src);
+                    imgModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+
+            const closeImgModal = () => {
+                imgModal.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            imgCloseBtn.addEventListener('click', closeImgModal);
+            imgModal.addEventListener('click', () => closeImgModal()); // Fechar clicando em QUALQUER lugar do modal (inclusive fundo)
+
+            // --- 2. VIDEO MODAL & HOVER ---
+            const vModal = document.getElementById('v-modal');
+            const mVideo = document.getElementById('modal-video');
+            const vCloseBtn = document.getElementById('close-v-modal');
+            const videoCards = document.querySelectorAll('.video-card');
+
+            videoCards.forEach(card => {
+                const videoPreview = card.querySelector('video');
+
+                // Hover: Play Preview
+                card.addEventListener('mouseenter', () => {
+                    videoPreview.play().catch(() => { });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    videoPreview.pause();
+                });
+
+                // Click: Open Modal with Sound
+                card.addEventListener('click', () => {
+                    const videoSrc = videoPreview.querySelector('source').getAttribute('src');
+                    mVideo.querySelector('source').src = videoSrc;
+                    mVideo.load();
+                    vModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    mVideo.play();
+                });
+            });
+
+            const closeVModal = () => {
+                vModal.classList.remove('active');
+                mVideo.pause();
+                document.body.style.overflow = '';
+            };
+
+            vCloseBtn.addEventListener('click', closeVModal);
+            vModal.addEventListener('click', (e) => {
+                if (e.target === vModal) closeVModal();
+            });
+
+            // ESC to close any modal
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeImgModal();
+                    closeVModal();
+                }
+            });
+
+            // --- 3. REVEAL OBSERVER ---
+            const revealOptions = {
+                threshold: 0.05, // Lowered for better mobile trigger
+                rootMargin: "0px 0px -20px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                        // Optional: stop observing once revealed
+                        // revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // --- 4. VIDEO FOCUS PREVIEW (AUTO-PLAY ON SCROLL) ---
+            const videoOptions = {
+                threshold: 0.6, // Play when 60% of the video is visible
+                rootMargin: "0px"
+            };
+
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target.querySelector('video');
+                    if (video) {
+                        if (entry.isIntersecting) {
+                            video.play().catch(() => { });
+                        } else {
+                            video.pause();
+                        }
+                    }
+                });
+            }, videoOptions);
+
+            document.querySelectorAll('.video-card').forEach(card => {
+                videoObserver.observe(card);
+            });
+        });
+
+        // --- WHATSAPP CONTACT LOGIC ---
+        function sendToWhatsApp() {
+            const name = document.getElementById('contact-name').value.trim();
+            const subject = document.getElementById('contact-subject').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+
+            if (!name || !message) {
+                alert('Por favor, preencha pelo menos o nome e a mensagem.');
+                return;
+            }
+
+            const phoneNumber = "5551989794082";
+            const formattedMessage = `Olá! Meu nome é *${name}*.\n\n*Assunto:* ${subject || 'Geral'}\n*Mensagem:* ${message}`;
+            const encodedMessage = encodeURIComponent(formattedMessage);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- COUNTER ANIMATION LOGIC (IntersectionObserver - Global) ---
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter-value');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        if (counter.dataset.animated === "true") return;
+                        counter.dataset.animated = "true";
+
+                        const target = +counter.getAttribute('data-target');
+                        const isHeroCounter = counter.closest('.animate-subtitle');
+                        const duration = isHeroCounter ? 5000 : 2000; // Slower for hero (5s), standard for rest (2s)
+                        let startTime = null;
+                        const hasPlus = counter.innerText.includes('+');
+
+                        const step = (timestamp) => {
+                            if (!startTime) startTime = timestamp;
+                            const progress = Math.min((timestamp - startTime) / duration, 1);
+                            // Ease-out cubic for a satisfying deceleration
+                            const eased = 1 - Math.pow(1 - progress, 3);
+                            const value = Math.floor(eased * target);
+
+                            counter.innerText = (hasPlus ? '+' : '') + value;
+
+                            if (progress < 1) {
+                                window.requestAnimationFrame(step);
+                            } else {
+                                counter.innerText = (hasPlus ? '+' : '') + target;
+                            }
+                        };
+
+                        // Se for um contador da Hero (tem animate-subtitle ou está dentro de um), esperamos o fade-in
+                        if (isHeroCounter) {
+                            setTimeout(() => {
+                                window.requestAnimationFrame(step);
+                            }, 3500); // 3.5s delay para sincronizar com o hero fade-in
+                        } else {
+                            window.requestAnimationFrame(step);
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // --- PROCESS TIMELINE ANIMATION ---
+        function animateProcess() {
+            return;
+        }
+
+        // --- 3D TESTIMONIAL CAROUSEL LOGIC ---
+        function setupTestimonial3D() {
+            const track = document.getElementById('feedback-track');
+            const prev = document.getElementById('feedback-prev');
+            const next = document.getElementById('feedback-next');
+            if (!track || !prev || !next) return;
+
+            // --- Lógica de Clonagem para Loop Infinito ---
+            const originals = Array.from(track.children);
+            // Clonamos no início e no fim para permitir navegação infinita nos dois sentidos
+            originals.forEach(item => {
+                const cloneAfter = item.cloneNode(true);
+                const cloneBefore = item.cloneNode(true);
+                track.appendChild(cloneAfter);
+                track.insertBefore(cloneBefore, track.firstChild);
+            });
+
+            // Largura de um set original
+            const totalWidth = originals.length * 100; // Porcentagem ou pixel? getSlideWidth é melhor.
+
+            const getSlideWidth = () => {
+                const firstSlide = track.querySelector('.feedback-slide');
+                if (!firstSlide) return track.clientWidth;
+                const styles = window.getComputedStyle(track);
+                const gap = parseFloat(styles.columnGap || styles.gap || '0');
+                return firstSlide.getBoundingClientRect().width + gap;
+            };
+
+            // Iniciar na primeira imagem original (após os clones iniciais)
+            const initialOffset = originals.length * getSlideWidth();
+            track.scrollLeft = initialOffset;
+
+            // Reset de posição imperceptível
+            track.addEventListener('scroll', () => {
+                const slideWidth = getSlideWidth();
+                const firstOriginalPos = originals.length * slideWidth;
+                const lastOriginalPos = firstOriginalPos * 2;
+
+                if (track.scrollLeft >= lastOriginalPos) {
+                    track.scrollLeft -= firstOriginalPos;
+                } else if (track.scrollLeft <= slideWidth * (originals.length - 1)) {
+                    track.scrollLeft += firstOriginalPos;
+                }
+            });
+
+            prev.addEventListener('click', () => {
+                track.scrollBy({ left: -getSlideWidth(), behavior: 'smooth' });
+            });
+
+            next.addEventListener('click', () => {
+                track.scrollBy({ left: getSlideWidth(), behavior: 'smooth' });
+            });
+        }
+
+        const hidePreloader = () => {
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+            const whatsapp = document.querySelector('.whatsapp-float');
+
+            if (preloader && !preloader.classList.contains('hidden')) {
+                preloader.classList.add('hidden');
+                body.classList.remove('loading');
+                body.classList.add('loaded');
+                if (whatsapp) whatsapp.classList.add('visible');
+                animateCounters();
+                animateProcess();
+                setupTestimonial3D();
+            }
+        };
+
+        // DOMContentLoaded é muito mais rápido que 'load' pois não espera imagens e vídeos
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pequeno delay para garantir que o layout JS (cinema) começou
+            setTimeout(hidePreloader, 300);
+        });
+
+        // Caso o DOMContentLoaded demore, o load servirá de fallback (mas o DOM costuma vir antes)
+        window.addEventListener('load', () => {
+            setTimeout(hidePreloader, 100);
+        });
+
+        // Safety fallback agressivo (Max 3s)
+        setTimeout(hidePreloader, 3000);
+
+    </script>
+
+    <!-- 3D Cinema Animation -->
+    <div id="brand-source" style="display:none;font-weight:900;font-family:'Outfit', sans-serif;">& CONTI</div>
+</body>
