@@ -9,8 +9,8 @@
     --green: #d7ff46;
     --rail: 0px;
     --radius: 34px;
-    --title: 'Archivo Black', sans-serif;
-    --body: 'Manrope', sans-serif;
+    --title: 'Montserrat', sans-serif;
+    --body: 'Outfit', sans-serif;
 }
 
 * {
@@ -71,7 +71,7 @@ a {
 .loader__mark em {
     color: #fff;
     font-style: normal;
-    font-weight: 900;
+    font-weight: 500; /* Mais fino conforme solicitado */
     margin-right: 0.2rem;
     display: inline-block;
 }
@@ -382,7 +382,7 @@ h3 {
     color: var(--blue);
     font-size: 0.72rem;
     font-weight: 900;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.35em; /* Aumentado para visual premium */
     text-transform: uppercase;
 }
 
@@ -436,7 +436,7 @@ h3 {
     color: #000; /* Letras pretas */
     font-size: 0.75rem;
     font-weight: 900;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.25em; /* Aumentado para visual premium */
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
@@ -1779,16 +1779,27 @@ h3 {
 .hero-v2-title {
     font-family: var(--title);
     font-size: clamp(3.2rem, 6.2vw, 5.8rem);
-    line-height: 0.95;
+    line-height: 0.85;
     margin-bottom: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.02em;
     color: #fff;
+    font-weight: 500;
 }
 
 .hero-v2-title em {
     color: var(--blue);
     font-style: normal;
+}
+
+.hero-v2-title span {
+    display: block;
+    font-size: 0.22em; /* Muito menor, como no logo */
+    font-weight: 300;
+    letter-spacing: 0.55em; /* Espaçamento largo característico */
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    font-family: var(--body);
 }
 
 .hero-v2-subtitle {
