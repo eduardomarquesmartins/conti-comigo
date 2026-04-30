@@ -44,6 +44,14 @@ a {
     color: inherit;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--title);
+}
+
+p, span, a, li, input, textarea, button {
+    font-family: var(--body);
+}
+
 .loader {
     position: fixed;
     inset: 0;
@@ -296,7 +304,7 @@ a {
     border-bottom: 1px solid rgba(255, 255, 255, 0.14);
     font-family: var(--title);
     font-size: clamp(2rem, 9vw, 4rem);
-    font-weight: 900;
+    font-weight: 700; /* Reduzido de 900 para consistência */
     line-height: 0.95;
     letter-spacing: -0.035em;
     text-transform: uppercase;
