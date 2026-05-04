@@ -60,8 +60,12 @@ const videoObserver = new IntersectionObserver((entries) => {
         const video = entry.target.querySelector('video');
         if (!video) return;
 
-        // Apenas pausamos quando sai da tela para economizar recursos
-        if (!entry.isIntersecting) {
+        if (entry.isIntersecting) {
+            video.play().catch(() => {
+                // Autoplay bloqueado pelo navegador até interação
+                console.log("Autoplay bloqueado, aguardando interação.");
+            });
+        } else {
             video.pause();
         }
     });
