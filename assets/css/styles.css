@@ -3619,8 +3619,7 @@ h3 {
         grid-template-columns: 1fr !important;
         gap: 1.5rem;
     }
-    .services-brands__card-visual-web,
-    .services-brands__card-visual-event {
+    .services-brands__card-visual-web {
         height: 110px;
     }
 }
@@ -3632,7 +3631,9 @@ h3 {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
     transform: rotate(-2deg);
     transition: all 0.5s ease;
-    height: 140px;
+    height: 220px;
+    width: 150px;
+    justify-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
