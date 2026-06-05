@@ -55,12 +55,23 @@ document.querySelectorAll('.pop-reveal').forEach(item => {
     revealObserver.observe(item);
 });
 
+const loadProjectVideo = (video) => {
+    if (!video || video.dataset.loaded === 'true') return;
+
+    video.querySelectorAll('source[data-src]').forEach((source) => {
+        source.src = source.dataset.src;
+    });
+    video.load();
+    video.dataset.loaded = 'true';
+};
+
 const videoObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         const video = entry.target.querySelector('video');
         if (!video) return;
 
         if (entry.isIntersecting) {
+            loadProjectVideo(video);
             video.play().catch(() => {
                 // Autoplay bloqueado pelo navegador até interação
                 console.log("Autoplay bloqueado, aguardando interação.");
@@ -353,18 +364,6 @@ if (heroSection && collageItems.length > 0) {
     animateParallax();
 }
 
-// --- LOTTIE BUILDING ANIMATION ---
-const lottieContainer = document.getElementById('lottie-building');
-if (lottieContainer) {
-    lottie.loadAnimation({
-        container: lottieContainer,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: 'https://lottie.host/17e57c8d-6997-400a-b333-e59389274291/3L29H7tC9F.json'
-    });
-}
-
 // --- MOBILE PHOTO EFFECTS ---
 if (window.innerWidth < 1024) {
     window.addEventListener('scroll', () => {
@@ -383,3 +382,106 @@ if (window.innerWidth < 1024) {
         });
     });
 }
+
+// --- INTERACTIVE MONTHLY PLANNING SIMULATOR ---
+const strategyDatabase = {
+    week1: {
+        lancamento: "Teasers e contagem regressiva para atiçar a curiosidade e desejo do público.",
+        oferta: "Aquecimento de público anunciando que uma oferta/condição exclusiva vem aí.",
+        branding: "Histórias marcantes e posts reforçando os diferencias e autoridade da sua marca."
+    },
+    week2: {
+        maes: "Campanha emocional com fotos e vídeos focando na conexão de mães e filhos.",
+        black: "Conteúdo estratégico revelando as primeiras grandes oportunidades da Black Friday.",
+        natal: "Campanha institucional acolhedora focada nos sentimentos de final de ano.",
+        institucional: "Storytelling humanizado mostrando os bastidores e os valores da sua equipe."
+    },
+    week3: {
+        sorteio: "Lançamento da Ação Premiada/Sorteio oficial para explodir o engajamento do perfil.",
+        live: "Super live de vendas / evento online focado em sanar dúvidas e fechar pedidos.",
+        audiovisual: "Lançamento do vídeo comercial cinematográfico impulsionado com tráfego pago."
+    },
+    week4: {
+        lancamento: "Escala dos anúncios de conversão + depoimentos reais de clientes e prova social.",
+        oferta: "Gatilhos de escassez e urgência: contagem regressiva para fechar o carrinho.",
+        branding: "Fechamento do ciclo mensal, análise aprofundada de métricas e relatório de ROI."
+    }
+};
+
+const runSimulation = () => {
+    const dateVal = document.querySelector('[data-group="date"] .simulator-btn.is-active')?.dataset.val || 'maes';
+    const focusVal = document.querySelector('[data-group="focus"] .simulator-btn.is-active')?.dataset.val || 'lancamento';
+    const actionVal = document.querySelector('[data-group="action"] .simulator-btn.is-active')?.dataset.val || 'sorteio';
+
+    const week1Desc = document.querySelector('#week-1 .week-desc');
+    const week2Desc = document.querySelector('#week-2 .week-desc');
+    const week3Desc = document.querySelector('#week-3 .week-desc');
+    const week4Desc = document.querySelector('#week-4 .week-desc');
+
+    if (week1Desc) {
+        week1Desc.style.opacity = 0;
+        setTimeout(() => {
+            week1Desc.textContent = strategyDatabase.week1[focusVal] || "...";
+            week1Desc.style.opacity = 1;
+        }, 150);
+    }
+    
+    if (week2Desc) {
+        week2Desc.style.opacity = 0;
+        setTimeout(() => {
+            week2Desc.textContent = strategyDatabase.week2[dateVal] || "...";
+            week2Desc.style.opacity = 1;
+        }, 150);
+    }
+
+    if (week3Desc) {
+        week3Desc.style.opacity = 0;
+        setTimeout(() => {
+            week3Desc.textContent = strategyDatabase.week3[actionVal] || "...";
+            week3Desc.style.opacity = 1;
+        }, 150);
+    }
+
+    if (week4Desc) {
+        week4Desc.style.opacity = 0;
+        setTimeout(() => {
+            week4Desc.textContent = strategyDatabase.week4[focusVal] || "...";
+            week4Desc.style.opacity = 1;
+        }, 150);
+    }
+};
+
+// Delegação de eventos no document para os botões do simulador
+document.addEventListener('click', (event) => {
+    const btn = event.target.closest('.simulator-btn');
+    if (!btn) return;
+    
+    const group = btn.closest('.simulator-buttons');
+    if (!group) return;
+    
+    event.preventDefault();
+    
+    group.querySelectorAll('.simulator-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    runSimulation();
+});
+
+// Run initially to populate on load
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(runSimulation, 400);
+});
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    setTimeout(runSimulation, 400);
+}
+
+// --- BENTO GRID SPOTLIGHT EFFECT ---
+document.querySelectorAll('.services-brands__card').forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--x', `${x}px`);
+        card.style.setProperty('--y', `${y}px`);
+    });
+});
+
