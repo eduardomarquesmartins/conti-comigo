@@ -3276,89 +3276,161 @@ h3 {
     align-items: center;
 }
 
-.services-brands__card-visual-feed {
+/* Card 1: Mockup de Celular (Gestão de Redes Sociais) */
+.services-brands__card-visual-phone-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.phone-mockup {
+    width: 140px;
+    height: 240px;
+    background: #111;
+    border-radius: 28px;
+    padding: 6px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transform: rotate(3deg) translateY(5px);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.phone-speaker {
+    width: 35px;
+    height: 10px;
+    background: #111;
+    border-radius: 8px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
     background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 16px;
-    padding: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+    border-radius: 22px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    padding-top: 14px;
     position: relative;
-    transform: rotate(2deg);
-    transition: all 0.5s ease;
+    border: 1px solid rgba(0, 0, 0, 0.01);
 }
 
-.services-brands__card:hover .services-brands__card-visual-feed {
-    transform: rotate(0deg) scale(1.03);
-    box-shadow: 0 15px 30px rgba(0, 82, 204, 0.05);
-}
-
-.feed-header {
+.phone-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 5px;
+    padding: 6px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-.feed-avatar {
-    width: 24px;
-    height: 24px;
+.phone-avatar {
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--blue) 0%, #00245a 100%);
 }
 
-.feed-user {
-    height: 8px;
-    width: 60px;
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 4px;
+.phone-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
-.feed-image {
-    height: 100px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, rgba(0, 82, 204, 0.05) 0%, rgba(0, 82, 204, 0.15) 100%);
-    display: grid;
-    place-items: center;
+.phone-username {
+    height: 5px;
+    width: 35px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+}
+
+.phone-location {
+    height: 3px;
+    width: 20px;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 1px;
+}
+
+.phone-post-image {
+    flex-grow: 1;
+    background: linear-gradient(135deg, rgba(0, 82, 204, 0.03) 0%, rgba(0, 82, 204, 0.08) 100%);
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: flex-end;
 }
 
-.feed-chart-svg {
+.phone-chart-svg {
     width: 100%;
-    height: 60px;
+    height: 90px;
     position: absolute;
     bottom: 0;
     left: 0;
 }
 
-.feed-chart-path {
+.phone-chart-path {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
-    animation: drawChart 2.5s ease forwards infinite;
+    animation: drawPhoneChart 2.5s ease forwards infinite;
 }
 
-@keyframes drawChart {
+@keyframes drawPhoneChart {
     to {
         stroke-dashoffset: 0;
     }
 }
 
-.feed-actions {
+.phone-chart-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(52, 199, 89, 0.12);
+    color: #34c759;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 20px;
+}
+
+.phone-actions {
     display: flex;
-    gap: 0.6rem;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    background: #fff;
 }
 
-.feed-icon {
-    width: 12px;
-    height: 12px;
+.phone-action-icon {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.08);
 }
 
-.feed-icon--active {
+.phone-action-icon--active {
     background: var(--blue);
+}
+
+.phone-action-save {
+    margin-left: auto;
+    width: 6px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 1px;
+}
+
+/* Efeito Hover do Card no Celular */
+.services-brands__card:hover .phone-mockup {
+    transform: rotate(0deg) scale(1.05) translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 82, 204, 0.08);
+    border-color: rgba(0, 82, 204, 0.15);
 }
 
 /* Card 2: Tags Flutuantes */
@@ -3622,38 +3694,201 @@ h3 {
     .services-brands__card-visual-web {
         height: 110px;
     }
+    .services-brands__card-visual-event-triple {
+        height: 130px;
+    }
+    .event-img-wrapper {
+        width: 65px;
+        height: 105px;
+    }
 }
 
-/* Card 4: Imagem de Casamento e Eventos */
-.services-brands__card-visual-event {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-    transform: rotate(-2deg);
-    transition: all 0.5s ease;
-    height: 220px;
-    width: 150px;
-    justify-self: center;
+/* Card 4: Três imagens de Eventos em leque com rotação */
+.services-brands__card-visual-event-triple {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    height: 220px;
     position: relative;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
 }
 
-.services-brands__card-visual-event img {
+.event-img-wrapper {
+    width: 88px;
+    height: 148px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: #fff;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.event-img-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 0.5s ease;
+    display: block;
 }
 
-.services-brands__card:hover .services-brands__card-visual-event {
-    transform: rotate(0deg) scale(1.03);
-    box-shadow: 0 15px 30px rgba(0, 82, 204, 0.05);
+/* Rotações em leque e z-index */
+.event-img-wrapper--left {
+    transform: rotate(-10deg) translateX(12px) translateY(5px);
+    z-index: 1;
 }
 
-.services-brands__card:hover .services-brands__card-visual-event img {
-    transform: scale(1.05);
+.event-img-wrapper--center {
+    transform: rotate(0deg) translateY(-5px);
+    z-index: 3;
+}
+
+.event-img-wrapper--right {
+    transform: rotate(10deg) translateX(-12px) translateY(5px);
+    z-index: 2;
+}
+
+/* Hover do Card afeta as imagens (abertura do leque e elevação) */
+.services-brands__card:hover .event-img-wrapper--left {
+    transform: rotate(-5deg) translateX(-8px) translateY(0) scale(1.03);
+    z-index: 2;
+    box-shadow: 0 12px 25px rgba(0, 82, 204, 0.08);
+}
+
+.services-brands__card:hover .event-img-wrapper--center {
+    transform: rotate(0deg) translateY(-8px) scale(1.05);
+    z-index: 4;
+    box-shadow: 0 15px 30px rgba(0, 82, 204, 0.1);
+}
+
+.services-brands__card:hover .event-img-wrapper--right {
+    transform: rotate(5deg) translateX(8px) translateY(0) scale(1.03);
+    z-index: 3;
+    box-shadow: 0 12px 25px rgba(0, 82, 204, 0.08);
+}
+
+/* Card 6: Prévia do Site AgroPets (Mockup de Navegador) */
+.services-brands__card-visual-agropets {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    width: 100%;
+}
+
+.agropets-browser {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(8px) rotate(1deg);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.agropets-browser-bar {
+    height: 20px;
+    background: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    gap: 4px;
+}
+
+.agropets-browser-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.agropets-browser-dot:nth-child(1) { background: #ff5f56; }
+.agropets-browser-dot:nth-child(2) { background: #ffbd2e; }
+.agropets-browser-dot:nth-child(3) { background: #27c93f; }
+
+.agropets-browser-content {
+    height: 95px;
+    overflow: hidden;
+    position: relative;
+    background: #fdfdfd;
+}
+
+.agropets-browser-content img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: translateY(0);
+    transition: transform 2.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Efeito de Hover */
+.services-brands__card:hover .agropets-browser {
+    transform: translateY(0) rotate(0deg) scale(1.02);
+    box-shadow: 0 12px 25px rgba(0, 82, 204, 0.06);
+    border-color: rgba(0, 82, 204, 0.15);
+}
+
+.services-brands__card:hover .agropets-browser-content img {
+    transform: translateY(-25%);
+}
+
+/* Card 3: Câmera SVG no Fundo */
+.services-brands__card-bg-camera {
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    width: 130px;
+    height: 130px;
+    opacity: 0.03; /* Extremamente discreto para não brigar com o texto */
+    pointer-events: none;
+    transform: rotate(-12deg);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+/* Efeito de hover no card afeta a câmera */
+.services-brands__card:hover .services-brands__card-bg-camera {
+    transform: rotate(0deg) scale(1.08);
+    opacity: 0.06;
+}
+
+/* Card 5: Site SVG no Fundo */
+.services-brands__card-bg-sites {
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    width: 130px;
+    height: 130px;
+    opacity: 0.03; /* Extremamente discreto para não brigar com o texto */
+    pointer-events: none;
+    transform: rotate(10deg);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+/* Efeito de hover no card afeta o SVG de sites */
+.services-brands__card:hover .services-brands__card-bg-sites {
+    transform: rotate(0deg) scale(1.08);
+    opacity: 0.06;
+}
+
+/* Card 2: Lâmpada SVG no Fundo */
+.services-brands__card-bg-ideia {
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    width: 130px;
+    height: 130px;
+    opacity: 0.03; /* Extremamente discreto para não brigar com o texto */
+    pointer-events: none;
+    transform: rotate(-8deg);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+/* Efeito de hover no card afeta o SVG de ideia */
+.services-brands__card:hover .services-brands__card-bg-ideia {
+    transform: rotate(0deg) scale(1.08);
+    opacity: 0.06;
 }
