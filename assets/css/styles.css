@@ -3619,7 +3619,40 @@ h3 {
         grid-template-columns: 1fr !important;
         gap: 1.5rem;
     }
-    .services-brands__card-visual-web {
+    .services-brands__card-visual-web,
+    .services-brands__card-visual-event {
         height: 110px;
     }
+}
+
+/* Card 4: Imagem de Casamento e Eventos */
+.services-brands__card-visual-event {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+    transform: rotate(-2deg);
+    transition: all 0.5s ease;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.services-brands__card-visual-event img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.services-brands__card:hover .services-brands__card-visual-event {
+    transform: rotate(0deg) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 82, 204, 0.05);
+}
+
+.services-brands__card:hover .services-brands__card-visual-event img {
+    transform: scale(1.05);
 }
